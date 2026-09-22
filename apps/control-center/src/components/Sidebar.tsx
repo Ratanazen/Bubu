@@ -14,80 +14,104 @@ interface SidebarProps {
 
 const navItems = [
   { id: 'home', icon: HomeIcon, label: 'Home' },
-  { id: 'pet', icon: PetIcon, label: 'Pet' },
-  { id: 'screen', icon: ScreenIcon, label: 'Screen' },
-  { id: 'monitors', icon: MonitorIcon, label: 'Monitors' },
-  { id: 'workspaces', icon: WorkspaceIcon, label: 'Workspaces' },
-  { id: 'windows', icon: WindowIcon, label: 'Windows' },
-  { id: 'compositor', icon: CompositorIcon, label: 'Compositor' },
-  { id: 'waybar', icon: WaybarIcon, label: 'Waybar' },
-  { id: 'character', icon: CharacterIcon, label: 'Character' },
-  { id: 'animations', icon: AnimationIcon, label: 'Animation' },
-  { id: 'styles', icon: StyleIcon, label: 'Styles' },
-  { id: 'music', icon: MusicIcon, label: 'Music' },
-  { id: 'notifications', icon: NotificationIcon, label: 'Notifications' },
-  { id: 'browser', icon: BrowserIcon, label: 'Browser' },
-  { id: 'integrations', icon: IntegrationIcon, label: 'Integrations' },
-  { id: 'cli', icon: CliIcon, label: 'CLI' },
+  { id: 'animations', icon: AnimationIcon, label: 'Animation Studio' },
+  { id: 'styles', icon: StyleIcon, label: 'Skins & Styles' },
+  { id: 'character', icon: CharacterIcon, label: 'Character Studio' },
+  { id: 'music', icon: MusicIcon, label: 'Music & Lyrics' },
+  { id: 'integrations', icon: IntegrationIcon, label: 'Linux & Waybar' },
+  { id: 'screen', icon: ScreenIcon, label: 'Screen & Monitors' },
   { id: 'diagnostics', icon: DiagnosticIcon, label: 'Diagnostics' },
   { id: 'settings', icon: SettingsIcon, label: 'Settings' },
 ];
 
 export default function Sidebar({ currentPage, onNavigate, onOpenCommandPalette }: SidebarProps) {
   return (
-    <nav className="sidebar">
-      <div className="sidebar-header">
-        <h1>Bubu V4</h1>
-        <div className="subtitle">Desktop Control System</div>
-        <button
+    <nav style={{
+      width: '240px',
+      height: '100%',
+      backgroundColor: '#0f172a',
+      borderRight: '1px solid #1e293b',
+      display: 'flex',
+      flexDirection: 'column',
+      userSelect: 'none'
+    }}>
+      {/* Header */}
+      <div style={{
+        padding: '20px 16px',
+        borderBottom: '1px solid #1e293b',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px'
+      }}>
+        <span style={{ fontSize: '24px' }}>🐾</span>
+        <div>
+          <div style={{ fontWeight: 'bold', fontSize: '16px', color: '#f8fafc', letterSpacing: '-0.02em' }}>Bubu V5</div>
+          <div style={{ fontSize: '11px', color: '#64748b' }}>Editable Character Platform</div>
+        </div>
+      </div>
+
+      {/* Quick Search / Command Palette Bar */}
+      <div style={{ padding: '12px 14px' }}>
+        <button 
           onClick={onOpenCommandPalette}
-          className="command-palette-btn"
           style={{
-            marginTop: '12px',
             width: '100%',
-            padding: '6px 12px',
+            background: '#1e293b',
+            border: '1px solid #334155',
+            color: '#94a3b8',
+            padding: '8px 12px',
             borderRadius: '8px',
-            border: '1px solid var(--border)',
-            backgroundColor: 'var(--bg-primary)',
-            color: 'var(--text-secondary)',
-            fontSize: '11px',
+            fontSize: '12px',
             display: 'flex',
-            justifyContent: 'space-between',
             alignItems: 'center',
+            justifyContent: 'space-between',
             cursor: 'pointer'
-          }}
-        >
-          <span style={{display: 'flex', alignItems: 'center', gap: '6px'}}>
-            <SearchIcon width={14} height={14} /> Quick Action
-          </span>
-          <kbd style={{ backgroundColor: 'rgba(0,0,0,0.06)', padding: '2px 4px', borderRadius: '4px' }}>Ctrl+K</kbd>
+          }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <SearchIcon size={14} color="#64748b" />
+            <span>Quick search...</span>
+          </div>
+          <kbd style={{ background: '#0f172a', padding: '2px 5px', borderRadius: '4px', fontSize: '10px', color: '#60a5fa' }}>Ctrl+K</kbd>
         </button>
       </div>
-      <div className="nav-items" style={{overflowY: 'auto', flex: 1}}>
-        {navItems.map(item => {
-            const Icon = item.icon;
-            return (
-                <div
-                    key={item.id}
-                    className={`nav-item ${currentPage === item.id ? 'active' : ''}`}
-                    onClick={() => onNavigate(item.id)}
-                    role="button"
-                    tabIndex={0}
-                    onKeyDown={e => e.key === 'Enter' && onNavigate(item.id)}
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '12px',
-                        padding: '10px 16px',
-                        cursor: 'pointer',
-                        color: currentPage === item.id ? 'var(--accent)' : 'var(--text-primary)'
-                    }}
-                >
-                <Icon width={18} height={18} color={currentPage === item.id ? 'var(--accent)' : 'var(--text-secondary)'} />
-                <span style={{ fontSize: '14px', fontWeight: currentPage === item.id ? 600 : 400 }}>{item.label}</span>
-                </div>
-            )
+
+      {/* Navigation Links */}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '0 8px 12px 8px' }}>
+        {navItems.map((item) => {
+          const IconComp = item.icon;
+          const isActive = currentPage === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => onNavigate(item.id)}
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '10px 12px',
+                margin: '2px 0',
+                border: 'none',
+                borderRadius: '8px',
+                background: isActive ? '#3b82f6' : 'transparent',
+                color: isActive ? '#ffffff' : '#94a3b8',
+                fontWeight: isActive ? 600 : 500,
+                fontSize: '13px',
+                cursor: 'pointer',
+                textAlign: 'left',
+                transition: 'all 0.15s ease'
+              }}>
+              <IconComp size={16} color={isActive ? '#ffffff' : '#64748b'} />
+              <span>{item.label}</span>
+            </button>
+          );
         })}
+      </div>
+
+      {/* Footer info */}
+      <div style={{ padding: '14px 16px', borderTop: '1px solid #1e293b', fontSize: '11px', color: '#64748b' }}>
+        <div>System: Linux Wayland</div>
+        <div style={{ color: '#10b981', marginTop: '2px' }}>● Pet Connected</div>
       </div>
     </nav>
   );
