@@ -4,30 +4,19 @@ directories:
   output: release/
 files:
   - apps/desktop-pet/dist/**/*
+  - packages/*/dist/**/*
+  - packages/*/package.json
+  - node_modules/**/*
   - dist/**/*
   - assets/**/*
+
+linux:
+  target:
+    - AppImage
+  category: Utility
 
 win:
   target:
     - target: nsis
       arch:
         - x64
-
-nsis:
-  oneClick: true
-  perMachine: false
-  allowToChangeInstallationDirectory: false
-  createDesktopShortcut: true
-  createStartMenuShortcut: true
-  shortcutName: "Bubu Desktop Companion"
-
-mac:
-  target: dmg
-  category: public.app-category.entertainment
-  hardenedRuntime: true
-  gatekeeperAssess: false
-
-linux:
-  target:
-    - AppImage
-  category: Utility
