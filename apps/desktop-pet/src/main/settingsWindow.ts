@@ -2,26 +2,38 @@ import { BrowserWindow } from 'electron';
 import path from 'path';
 
 let settingsWin: BrowserWindow | null = null;
+let controlCenterWin: BrowserWindow | null = null;
 
-export function openSettingsWindow() {
-    if (settingsWin) {
-        settingsWin.focus();
+export function openControlCenterWindow() {
+    if (controlCenterWin) {
+        controlCenterWin.focus();
         return;
     }
-    settingsWin = new BrowserWindow({
-        width: 400,
-        height: 500,
-        title: 'Bubu Settings',
+    controlCenterWin = new BrowserWindow({
+        width: 1100,
+        height: 750,
+        minWidth: 800,
+        minHeight: 600,
+        title: '🐾 Bubu Control Center',
         autoHideMenuBar: true,
         webPreferences: {
             preload: path.join(__dirname, '../preload/preload.js'),
             contextIsolation: true
         }
     });
-    
-    settingsWin.loadFile(path.join(__dirname, '../renderer/settings.html'));
-    
-    settingsWin.on('closed', () => {
-        settingsWin = null;
+
+    const ccDist = path.join(__dirname, '../../../../dist/control-center/index.html');
+    if (require('fs').existsSync(ccDist)) {
+        controlCenterWin.loadFile(ccDist);
+    } else {
+        controlCenterWin.loadURL('http://localhost:5173');
+    }
+
+    controlCenterWin.on('closed', () => {
+        controlCenterWin = null;
     });
+}
+
+export function openSettingsWindow() {
+    openControlCenterWindow();
 }
