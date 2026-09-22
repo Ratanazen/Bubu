@@ -26,7 +26,7 @@ export default function HomeDashboard() {
 
     const handleLocationClick = (locName: string) => {
         setCurrentLocation(locName);
-        triggerAction(`📍 Click moved Bubu to: ${locName}`);
+        triggerAction(`📍 Bubu relocated to ${locName}`);
     };
 
     const handleQuickStyle = (styleName: string) => {
@@ -34,16 +34,17 @@ export default function HomeDashboard() {
         triggerAction(`🎨 Applied Style: ${styleName}`);
     };
 
-    const locations = [
-        { name: 'Top Left', icon: '↖️', desc: 'Screen Top-Left' },
-        { name: 'Top Center', icon: '⬆️', desc: 'Screen Top-Center' },
-        { name: 'Top Right', icon: '↗️', desc: 'Screen Top-Right' },
-        { name: 'Center Left', icon: '⬅️', desc: 'Screen Middle-Left' },
-        { name: 'Center Screen', icon: '🎯', desc: 'Exact Center' },
-        { name: 'Center Right', icon: '➡️', desc: 'Screen Middle-Right' },
-        { name: 'Bottom Left', icon: '↙️', desc: 'Screen Bottom-Left' },
-        { name: 'Bottom Center', icon: '⬇️', desc: 'Screen Bottom-Center' },
-        { name: 'Bottom Right', icon: '↘️', desc: 'Screen Bottom-Right' }
+    // 9-Zone Visual SVG Display Grid (Click on any cell to move Bubu)
+    const displayZones = [
+        { id: 'top-left', name: 'Top Left', label: 'TL', col: 1, row: 1 },
+        { id: 'top-center', name: 'Top Center', label: 'TC', col: 2, row: 1 },
+        { id: 'top-right', name: 'Top Right', label: 'TR', col: 3, row: 1 },
+        { id: 'center-left', name: 'Center Left', label: 'CL', col: 1, row: 2 },
+        { id: 'center', name: 'Center Screen', label: 'Center', col: 2, row: 2 },
+        { id: 'center-right', name: 'Center Right', label: 'CR', col: 3, row: 2 },
+        { id: 'bottom-left', name: 'Bottom Left', label: 'BL', col: 1, row: 3 },
+        { id: 'bottom-center', name: 'Bottom Center', label: 'BC', col: 2, row: 3 },
+        { id: 'bottom-right', name: 'Bottom Right', label: 'BR', col: 3, row: 3 }
     ];
 
     const ezStyles = [
@@ -57,11 +58,11 @@ export default function HomeDashboard() {
 
     return (
         <div style={{ padding: '24px', color: '#f8fafc', maxWidth: '1100px', margin: '0 auto', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-            {/* Header with Live Status Notification */}
+            {/* Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <div>
                     <h1 style={{ margin: 0, fontSize: '26px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        🐾 Bubu V5 One-Click Control Panel
+                        🐾 Bubu V5 One-Click Screen Relocator
                         <span style={{ 
                             fontSize: '12px', 
                             background: bubuStatus === 'running' ? '#10b981' : bubuStatus === 'hidden' ? '#f59e0b' : '#ef4444', 
@@ -75,7 +76,7 @@ export default function HomeDashboard() {
                         </span>
                     </h1>
                     <p style={{ color: '#94a3b8', margin: '4px 0 0 0', fontSize: '14px' }}>
-                        One-click icon grid to instantly relocate Bubu anywhere on your desktop screen.
+                        Click on any spot inside the virtual monitor below to instantly relocate Bubu on your screen.
                     </p>
                 </div>
                 {statusMsg && (
@@ -85,9 +86,8 @@ export default function HomeDashboard() {
                 )}
             </div>
 
-            {/* 1. MASTER POWER CONTROLS */}
-            <div style={{ background: '#1e293b', padding: '18px 24px', borderRadius: '16px', border: '1px solid #334155', marginBottom: '20px' }}>
-                <h3 style={{ margin: '0 0 12px 0', fontSize: '15px', color: '#60a5fa' }}>⚡ Master Pet Controls</h3>
+            {/* Master Controls */}
+            <div style={{ background: '#1e293b', padding: '16px 20px', borderRadius: '16px', border: '1px solid #334155', marginBottom: '20px' }}>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
                     <button 
                         onClick={handleRunShow}
@@ -95,7 +95,7 @@ export default function HomeDashboard() {
                             background: 'linear-gradient(135deg, #10b981, #059669)', 
                             color: '#fff', 
                             border: 'none', 
-                            padding: '12px 22px', 
+                            padding: '12px 20px', 
                             borderRadius: '10px', 
                             fontWeight: 'bold', 
                             fontSize: '14px', 
@@ -140,54 +140,74 @@ export default function HomeDashboard() {
                 </div>
             </div>
 
-            {/* 2. ONE-CLICK ICON LOCATION SELECTOR */}
+            {/* VIRTUAL SCREEN MONITOR (Click inside to position Bubu) */}
             <div style={{ background: '#1e293b', padding: '24px', borderRadius: '16px', border: '1px solid #334155', marginBottom: '20px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                     <div>
-                        <h2 style={{ margin: 0, fontSize: '18px', color: '#f8fafc' }}>🖱️ Click Icon to Change Bubu Location</h2>
-                        <p style={{ margin: '4px 0 0 0', fontSize: '13px', color: '#94a3b8' }}>Click any direction icon below to instantly relocate Bubu to that spot on your screen.</p>
+                        <h2 style={{ margin: 0, fontSize: '18px', color: '#f8fafc' }}>🖥️ Virtual Monitor Screen Relocator</h2>
+                        <p style={{ margin: '4px 0 0 0', fontSize: '13px', color: '#94a3b8' }}>Click any of the 9 screen tiles to immediately position Bubu there on your desktop.</p>
                     </div>
                     <div style={{ background: '#0f172a', padding: '6px 14px', borderRadius: '8px', border: '1px solid #334155', fontSize: '13px' }}>
-                        Active: <strong style={{ color: '#38bdf8' }}>{currentLocation}</strong>
+                        Current Spot: <strong style={{ color: '#38bdf8' }}>{currentLocation}</strong>
                     </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px', maxWidth: '650px', margin: '0 auto' }}>
-                    {locations.map(loc => {
-                        const isSelected = currentLocation === loc.name;
-                        return (
-                            <button
-                                key={loc.name}
-                                onClick={() => handleLocationClick(loc.name)}
-                                style={{
-                                    padding: '20px 10px',
-                                    background: isSelected ? 'linear-gradient(135deg, #2563eb, #1d4ed8)' : '#0f172a',
-                                    color: '#fff',
-                                    border: isSelected ? '2px solid #60a5fa' : '1px solid #334155',
-                                    borderRadius: '14px',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    gap: '8px',
-                                    transition: 'all 0.15s ease',
-                                    transform: isSelected ? 'scale(1.03)' : 'scale(1)',
-                                    boxShadow: isSelected ? '0 0 16px rgba(59, 130, 246, 0.4)' : 'none'
-                                }}>
-                                <span style={{ fontSize: '28px' }}>{loc.icon}</span>
-                                <span style={{ fontWeight: 'bold', fontSize: '13px' }}>{loc.name}</span>
-                                <span style={{ fontSize: '10px', color: isSelected ? '#bfdbfe' : '#64748b' }}>{loc.desc}</span>
-                            </button>
-                        );
-                    })}
+                {/* Simulated Screen Frame */}
+                <div style={{ 
+                    background: '#0b1120', 
+                    borderRadius: '14px', 
+                    border: '3px solid #334155', 
+                    padding: '16px', 
+                    maxWidth: '680px', 
+                    margin: '0 auto', 
+                    boxShadow: 'inset 0 0 20px rgba(0,0,0,0.6)' 
+                }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+                        {displayZones.map(zone => {
+                            const isSelected = currentLocation === zone.name;
+                            return (
+                                <button
+                                    key={zone.id}
+                                    onClick={() => handleLocationClick(zone.name)}
+                                    style={{
+                                        height: '90px',
+                                        background: isSelected ? 'radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(15, 23, 42, 0.9) 100%)' : '#1e293b',
+                                        border: isSelected ? '2px solid #38bdf8' : '1px dashed #475569',
+                                        borderRadius: '12px',
+                                        color: isSelected ? '#38bdf8' : '#cbd5e1',
+                                        cursor: 'pointer',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        gap: '6px',
+                                        transition: 'all 0.15s ease',
+                                        transform: isSelected ? 'scale(1.02)' : 'scale(1)',
+                                        boxShadow: isSelected ? '0 0 16px rgba(56, 189, 248, 0.4)' : 'none'
+                                    }}>
+                                    {isSelected ? (
+                                        <>
+                                            <span style={{ fontSize: '24px', animation: 'bounce 1s infinite' }}>🐾</span>
+                                            <span style={{ fontSize: '12px', fontWeight: 'bold' }}>Bubu Here</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <span style={{ fontSize: '16px', opacity: 0.5 }}>⛶</span>
+                                            <span style={{ fontSize: '12px', fontWeight: '500' }}>{zone.name}</span>
+                                        </>
+                                    )}
+                                </button>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
 
-            {/* 3. EZ STYLES PALETTE */}
-            <div style={{ background: '#1e293b', padding: '20px 24px', borderRadius: '16px', border: '1px solid #334155' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                    <h3 style={{ margin: 0, fontSize: '16px', color: '#60a5fa' }}>🎨 Quick Style Presets</h3>
-                    <span style={{ fontSize: '12px', color: '#94a3b8' }}>Selected: <strong style={{ color: '#f472b6' }}>{currentStyle}</strong></span>
+            {/* Quick Styles */}
+            <div style={{ background: '#1e293b', padding: '20px', borderRadius: '16px', border: '1px solid #334155' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <h3 style={{ margin: 0, fontSize: '15px', color: '#60a5fa' }}>🎨 EZ Style Presets</h3>
+                    <span style={{ fontSize: '12px', color: '#94a3b8' }}>Active: <strong style={{ color: '#f472b6' }}>{currentStyle}</strong></span>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '10px' }}>
@@ -196,7 +216,7 @@ export default function HomeDashboard() {
                             key={st.name}
                             onClick={() => handleQuickStyle(st.name)}
                             style={{
-                                padding: '12px',
+                                padding: '10px 14px',
                                 background: currentStyle === st.name ? 'rgba(59, 130, 246, 0.2)' : '#0f172a',
                                 border: currentStyle === st.name ? '2px solid #3b82f6' : '1px solid #334155',
                                 borderRadius: '10px',
@@ -207,7 +227,6 @@ export default function HomeDashboard() {
                                 <span style={{ display: 'inline-block', width: '10px', height: '10px', borderRadius: '50%', background: st.color }}></span>
                                 <strong style={{ fontSize: '13px', color: currentStyle === st.name ? '#60a5fa' : '#f8fafc' }}>{st.name}</strong>
                             </div>
-                            <div style={{ fontSize: '11px', color: '#64748b', marginTop: '4px' }}>{st.desc}</div>
                         </div>
                     ))}
                 </div>
