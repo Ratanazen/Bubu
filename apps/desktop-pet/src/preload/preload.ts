@@ -2,6 +2,9 @@ import { contextBridge, ipcRenderer } from 'electron';
 
 contextBridge.exposeInMainWorld('electronAPI', {
     moveWindow: (x: number, y: number) => ipcRenderer.send('move-window', x, y),
+    setWindowPosition: (x: number, y: number) => ipcRenderer.send('set-window-position', x, y),
+    setWindowProperties: (props: any) => ipcRenderer.send('set-window-properties', props),
+    getAllDisplays: () => ipcRenderer.invoke('get-all-displays'),
     getScreenBounds: () => ipcRenderer.invoke('get-screen-bounds'),
     setIgnoreMouseEvents: (ignore: boolean, forward: boolean = false) => ipcRenderer.send('set-ignore-mouse-events', ignore, forward),
     getSettings: () => ipcRenderer.invoke('get-settings'),

@@ -17,6 +17,7 @@ import { PrivacyEngine } from '../packages/privacy-engine/dist/PrivacyEngine.js'
 import { PerformanceEngine } from '../packages/performance-engine/dist/PerformanceEngine.js';
 import { PluginEngine } from '../packages/plugin-engine/dist/PluginEngine.js';
 import { PlatformDetector } from '../packages/platform-engine/dist/PlatformDetector.js';
+import { ScreenManager } from '../packages/screen-engine/dist/ScreenManager.js';
 
 describe('🐾 BUBU V2 — CORE ENGINE TEST SUITE', () => {
 
@@ -184,6 +185,53 @@ describe('🐾 BUBU V2 — CORE ENGINE TEST SUITE', () => {
     test('PlatformDetector identifies current OS and session', () => {
       const osName = PlatformDetector.getOS();
       assert.ok(['windows', 'macos', 'linux'].includes(osName));
+    });
+  });
+
+  describe('9. Screen Control Map & Multi-Monitor Positioning', () => {
+    test('ScreenManager tracks multi-monitor geometry and calculates edge zones', () => {
+      const screenMgr = new ScreenManager();
+      screenMgr.updateMonitors([
+        {
+          id: 'MON-1',
+          name: 'Left Monitor',
+          bounds: { x: 0, y: 0, width: 1920, height: 1080 },
+          workArea: { x: 0, y: 0, width: 1920, height: 1040 },
+          scaleFactor: 1.0,
+          isPrimary: true
+        },
+        {
+          id: 'MON-2',
+          name: 'Right 4K Monitor',
+          bounds: { x: 1920, y: 0, width: 3840, height: 2160 },
+          workArea: { x: 1920, y: 0, width: 3840, height: 2100 },
+          scaleFactor: 1.5,
+          isPrimary: false
+        }
+      ]);
+
+      const monitors = screenMgr.getMonitors();
+      assert.equal(monitors.length, 2);
+
+      // Move Bubu to bottom-right zone on primary monitor
+      screenMgr.moveToZone('bottom-right');
+      let state = screenMgr.getState();
+      assert.equal(state.bubuPosition.zone, 'bottom-right');
+      assert.ok(state.bubuPosition.x > 1600);
+      assert.ok(state.bubuPosition.y > 800);
+
+      // Switch to secondary monitor
+      screenMgr.moveToMonitor('MON-2');
+      state = screenMgr.getState();
+      assert.equal(state.bubuPosition.monitorId, 'MON-2');
+      assert.ok(state.bubuPosition.x >= 1920);
+
+      // Direct absolute coordinate move
+      screenMgr.moveBubu(100, 100);
+      state = screenMgr.getState();
+      assert.equal(state.bubuPosition.x, 100);
+      assert.equal(state.bubuPosition.y, 100);
+      assert.equal(state.bubuPosition.monitorId, 'MON-1');
     });
   });
 });

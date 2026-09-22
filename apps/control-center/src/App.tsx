@@ -13,6 +13,7 @@ import PerformancePage from './pages/PerformancePage';
 import PluginsPage from './pages/PluginsPage';
 import SettingsPage from './pages/SettingsPage';
 import PrivacyPage from './pages/PrivacyPage';
+import ScreenMapPage from './pages/ScreenMapPage';
 
 const pages: Record<string, React.FC> = {
   home: HomePage,
@@ -22,6 +23,7 @@ const pages: Record<string, React.FC> = {
   lyrics: LyricsPage,
   browser: BrowserPage,
   skins: SkinsPage,
+  'screen-map': ScreenMapPage,
   linux: LinuxPage,
   performance: PerformancePage,
   plugins: PluginsPage,

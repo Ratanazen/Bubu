@@ -14,6 +14,7 @@ const navItems = [
   { id: 'music', icon: '🎵', label: 'Music' },
   { id: 'lyrics', icon: '🎤', label: 'Lyrics' },
   { id: 'browser', icon: '🌐', label: 'Browser' },
+  { id: 'screen-map', icon: '🖥️', label: 'Screen Map' },
   { id: 'linux', icon: '🐧', label: 'Linux & Waybar' },
   { id: 'performance', icon: '⚡', label: 'Performance' },
   { id: 'plugins', icon: '🧩', label: 'Plugins' },

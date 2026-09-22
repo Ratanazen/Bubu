@@ -26,6 +26,7 @@ export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandP
     { id: 'pet-pet', title: 'Pet Bubu (Affection)', category: 'Interaction', action: () => alert('Bubu purrs with happiness! 💖') },
     { id: 'nav-character', title: 'Open Character Studio', category: 'Navigation', action: () => { onNavigate('character'); onClose(); } },
     { id: 'nav-skins', title: 'Open Skin Library', category: 'Navigation', action: () => { onNavigate('skins'); onClose(); } },
+    { id: 'nav-screen-map', title: 'Open Screen Control Map', category: 'Desktop', shortcut: 'Ctrl+Shift+M', action: () => { onNavigate('screen-map'); onClose(); } },
     { id: 'nav-lyrics', title: 'Open Lyrics Window', category: 'Music', shortcut: 'Ctrl+Shift+L', action: () => { onNavigate('lyrics'); onClose(); } },
     { id: 'nav-performance', title: 'Open Performance Monitor', category: 'System', action: () => { onNavigate('performance'); onClose(); } },
     { id: 'nav-privacy', title: 'Open Privacy Center', category: 'Security', action: () => { onNavigate('privacy'); onClose(); } },

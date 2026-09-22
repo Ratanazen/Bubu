@@ -12,6 +12,29 @@ export function setupIPC(mainWindow: BrowserWindow) {
         return screen.getPrimaryDisplay().workArea;
     });
 
+    ipcMain.handle('get-all-displays', () => {
+        const primary = screen.getPrimaryDisplay();
+        return screen.getAllDisplays().map(d => ({
+            id: String(d.id),
+            name: `Display ${d.id}`,
+            bounds: d.bounds,
+            workArea: d.workArea,
+            scaleFactor: d.scaleFactor,
+            isPrimary: d.id === primary.id,
+            rotation: d.rotation
+        }));
+    });
+
+    ipcMain.on('set-window-position', (event, x, y) => {
+        mainWindow.setPosition(Math.round(x), Math.round(y));
+    });
+
+    ipcMain.on('set-window-properties', (event, props) => {
+        if (props.alwaysOnTop !== undefined) mainWindow.setAlwaysOnTop(props.alwaysOnTop);
+        if (props.opacity !== undefined) mainWindow.setOpacity(props.opacity);
+        if (props.clickThrough !== undefined) mainWindow.setIgnoreMouseEvents(props.clickThrough, { forward: true });
+    });
+
     ipcMain.on('set-ignore-mouse-events', (event, ignore, forward) => {
         mainWindow.setIgnoreMouseEvents(ignore, { forward });
     });
