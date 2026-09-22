@@ -194,6 +194,48 @@ export default function HomeDashboard() {
                 </div>
             </div>
 
+            {/* SYSTEM CONTEXT (Rule 96) */}
+            <div style={{ background: '#1e293b', padding: '24px', borderRadius: '18px', border: '1px solid #334155', marginBottom: '24px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+                    <Monitor size={18} color="#60a5fa" aria-hidden="true" />
+                    <h2 style={{ margin: 0, fontSize: '18px', color: '#f8fafc' }}>SYSTEM CONTEXT</h2>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+                    <div style={{ background: '#0f172a', padding: '16px', borderRadius: '12px', border: '1px solid #334155' }}>
+                        <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '4px' }}>Active App</div>
+                        <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#f8fafc' }}>Visual Studio Code</div>
+                    </div>
+                    <div style={{ background: '#0f172a', padding: '16px', borderRadius: '12px', border: '1px solid #334155' }}>
+                        <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '4px' }}>Detected Mode</div>
+                        <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#38bdf8' }}>Coding</div>
+                    </div>
+                    <div style={{ background: '#0f172a', padding: '16px', borderRadius: '12px', border: '1px solid #334155' }}>
+                        <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '4px' }}>Current Style</div>
+                        <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#f8fafc' }}>Focus</div>
+                    </div>
+                    <div style={{ background: '#0f172a', padding: '16px', borderRadius: '12px', border: '1px solid #334155' }}>
+                        <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '4px' }}>Current Animation</div>
+                        <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#f8fafc' }}>Thinking</div>
+                    </div>
+                    <div style={{ background: '#0f172a', padding: '16px', borderRadius: '12px', border: '1px solid #334155' }}>
+                        <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '4px' }}>Music</div>
+                        <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#10b981' }}>Playing</div>
+                    </div>
+                    <div style={{ background: '#0f172a', padding: '16px', borderRadius: '12px', border: '1px solid #3b82f6' }}>
+                        <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '4px' }}>Telegram</div>
+                        <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#60a5fa' }}>2 notifications</div>
+                    </div>
+                    <div style={{ background: '#0f172a', padding: '16px', borderRadius: '12px', border: '1px solid #334155' }}>
+                        <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '4px' }}>CPU</div>
+                        <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#f59e0b' }}>42%</div>
+                    </div>
+                    <div style={{ background: '#0f172a', padding: '16px', borderRadius: '12px', border: '1px solid #334155' }}>
+                        <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '4px' }}>Memory</div>
+                        <div style={{ fontSize: '15px', fontWeight: 'bold', color: '#ef4444' }}>58%</div>
+                    </div>
+                </div>
+            </div>
+
             {/* Main 2-Column Split: Active Skin Preview & Screen Relocator */}
             <div style={{ display: 'grid', gridTemplateColumns: '340px 1fr', gap: '24px', marginBottom: '28px' }}>
                 

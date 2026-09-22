@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   Play, Pause, SkipBack, SkipForward, Repeat,
   Upload, Save, Trash2, ArrowLeft, ArrowRight,
-  FolderOpen, Film,
+  FolderOpen, Film, Sparkles,
 } from 'lucide-react';
 
 export interface FrameItem {
@@ -391,8 +391,11 @@ export default function AnimationStudioPage() {
               <FolderOpen size={36} color="var(--text-muted)" aria-hidden="true" />
             </div>
             <div style={{ fontWeight: 600 }}>Drop PNG / WebP images here or click to import</div>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '6px', fontSize: '12px', color: '#10b981', marginTop: '8px', fontWeight: 'bold' }}>
+              <Sparkles size={14} aria-hidden="true" /> Smart Asset Recognition Enabled
+            </div>
             <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '4px' }}>
-              Name them sequentially (e.g. {selectedState.toLowerCase()}_01.png, {selectedState.toLowerCase()}_02.png) for automatic timeline generation.
+              Filenames like <strong>walk_01.png</strong> or <strong>idle_left_02.png</strong> will automatically suggest the Animation State, Frame Number, and Direction.
             </div>
           </div>
         ) : (

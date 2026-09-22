@@ -2,7 +2,7 @@ import React from 'react';
 import {
   House, Clapperboard, Shirt, UserRound, Music2,
   LayoutGrid, Monitor, Activity, Settings, Search,
-  Zap, Power
+  Zap, Power, Target
 } from 'lucide-react';
 import { PetIcon } from './Icons';
 
@@ -14,6 +14,7 @@ interface SidebarProps {
 
 const navItems = [
   { id: 'home',         Icon: House,        label: 'Home' },
+  { id: 'context',      Icon: Target,       label: 'Context & Profiles' },
   { id: 'animations',   Icon: Clapperboard, label: 'Animation Studio' },
   { id: 'styles',       Icon: Shirt,        label: 'Skins & Styles' },
   { id: 'character',    Icon: UserRound,    label: 'Character Studio' },

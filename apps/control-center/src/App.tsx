@@ -14,12 +14,14 @@ import PluginsPage from './pages/PluginsPage';
 import SettingsPage from './pages/SettingsPage';
 import PrivacyPage from './pages/PrivacyPage';
 import ScreenMapPage from './pages/ScreenMapPage';
+import ContextPage from './pages/ContextPage';
 import CompositorPage from './pages/CompositorPage';
 import WaybarPage from './pages/WaybarPage';
 import AvatarPage from './pages/AvatarPage';
 
 const pages: Record<string, React.FC> = {
   home: HomePage,
+  context: ContextPage,
   avatar: AvatarPage,
   pet: AvatarPage,
   screen: ScreenMapPage,
