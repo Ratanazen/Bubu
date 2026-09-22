@@ -16,11 +16,12 @@ import PrivacyPage from './pages/PrivacyPage';
 import ScreenMapPage from './pages/ScreenMapPage';
 import CompositorPage from './pages/CompositorPage';
 import WaybarPage from './pages/WaybarPage';
-
+import AvatarPage from './pages/AvatarPage';
 
 const pages: Record<string, React.FC> = {
   home: HomePage,
-  pet: CharacterPage,
+  avatar: AvatarPage,
+  pet: AvatarPage,
   screen: ScreenMapPage,
   monitors: ScreenMapPage,
   workspaces: ScreenMapPage,
@@ -29,7 +30,7 @@ const pages: Record<string, React.FC> = {
   waybar: WaybarPage,
   character: CharacterPage,
   animations: AnimationStudioPage,
-  styles: SkinsPage,
+  styles: AvatarPage,
   music: MusicPage,
   notifications: PrivacyPage,
   browser: BrowserPage,
@@ -38,7 +39,6 @@ const pages: Record<string, React.FC> = {
   diagnostics: PerformancePage,
   settings: SettingsPage,
 };
-
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -58,20 +58,20 @@ export default function App() {
   const PageComponent = pages[currentPage] || HomePage;
 
   return (
-    <>
-      <Sidebar
-        currentPage={currentPage}
-        onNavigate={setCurrentPage}
-        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+    <div style={{ display: 'flex', width: '100vw', height: '100vh', backgroundColor: '#0f172a', color: '#f8fafc', overflow: 'hidden' }}>
+      <Sidebar 
+        currentPage={currentPage} 
+        onNavigate={setCurrentPage} 
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} 
       />
-      <main className="main-content">
+      <main style={{ flex: 1, height: '100%', overflowY: 'auto', backgroundColor: '#0b1120' }}>
         <PageComponent />
       </main>
-      <CommandPalette
+      <CommandPalette 
         isOpen={isCommandPaletteOpen}
-        onClose={() => setIsCommandPaletteOpen(false)}
-        onNavigate={setCurrentPage}
+        onClose={() => setIsCommandPaletteOpen(false)} 
+        onNavigate={setCurrentPage} 
       />
-    </>
+    </div>
   );
 }

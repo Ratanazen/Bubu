@@ -1,39 +1,26 @@
-/**
- * Built-in visual style identifiers.
- */
 export type BuiltinStyleId =
-  | 'cute'
+  | 'classic'
+  | 'modern'
+  | 'glass'
+  | 'cyberpunk'
   | 'kawaii'
-  | 'pastel'
-  | 'soft'
-  | 'minimal'
-  | 'chibi'
-  | 'cartoon'
   | 'pixel'
-  | 'retro'
-  | 'y2k'
-  | 'cyber'
-  | 'neon'
-  | 'dark'
-  | 'sakura'
-  | 'winter'
-  | 'halloween'
-  | 'christmas'
-  | 'space'
-  | 'ocean'
-  | 'forest'
-  | 'night'
-  | 'sunset'
-  | 'monochrome';
+  | 'minimal'
+  | 'catppuccin'
+  | 'vscode'
+  | 'macos'
+  | 'custom';
 
-/**
- * Style identifier type supporting built-in and custom style IDs.
- */
 export type StyleId = BuiltinStyleId | (string & {});
 
-/**
- * Modifiers applied to animations by this style.
- */
+export interface BubuAvatarAsset {
+  file: string;
+  type: 'image' | 'gif' | 'webp' | 'png' | 'jpg';
+  preview?: string;
+  dimensions?: { width: number; height: number };
+  frameCount?: number;
+}
+
 export interface StyleAnimationModifiers {
   speedMultiplier?: number;
   scaleMultiplier?: number;
@@ -42,24 +29,18 @@ export interface StyleAnimationModifiers {
   [key: string]: unknown;
 }
 
-/**
- * Visual style definition specifying color scheme, shaders/effects, and animation modifiers.
- */
 export interface Style {
   id: StyleId;
   name: string;
   description?: string;
-  colors: string[];
-  effects: string[];
-  animationModifiers: StyleAnimationModifiers | Record<string, unknown>;
+  avatar: BubuAvatarAsset;
+  colors?: string[];
+  effects?: string[];
+  animationModifiers?: StyleAnimationModifiers | Record<string, unknown>;
 }
 
-/**
- * Style preset package including full style metadata.
- */
 export interface StylePreset {
-  id: string;
+  id: StyleId;
   name: string;
-  description: string;
   style: Style;
 }
