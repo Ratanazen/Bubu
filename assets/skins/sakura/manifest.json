@@ -1,0 +1,15 @@
+{
+  "id": "bubu-sakura",
+  "name": "Sakura Bubu",
+  "version": "1.0.0",
+  "author": "Bubu Team",
+  "description": "A soft pastel Sakura-themed Bubu with pink accents and flower accessories",
+  "style": "pastel",
+  "animations": {
+    "idle": { "frames": ["idle_01.png"], "fps": 4, "loop": true },
+    "walk": { "frames": ["walk_01.png", "walk_02.png"], "fps": 8, "loop": true },
+    "sleep": { "frames": ["sleep_01.png"], "fps": 2, "loop": true },
+    "happy": { "frames": ["happy_01.png"], "fps": 6, "loop": false },
+    "dance": { "frames": ["dance_01.png", "dance_02.png"], "fps": 8, "loop": true }
+  }
+}

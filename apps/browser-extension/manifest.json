@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "Bubu Desktop Companion",
+  "version": "1.0.0",
+  "description": "Connect your browser to Bubu Desktop Companion for music detection, lyrics, and more.",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/bubu-16.png",
+      "48": "icons/bubu-48.png",
+      "128": "icons/bubu-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://music.youtube.com/*",
+        "*://open.spotify.com/*",
+        "*://soundcloud.com/*"
+      ],
+      "js": ["src/content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/bubu-16.png",
+    "48": "icons/bubu-48.png",
+    "128": "icons/bubu-128.png"
+  },
+  "externally_connectable": {
+    "ids": ["*"]
+  }
+}

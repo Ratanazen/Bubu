@@ -1,0 +1,19 @@
+{
+  "name": "@bubu/browser-engine",
+  "version": "1.0.0",
+  "description": "Browser extension bridge and Native Messaging host for Bubu Desktop Companion",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "@bubu/music-engine": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.2.2"
+  }
+}

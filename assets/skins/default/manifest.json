@@ -1,0 +1,16 @@
+{
+  "id": "bubu-default",
+  "name": "Default Bubu",
+  "version": "1.0.0",
+  "author": "Bubu Team",
+  "description": "The default Bubu character skin",
+  "style": "cute",
+  "animations": {
+    "idle": { "frames": ["idle_01.png"], "fps": 4, "loop": true },
+    "walk": { "frames": ["walk_01.png", "walk_02.png"], "fps": 8, "loop": true },
+    "sleep": { "frames": ["sleep_01.png"], "fps": 2, "loop": true },
+    "happy": { "frames": ["happy_01.png"], "fps": 6, "loop": false },
+    "dance": { "frames": ["dance_01.png", "dance_02.png"], "fps": 8, "loop": true },
+    "surprised": { "frames": ["surprised_01.png"], "fps": 4, "loop": false }
+  }
+}

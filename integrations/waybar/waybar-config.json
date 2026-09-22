@@ -1,0 +1,11 @@
+{
+    "custom/bubu": {
+        "exec": "bubu waybar",
+        "return-type": "json",
+        "interval": 1,
+        "tooltip": true,
+        "format": "{}",
+        "on-click": "bubu pet show",
+        "on-click-right": "bubu pet pause"
+    }
+}

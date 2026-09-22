@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubu</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            width: 320px;
+            min-height: 400px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #fef6f6;
+            color: #333;
+        }
+        .header {
+            background: linear-gradient(135deg, #ffb7b2, #ffc8dd);
+            padding: 16px;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+        }
+        .header h1 { font-size: 18px; color: #fff; }
+        .header .status {
+            display: flex; align-items: center; justify-content: center;
+            gap: 6px; margin-top: 6px; font-size: 12px; color: #fff;
+        }
+        .header .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            display: inline-block;
+        }
+        .dot.connected { background: #4ade80; }
+        .dot.disconnected { background: #f87171; }
+
+        .section {
+            margin: 12px; padding: 12px;
+            background: white; border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .section h3 { font-size: 13px; color: #999; margin-bottom: 8px; }
+        .section .info { font-size: 14px; font-weight: 500; }
+        .section .sub { font-size: 12px; color: #666; margin-top: 2px; }
+
+        .controls {
+            display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+            margin: 12px;
+        }
+        .controls button {
+            padding: 8px 14px; border: none; border-radius: 20px;
+            background: #ffb7b2; color: #fff; font-size: 12px;
+            cursor: pointer; font-weight: 500;
+            transition: transform 0.1s, background 0.2s;
+        }
+        .controls button:hover { background: #ff9a94; transform: scale(1.05); }
+        .controls button:active { transform: scale(0.95); }
+
+        .footer {
+            text-align: center; padding: 12px;
+            font-size: 11px; color: #bbb;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🐾 Bubu</h1>
+        <div class="status">
+            <span class="dot" id="statusDot"></span>
+            <span id="statusText">Checking...</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>🎵 Music</h3>
+        <div class="info" id="songTitle">Not Playing</div>
+        <div class="sub" id="songArtist"></div>
+    </div>
+
+    <div class="section">
+        <h3>📝 Lyrics</h3>
+        <div class="info" id="lyricsStatus">Not available</div>
+    </div>
+
+    <div class="controls">
+        <button onclick="sendCmd('dance')">🕺 Dance</button>
+        <button onclick="sendCmd('sleep')">😴 Sleep</button>
+        <button onclick="sendCmd('show')">👁️ Show</button>
+        <button onclick="sendCmd('hide')">🙈 Hide</button>
+        <button onclick="sendCmd('pause')">⏸️ Pause</button>
+        <button onclick="sendCmd('lyrics')">🎤 Lyrics</button>
+    </div>
+
+    <div class="section">
+        <h3>⚙️ Quick Settings</h3>
+        <label style="display:flex; align-items:center; gap:8px; font-size:13px; cursor:pointer;">
+            <input type="checkbox" id="autoDetect" checked>
+            Auto-detect music
+        </label>
+    </div>
+
+    <div class="footer">Bubu Desktop Companion v1.0.0</div>
+
+    <script src="src/popup.js"></script>
+</body>
+</html>

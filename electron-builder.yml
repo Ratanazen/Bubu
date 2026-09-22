@@ -1,0 +1,32 @@
+appId: com.bubu.desktop
+productName: Bubu Desktop Pet
+directories:
+  output: release/
+files:
+  - dist/**/*
+  - assets/**/*
+
+# Windows Configuration
+win:
+  target: nsis
+nsis:
+  oneClick: true
+  perMachine: false
+  allowToChangeInstallationDirectory: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: "Bubu Desktop Pet"
+
+# macOS Configuration
+mac:
+  target: dmg
+  category: public.app-category.entertainment
+  hardenedRuntime: true
+  gatekeeperAssess: false
+
+# Linux Configuration
+linux:
+  target:
+    - AppImage
+    - snap
+  category: Utility

@@ -1,0 +1,32 @@
+import { app, BrowserWindow, screen } from 'electron';
+import { createMainWindow } from './window';
+import { setupIPC } from './ipc';
+import { setupTray } from './tray';
+import { setupStartup } from './startup';
+
+let mainWindow: BrowserWindow | null = null;
+
+// Fix for transparent windows on some Linux compositors
+if (process.platform === 'linux') {
+    app.disableHardwareAcceleration();
+    app.commandLine.appendSwitch('enable-transparent-visuals');
+}
+
+app.whenReady().then(() => {
+    mainWindow = createMainWindow();
+    setupIPC(mainWindow);
+    setupTray(mainWindow);
+    setupStartup();
+
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) {
+            mainWindow = createMainWindow();
+        }
+    });
+});
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});

@@ -1,0 +1,16 @@
+{
+  "name": "@bubu/core",
+  "version": "1.0.0",
+  "description": "Core state management, event bus, settings store, and IPC bridge for Bubu Desktop Companion",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "watch": "tsc -w"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.2.2"
+  }
+}

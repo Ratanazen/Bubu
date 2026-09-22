@@ -1,0 +1,14 @@
+{
+  "name": "@bubu/skin-engine",
+  "version": "1.0.0",
+  "description": "Skin management, packaging, and animation asset resolution for Bubu Desktop Companion",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.2.2"
+  }
+}

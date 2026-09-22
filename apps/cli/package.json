@@ -1,0 +1,14 @@
+{
+  "name": "@bubu/cli",
+  "version": "1.0.0",
+  "description": "Command-line interface for Bubu Desktop Companion",
+  "bin": {
+    "bubu": "./bin/bubu.js"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@bubu/lyrics-engine",
+  "version": "1.0.0",
+  "description": "Lyrics fetching, parsing (LRC), synchronization, and caching engine for Bubu Desktop Companion",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "watch": "tsc -w"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.2.2"
+  }
+}

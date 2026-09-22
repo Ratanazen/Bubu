@@ -1,0 +1,10 @@
+{
+    "custom/bubu": {
+        "exec": "bubu swaybar",
+        "return-type": "json",
+        "interval": 1,
+        "tooltip": true,
+        "format": "{}",
+        "on-click": "bubu pet show"
+    }
+}
