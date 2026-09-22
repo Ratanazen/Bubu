@@ -2,6 +2,9 @@
   "name": "bubu-desktop-companion",
   "version": "2.0.0",
   "private": true,
+  "description": "Bubu Desktop Companion - Animated Desktop Pet and Control Center",
+  "author": "Bubu Team",
+  "main": "apps/desktop-pet/dist/main/main.js",
   "workspaces": [
     "apps/*",
     "packages/*"

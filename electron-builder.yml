@@ -3,6 +3,7 @@ productName: Bubu Desktop Pet
 directories:
   output: release/
 files:
+  - apps/desktop-pet/dist/**/*
   - dist/**/*
   - assets/**/*
 
@@ -28,5 +29,4 @@ mac:
 linux:
   target:
     - AppImage
-    - snap
   category: Utility
