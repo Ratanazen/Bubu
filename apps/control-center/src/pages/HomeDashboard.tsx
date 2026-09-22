@@ -1,8 +1,61 @@
 import React, { useState } from 'react';
 
+interface SkinItem {
+    id: string;
+    name: string;
+    type: 'gif' | 'png' | 'webp';
+    imgUrl: string;
+    desc: string;
+    badge: string;
+}
+
+const DEFAULT_SKINS: SkinItem[] = [
+    {
+        id: 'cyberpunk',
+        name: 'Cyberpunk Neon',
+        type: 'gif',
+        imgUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/25.gif',
+        desc: 'Animated Electric Pikachu GIF',
+        badge: 'ANIMATED GIF'
+    },
+    {
+        id: 'kawaii',
+        name: 'Kawaii Pastel',
+        type: 'gif',
+        imgUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/133.gif',
+        desc: 'Animated Cute Eevee GIF',
+        badge: 'ANIMATED GIF'
+    },
+    {
+        id: 'original',
+        name: 'Classic Bubu',
+        type: 'png',
+        imgUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png',
+        desc: 'High-res Original Static Image',
+        badge: 'STATIC PNG'
+    },
+    {
+        id: 'frosted',
+        name: 'Frosted Glass',
+        type: 'png',
+        imgUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png',
+        desc: 'Glassmorphism Style Image',
+        badge: 'STATIC PNG'
+    },
+    {
+        id: 'pixel',
+        name: 'Retro Arcade',
+        type: 'png',
+        imgUrl: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png',
+        desc: '8-bit Pixel Art Avatar',
+        badge: 'PIXEL ART'
+    }
+];
+
 export default function HomeDashboard() {
     const [bubuStatus, setBubuStatus] = useState<'running' | 'hidden' | 'stopped'>('running');
-    const [currentStyle, setCurrentStyle] = useState('Cyberpunk Neon');
+    const [skins, setSkins] = useState<SkinItem[]>(DEFAULT_SKINS);
+    const [activeSkin, setActiveSkin] = useState<SkinItem>(DEFAULT_SKINS[0]);
     const [currentLocation, setCurrentLocation] = useState('Bottom Right');
     const [statusMsg, setStatusMsg] = useState<string | null>(null);
 
@@ -26,43 +79,52 @@ export default function HomeDashboard() {
 
     const handleLocationClick = (locName: string) => {
         setCurrentLocation(locName);
-        triggerAction(`📍 Bubu relocated to ${locName}`);
+        triggerAction(`📍 Bubu relocated to: ${locName}`);
     };
 
-    const handleQuickStyle = (styleName: string) => {
-        setCurrentStyle(styleName);
-        triggerAction(`🎨 Applied Style: ${styleName}`);
+    const handleSkinSelect = (skin: SkinItem) => {
+        setActiveSkin(skin);
+        triggerAction(`🎭 Applied ${skin.type.toUpperCase()} Skin: ${skin.name}`);
     };
 
-    // 9-Zone Visual SVG Display Grid (Click on any cell to move Bubu)
+    const handleUploadSkin = (e: React.ChangeEvent<HTMLInputElement>, isGif: boolean) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const objectUrl = URL.createObjectURL(file);
+        const newSkin: SkinItem = {
+            id: 'custom-' + Date.now(),
+            name: file.name.split('.')[0] || 'Custom Skin',
+            type: isGif || file.type.includes('gif') ? 'gif' : 'png',
+            imgUrl: objectUrl,
+            desc: `Imported ${file.name}`,
+            badge: isGif || file.type.includes('gif') ? 'CUSTOM GIF' : 'CUSTOM IMAGE'
+        };
+
+        setSkins(prev => [newSkin, ...prev]);
+        setActiveSkin(newSkin);
+        triggerAction(`✨ Imported & applied custom ${newSkin.badge}: ${file.name}`);
+    };
+
     const displayZones = [
-        { id: 'top-left', name: 'Top Left', label: 'TL', col: 1, row: 1 },
-        { id: 'top-center', name: 'Top Center', label: 'TC', col: 2, row: 1 },
-        { id: 'top-right', name: 'Top Right', label: 'TR', col: 3, row: 1 },
-        { id: 'center-left', name: 'Center Left', label: 'CL', col: 1, row: 2 },
-        { id: 'center', name: 'Center Screen', label: 'Center', col: 2, row: 2 },
-        { id: 'center-right', name: 'Center Right', label: 'CR', col: 3, row: 2 },
-        { id: 'bottom-left', name: 'Bottom Left', label: 'BL', col: 1, row: 3 },
-        { id: 'bottom-center', name: 'Bottom Center', label: 'BC', col: 2, row: 3 },
-        { id: 'bottom-right', name: 'Bottom Right', label: 'BR', col: 3, row: 3 }
-    ];
-
-    const ezStyles = [
-        { name: 'Original Bear', color: '#f59e0b', desc: 'Classic warm aesthetic' },
-        { name: 'Cyberpunk Neon', color: '#38bdf8', desc: 'Futuristic glowing neon' },
-        { name: 'Kawaii Pastel', color: '#f472b6', desc: 'Pink anime cute theme' },
-        { name: 'Pixel Arcade', color: '#4ade80', desc: '8-bit retro arcade' },
-        { name: 'Minimal Dark', color: '#cbd5e1', desc: 'Monochrome sleek dark' },
-        { name: 'Glass Frosted', color: '#c084fc', desc: 'Translucent glass shine' }
+        { id: 'top-left', name: 'Top Left' },
+        { id: 'top-center', name: 'Top Center' },
+        { id: 'top-right', name: 'Top Right' },
+        { id: 'center-left', name: 'Center Left' },
+        { id: 'center', name: 'Center Screen' },
+        { id: 'center-right', name: 'Center Right' },
+        { id: 'bottom-left', name: 'Bottom Left' },
+        { id: 'bottom-center', name: 'Bottom Center' },
+        { id: 'bottom-right', name: 'Bottom Right' }
     ];
 
     return (
-        <div style={{ padding: '24px', color: '#f8fafc', maxWidth: '1100px', margin: '0 auto', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+        <div style={{ padding: '24px', color: '#f8fafc', maxWidth: '1200px', margin: '0 auto', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
             {/* Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <div>
                     <h1 style={{ margin: 0, fontSize: '26px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        🐾 Bubu V5 One-Click Screen Relocator
+                        🐾 Bubu V5 Skin & Location Master
                         <span style={{ 
                             fontSize: '12px', 
                             background: bubuStatus === 'running' ? '#10b981' : bubuStatus === 'hidden' ? '#f59e0b' : '#ef4444', 
@@ -76,7 +138,7 @@ export default function HomeDashboard() {
                         </span>
                     </h1>
                     <p style={{ color: '#94a3b8', margin: '4px 0 0 0', fontSize: '14px' }}>
-                        Click on any spot inside the virtual monitor below to instantly relocate Bubu on your screen.
+                        Live animated GIF & Image skin switcher, custom file importer, and virtual screen relocator.
                     </p>
                 </div>
                 {statusMsg && (
@@ -86,149 +148,161 @@ export default function HomeDashboard() {
                 )}
             </div>
 
-            {/* Master Controls */}
-            <div style={{ background: '#1e293b', padding: '16px 20px', borderRadius: '16px', border: '1px solid #334155', marginBottom: '20px' }}>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+            {/* Master Power Bar */}
+            <div style={{ background: '#1e293b', padding: '16px 20px', borderRadius: '16px', border: '1px solid #334155', marginBottom: '24px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+                <div style={{ display: 'flex', gap: '10px' }}>
                     <button 
                         onClick={handleRunShow}
-                        style={{ 
-                            background: 'linear-gradient(135deg, #10b981, #059669)', 
-                            color: '#fff', 
-                            border: 'none', 
-                            padding: '12px 20px', 
-                            borderRadius: '10px', 
-                            fontWeight: 'bold', 
-                            fontSize: '14px', 
-                            cursor: 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
-                        }}>
+                        style={{ background: 'linear-gradient(135deg, #10b981, #059669)', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '10px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
                         ▶️ Run & Show Bubu
                     </button>
-
                     <button 
                         onClick={handleHide}
-                        style={{ 
-                            background: '#334155', 
-                            color: '#f8fafc', 
-                            border: '1px solid #475569', 
-                            padding: '12px 18px', 
-                            borderRadius: '10px', 
-                            fontWeight: 'bold', 
-                            fontSize: '14px', 
-                            cursor: 'pointer' 
-                        }}>
-                        🙈 Hide Window
+                        style={{ background: '#334155', color: '#f8fafc', border: '1px solid #475569', padding: '10px 16px', borderRadius: '10px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer' }}>
+                        🙈 Hide
                     </button>
-
                     <button 
                         onClick={handleExit}
-                        style={{ 
-                            background: '#ef4444', 
-                            color: '#fff', 
-                            border: 'none', 
-                            padding: '12px 18px', 
-                            borderRadius: '10px', 
-                            fontWeight: 'bold', 
-                            fontSize: '14px', 
-                            cursor: 'pointer' 
-                        }}>
+                        style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '10px 16px', borderRadius: '10px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer' }}>
                         🛑 Exit Pet
                     </button>
                 </div>
-            </div>
 
-            {/* VIRTUAL SCREEN MONITOR (Click inside to position Bubu) */}
-            <div style={{ background: '#1e293b', padding: '24px', borderRadius: '16px', border: '1px solid #334155', marginBottom: '20px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                    <div>
-                        <h2 style={{ margin: 0, fontSize: '18px', color: '#f8fafc' }}>🖥️ Virtual Monitor Screen Relocator</h2>
-                        <p style={{ margin: '4px 0 0 0', fontSize: '13px', color: '#94a3b8' }}>Click any of the 9 screen tiles to immediately position Bubu there on your desktop.</p>
-                    </div>
-                    <div style={{ background: '#0f172a', padding: '6px 14px', borderRadius: '8px', border: '1px solid #334155', fontSize: '13px' }}>
-                        Current Spot: <strong style={{ color: '#38bdf8' }}>{currentLocation}</strong>
-                    </div>
-                </div>
+                {/* Import Buttons */}
+                <div style={{ display: 'flex', gap: '10px' }}>
+                    <label style={{ background: '#8b5cf6', color: '#fff', padding: '10px 16px', borderRadius: '10px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        🎬 Add Custom GIF
+                        <input type="file" accept="image/gif" style={{ display: 'none' }} onChange={(e) => handleUploadSkin(e, true)} />
+                    </label>
 
-                {/* Simulated Screen Frame */}
-                <div style={{ 
-                    background: '#0b1120', 
-                    borderRadius: '14px', 
-                    border: '3px solid #334155', 
-                    padding: '16px', 
-                    maxWidth: '680px', 
-                    margin: '0 auto', 
-                    boxShadow: 'inset 0 0 20px rgba(0,0,0,0.6)' 
-                }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
-                        {displayZones.map(zone => {
-                            const isSelected = currentLocation === zone.name;
-                            return (
-                                <button
-                                    key={zone.id}
-                                    onClick={() => handleLocationClick(zone.name)}
-                                    style={{
-                                        height: '90px',
-                                        background: isSelected ? 'radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(15, 23, 42, 0.9) 100%)' : '#1e293b',
-                                        border: isSelected ? '2px solid #38bdf8' : '1px dashed #475569',
-                                        borderRadius: '12px',
-                                        color: isSelected ? '#38bdf8' : '#cbd5e1',
-                                        cursor: 'pointer',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: '6px',
-                                        transition: 'all 0.15s ease',
-                                        transform: isSelected ? 'scale(1.02)' : 'scale(1)',
-                                        boxShadow: isSelected ? '0 0 16px rgba(56, 189, 248, 0.4)' : 'none'
-                                    }}>
-                                    {isSelected ? (
-                                        <>
-                                            <span style={{ fontSize: '24px', animation: 'bounce 1s infinite' }}>🐾</span>
-                                            <span style={{ fontSize: '12px', fontWeight: 'bold' }}>Bubu Here</span>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <span style={{ fontSize: '16px', opacity: 0.5 }}>⛶</span>
-                                            <span style={{ fontSize: '12px', fontWeight: '500' }}>{zone.name}</span>
-                                        </>
-                                    )}
-                                </button>
-                            );
-                        })}
-                    </div>
+                    <label style={{ background: '#3b82f6', color: '#fff', padding: '10px 16px', borderRadius: '10px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        🖼️ Add Custom Image
+                        <input type="file" accept="image/png,image/jpeg,image/webp" style={{ display: 'none' }} onChange={(e) => handleUploadSkin(e, false)} />
+                    </label>
                 </div>
             </div>
 
-            {/* Quick Styles */}
-            <div style={{ background: '#1e293b', padding: '20px', borderRadius: '16px', border: '1px solid #334155' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                    <h3 style={{ margin: 0, fontSize: '15px', color: '#60a5fa' }}>🎨 EZ Style Presets</h3>
-                    <span style={{ fontSize: '12px', color: '#94a3b8' }}>Active: <strong style={{ color: '#f472b6' }}>{currentStyle}</strong></span>
+            {/* Main 2-Column Split: Active Skin Preview & Screen Relocator */}
+            <div style={{ display: 'grid', gridTemplateColumns: '340px 1fr', gap: '24px', marginBottom: '28px' }}>
+                
+                {/* Active Skin Live Card */}
+                <div style={{ background: '#1e293b', padding: '24px', borderRadius: '18px', border: '1px solid #334155', textAlign: 'center' }}>
+                    <div style={{ fontSize: '12px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '12px' }}>Active Bubu Avatar</div>
+                    
+                    <div style={{ 
+                        width: '200px', 
+                        height: '200px', 
+                        margin: '0 auto 16px auto', 
+                        background: 'radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(15, 23, 42, 0.9) 100%)', 
+                        borderRadius: '20px', 
+                        border: '2px solid #3b82f6', 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        overflow: 'hidden',
+                        boxShadow: '0 8px 24px rgba(0,0,0,0.5)'
+                    }}>
+                        <img 
+                            src={activeSkin.imgUrl} 
+                            alt={activeSkin.name} 
+                            style={{ maxWidth: '85%', maxHeight: '85%', objectFit: 'contain', imageRendering: activeSkin.id === 'pixel' ? 'pixelated' : 'auto' }} 
+                        />
+                    </div>
+
+                    <h2 style={{ margin: '0 0 6px 0', fontSize: '20px', color: '#f8fafc' }}>{activeSkin.name}</h2>
+                    <span style={{ display: 'inline-block', background: activeSkin.type === 'gif' ? '#8b5cf6' : '#3b82f6', color: '#fff', padding: '3px 10px', borderRadius: '12px', fontSize: '11px', fontWeight: 'bold' }}>
+                        {activeSkin.badge}
+                    </span>
+                    <p style={{ color: '#94a3b8', fontSize: '12px', margin: '8px 0 0 0' }}>{activeSkin.desc}</p>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '10px' }}>
-                    {ezStyles.map(st => (
-                        <div
-                            key={st.name}
-                            onClick={() => handleQuickStyle(st.name)}
-                            style={{
-                                padding: '10px 14px',
-                                background: currentStyle === st.name ? 'rgba(59, 130, 246, 0.2)' : '#0f172a',
-                                border: currentStyle === st.name ? '2px solid #3b82f6' : '1px solid #334155',
-                                borderRadius: '10px',
-                                cursor: 'pointer',
-                                transition: 'all 0.15s'
-                            }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <span style={{ display: 'inline-block', width: '10px', height: '10px', borderRadius: '50%', background: st.color }}></span>
-                                <strong style={{ fontSize: '13px', color: currentStyle === st.name ? '#60a5fa' : '#f8fafc' }}>{st.name}</strong>
-                            </div>
+                {/* Virtual Screen Frame Relocator */}
+                <div style={{ background: '#1e293b', padding: '24px', borderRadius: '18px', border: '1px solid #334155' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                        <div>
+                            <h3 style={{ margin: 0, fontSize: '18px', color: '#f8fafc' }}>🖥️ Screen Location Grid</h3>
+                            <p style={{ margin: '4px 0 0 0', fontSize: '13px', color: '#94a3b8' }}>Click any spot below to instantly move your active skin on desktop.</p>
                         </div>
-                    ))}
+                        <div style={{ background: '#0f172a', padding: '6px 14px', borderRadius: '8px', border: '1px solid #334155', fontSize: '13px' }}>
+                            Spot: <strong style={{ color: '#38bdf8' }}>{currentLocation}</strong>
+                        </div>
+                    </div>
+
+                    {/* Virtual Screen Viewport */}
+                    <div style={{ background: '#0b1120', borderRadius: '14px', border: '3px solid #334155', padding: '14px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+                            {displayZones.map(zone => {
+                                const isSelected = currentLocation === zone.name;
+                                return (
+                                    <button
+                                        key={zone.id}
+                                        onClick={() => handleLocationClick(zone.name)}
+                                        style={{
+                                            height: '80px',
+                                            background: isSelected ? 'radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(15, 23, 42, 0.9) 100%)' : '#1e293b',
+                                            border: isSelected ? '2px solid #38bdf8' : '1px dashed #475569',
+                                            borderRadius: '10px',
+                                            color: isSelected ? '#38bdf8' : '#cbd5e1',
+                                            cursor: 'pointer',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: '4px',
+                                            transition: 'all 0.15s ease',
+                                            boxShadow: isSelected ? '0 0 16px rgba(56, 189, 248, 0.4)' : 'none'
+                                        }}>
+                                        {isSelected ? (
+                                            <>
+                                                <img src={activeSkin.imgUrl} alt="skin" style={{ width: '28px', height: '28px', objectFit: 'contain' }} />
+                                                <span style={{ fontSize: '11px', fontWeight: 'bold' }}>Bubu Here</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span style={{ fontSize: '14px', opacity: 0.5 }}>⛶</span>
+                                                <span style={{ fontSize: '11px' }}>{zone.name}</span>
+                                            </>
+                                        )}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Skins Library (One-Click Selection) */}
+            <div>
+                <h3 style={{ fontSize: '18px', margin: '0 0 16px 0' }}>🎨 Bubu Skin Library (Image & GIF)</h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: '16px' }}>
+                    {skins.map(sk => {
+                        const isSelected = activeSkin.id === sk.id;
+                        return (
+                            <div 
+                                key={sk.id}
+                                onClick={() => handleSkinSelect(sk)}
+                                style={{
+                                    background: '#1e293b',
+                                    border: isSelected ? '2px solid #3b82f6' : '1px solid #334155',
+                                    borderRadius: '14px',
+                                    padding: '16px',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    transition: 'all 0.15s ease',
+                                    boxShadow: isSelected ? '0 0 18px rgba(59, 130, 246, 0.35)' : 'none'
+                                }}>
+                                <div style={{ width: '90px', height: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px' }}>
+                                    <img src={sk.imgUrl} alt={sk.name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+                                </div>
+                                <div style={{ fontWeight: 'bold', fontSize: '14px', color: isSelected ? '#60a5fa' : '#f8fafc' }}>{sk.name}</div>
+                                <span style={{ fontSize: '10px', background: sk.type === 'gif' ? '#8b5cf6' : '#334155', color: '#fff', padding: '2px 8px', borderRadius: '10px', marginTop: '4px' }}>
+                                    {sk.badge}
+                                </span>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </div>
