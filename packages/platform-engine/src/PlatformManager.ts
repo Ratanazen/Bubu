@@ -80,7 +80,7 @@ export class PlatformManager {
         return this.adapter.getCapabilities();
     }
 
-    public getDisplayInfo(): DisplayInfo[] {
+    public async getDisplayInfo(): Promise<DisplayInfo[]> {
         return this.adapter.getDisplayInfo();
     }
 
@@ -119,4 +119,18 @@ export class PlatformManager {
     public async openUrl(url: string): Promise<void> {
         return this.adapter.openUrl(url);
     }
+
+    public async getWorkspaces() {
+        return this.adapter.getWorkspaces();
+    }
+    public async getActiveWorkspace() {
+        return this.adapter.getActiveWorkspace();
+    }
+    public async configure() {
+        return this.adapter.configure();
+    }
+    public async doctor() {
+        return this.adapter.doctor();
+    }
+
 }

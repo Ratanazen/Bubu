@@ -63,3 +63,41 @@ export type LinuxDesktopEnvironment =
  * Linux display server session types.
  */
 export type LinuxSessionType = 'x11' | 'wayland' | 'unknown';
+
+export interface WorkspaceInfo {
+  id: string | number;
+  name: string;
+  monitorId: string | number;
+  isActive: boolean;
+  isVisible: boolean;
+}
+
+export interface WindowInfo {
+  id: string | number;
+  title: string;
+  appClass: string;
+  workspaceId: string | number;
+  monitorId: string | number;
+  isFocused: boolean;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export interface PetPosition {
+  monitorId?: string | number;
+  workspaceId?: string | number;
+  x: number;
+  y: number;
+  anchor: 'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'custom';
+  scale: number;
+  opacity: number;
+}
+
+export interface DiagnosticResult {
+  category: string;
+  status: 'ok' | 'warning' | 'error' | 'unknown';
+  message: string;
+  details?: string;
+}

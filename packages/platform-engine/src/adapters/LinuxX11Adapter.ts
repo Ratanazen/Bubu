@@ -21,7 +21,7 @@ export class LinuxX11Adapter implements PlatformAdapter {
         };
     }
 
-    getDisplayInfo(): DisplayInfo[] {
+    async getDisplayInfo(): Promise<DisplayInfo[]> {
         return [];
     }
 
@@ -91,4 +91,10 @@ export class LinuxX11Adapter implements PlatformAdapter {
             // ignore
         }
     }
+
+    async getWorkspaces() { return []; }
+    async getActiveWorkspace() { return null; }
+    async configure() { return; }
+    async doctor() { return []; }
+
 }

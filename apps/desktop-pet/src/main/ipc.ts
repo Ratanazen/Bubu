@@ -2,6 +2,7 @@ import { ipcMain, BrowserWindow, screen, app } from 'electron';
 import { loadSettings, saveSettings } from './store';
 import { openSettingsWindow } from './settingsWindow';
 import { exec } from 'child_process';
+import { PlatformManager } from '@bubu/platform-engine';
 
 export function setupIPC(mainWindow: BrowserWindow) {
     ipcMain.on('move-window', (event, x, y) => {
@@ -50,6 +51,19 @@ export function setupIPC(mainWindow: BrowserWindow) {
             openAtLogin: settings.startWithWindows,
             path: app.getPath('exe')
         });
+    });
+
+    
+    ipcMain.handle('get-workspaces', async () => {
+        try {
+            return await PlatformManager.getInstance().getWorkspaces();
+        } catch { return []; }
+    });
+
+    ipcMain.handle('compositor-status', async () => {
+        try {
+            return await PlatformManager.getInstance().getCapabilities();
+        } catch { return null; }
     });
 
     ipcMain.on('show-settings', () => {

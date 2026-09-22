@@ -58,4 +58,10 @@ export class GNOMEAdapter extends (PlatformDetector.getLinuxSessionType() === 'x
 
         return super.getSystemTheme();
     }
+
+    async getWorkspaces() { return []; }
+    async getActiveWorkspace() { return null; }
+    async configure() { return; }
+    async doctor() { return []; }
+
 }

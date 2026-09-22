@@ -11,3 +11,4 @@ export * from './settings';
 export * from './events';
 export * from './ipc';
 export * from './browser';
+export * from './waybar';

@@ -80,4 +80,10 @@ export class SwayAdapter extends LinuxWaylandAdapter {
         }
         return null;
     }
+
+    async getWorkspaces() { return []; }
+    async getActiveWorkspace() { return null; }
+    async configure() { return; }
+    async doctor() { return []; }
+
 }

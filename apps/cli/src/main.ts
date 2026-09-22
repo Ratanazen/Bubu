@@ -15,6 +15,10 @@ import {
   i3Command,
 } from './commands/integration';
 import { runDoctor } from './commands/doctor';
+import { screenCommand } from './commands/screen';
+import { compositorCommand } from './commands/compositor';
+import { workspaceCommand } from './commands/workspace';
+import { platformCommand } from './commands/platform';
 
 const VERSION = '2.0.0';
 
@@ -170,6 +174,24 @@ async function main(): Promise<void> {
     case 'doctor':
     case 'diagnostics':
       await runDoctor();
+      break;
+
+    
+    case 'screen':
+      await screenCommand(subArgs);
+      break;
+
+    case 'compositor':
+      await compositorCommand(subArgs);
+      break;
+
+    case 'workspace':
+      await workspaceCommand(subArgs);
+      break;
+
+    
+    case 'platform':
+      await platformCommand(subArgs);
       break;
 
     default:

@@ -60,4 +60,10 @@ export class KDEAdapter extends (PlatformDetector.getLinuxSessionType() === 'x11
 
         return super.getSystemTheme();
     }
+
+    async getWorkspaces() { return []; }
+    async getActiveWorkspace() { return null; }
+    async configure() { return; }
+    async doctor() { return []; }
+
 }

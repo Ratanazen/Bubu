@@ -30,4 +30,10 @@ export class XFCEAdapter extends LinuxX11Adapter {
 
         return super.getSystemTheme();
     }
+
+    async getWorkspaces() { return []; }
+    async getActiveWorkspace() { return null; }
+    async configure() { return; }
+    async doctor() { return []; }
+
 }

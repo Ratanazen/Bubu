@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import CommandPalette from './components/CommandPalette';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/HomeDashboard';
 import CharacterPage from './pages/CharacterPage';
 import AnimationStudioPage from './pages/AnimationStudioPage';
 import MusicPage from './pages/MusicPage';
@@ -14,22 +14,31 @@ import PluginsPage from './pages/PluginsPage';
 import SettingsPage from './pages/SettingsPage';
 import PrivacyPage from './pages/PrivacyPage';
 import ScreenMapPage from './pages/ScreenMapPage';
+import CompositorPage from './pages/CompositorPage';
+import WaybarPage from './pages/WaybarPage';
+
 
 const pages: Record<string, React.FC> = {
   home: HomePage,
+  pet: CharacterPage,
+  screen: ScreenMapPage,
+  monitors: ScreenMapPage,
+  workspaces: ScreenMapPage,
+  windows: ScreenMapPage,
+  compositor: CompositorPage,
+  waybar: WaybarPage,
   character: CharacterPage,
   animations: AnimationStudioPage,
+  styles: SkinsPage,
   music: MusicPage,
-  lyrics: LyricsPage,
+  notifications: PrivacyPage,
   browser: BrowserPage,
-  skins: SkinsPage,
-  'screen-map': ScreenMapPage,
-  linux: LinuxPage,
-  performance: PerformancePage,
-  plugins: PluginsPage,
+  integrations: LinuxPage,
+  cli: LinuxPage,
+  diagnostics: PerformancePage,
   settings: SettingsPage,
-  privacy: PrivacyPage,
 };
+
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
