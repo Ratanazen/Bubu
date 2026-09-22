@@ -106,7 +106,11 @@ export class AnimationPlayer {
       }
     }
 
-    const frameDuration = 1 / Math.max(1, this.fps);
+    const currentFrameObj = this.config.frames[this.currentFrameIndex];
+    const durationMs = (typeof currentFrameObj === 'object' && currentFrameObj.duration)
+      ? currentFrameObj.duration
+      : 1000 / Math.max(1, this.fps);
+    const frameDuration = durationMs / 1000;
     this.frameTimer += delta;
 
     // Advance frames as needed for accumulated delta
@@ -127,7 +131,9 @@ export class AnimationPlayer {
       return '';
     }
     const idx = Math.min(Math.max(0, this.currentFrameIndex), this.config.frames.length - 1);
-    return this.config.frames[idx] ?? '';
+    const item = this.config.frames[idx];
+    if (typeof item === 'string') return item;
+    return item?.asset || '';
   }
 
   /**
@@ -168,6 +174,7 @@ export class AnimationPlayer {
   public getPlayback(): AnimationPlayback {
     return {
       currentFrame: this.currentFrameIndex,
+      currentFrameAsset: this.getCurrentFrame(),
       isPlaying: this.isPlayingState,
       elapsed: this.elapsed,
     };
