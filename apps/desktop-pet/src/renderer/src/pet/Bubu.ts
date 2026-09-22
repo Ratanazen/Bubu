@@ -72,10 +72,32 @@ export class Bubu {
             setTimeout(() => { if(this.state === 'SURPRISED') this.setState('IDLE'); }, 1000);
         }
     }
+
+    private lastPetTime = 0;
+    private petStreak = 0;
+
+    onPet() {
+        const now = Date.now();
+        if (now - this.lastPetTime < 600) {
+            this.petStreak++;
+        } else {
+            this.petStreak = 1;
+        }
+        this.lastPetTime = now;
+
+        if (this.petStreak >= 3) {
+            this.setState('DANCE');
+            setTimeout(() => { if (this.state === 'DANCE') this.setState('HAPPY'); }, 2000);
+            setTimeout(() => { if (this.state === 'HAPPY') this.setState('IDLE'); }, 4000);
+            this.petStreak = 0;
+        } else {
+            this.setState('HAPPY');
+            setTimeout(() => { if (this.state === 'HAPPY') this.setState('IDLE'); }, 1500);
+        }
+    }
     
     onDoubleClick() {
-        this.setState('HAPPY');
-        setTimeout(() => { if(this.state === 'HAPPY') this.setState('IDLE'); }, 2000);
+        this.onPet();
     }
 
     update(dt: number) {

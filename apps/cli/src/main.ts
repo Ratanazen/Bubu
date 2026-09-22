@@ -14,8 +14,9 @@ import {
   swayCommand,
   i3Command,
 } from './commands/integration';
+import { runDoctor } from './commands/doctor';
 
-const VERSION = '1.0.0';
+const VERSION = '2.0.0';
 
 /**
  * Print the Bubu CLI banner and help menu.
@@ -164,6 +165,11 @@ async function main(): Promise<void> {
 
     case 'i3':
       await i3Command();
+      break;
+
+    case 'doctor':
+    case 'diagnostics':
+      await runDoctor();
       break;
 
     default:
