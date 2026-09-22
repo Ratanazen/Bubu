@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Monitor, Check, Palette } from 'lucide-react';
+import { PetIcon } from '../components/Icons';
 
 export default function ScreenMapPage() {
     const [monitors, setMonitors] = useState<any[]>([]);
@@ -42,34 +44,41 @@ export default function ScreenMapPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <div>
                     <h1 style={{ margin: 0, fontSize: '26px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        🐾 Bubu Desktop Control System V5
+                        <Monitor size={24} aria-hidden="true" />
+                        Bubu Desktop Control System V5
                         <span style={{ fontSize: '12px', background: 'rgba(59, 130, 246, 0.2)', color: '#60a5fa', padding: '4px 10px', borderRadius: '12px', border: '1px solid rgba(59, 130, 246, 0.4)' }}>EZ Customizer Mode</span>
                     </h1>
                     <p style={{ color: '#94a3b8', margin: '6px 0 0 0', fontSize: '14px' }}>Real-time multi-monitor topology control, custom anchor positioning, and instant style switcher.</p>
                 </div>
                 {statusMsg && (
-                    <div style={{ background: '#10b981', color: '#fff', padding: '8px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600 }}>
-                        ✓ {statusMsg}
+                    <div style={{ background: '#10b981', color: '#fff', padding: '8px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Check size={14} aria-hidden="true" /> {statusMsg}
                     </div>
                 )}
             </div>
 
             {/* Mode Switcher Tabs */}
             <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', borderBottom: '1px solid #334155', paddingBottom: '12px' }}>
-                <button 
+                <button
                     onClick={() => setActiveTab('map')}
-                    style={{ background: activeTab === 'map' ? '#3b82f6' : '#1e293b', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}>
-                    🗺️ Interactive Screen Map
+                    style={{ background: activeTab === 'map' ? '#3b82f6' : '#1e293b', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
+                    aria-pressed={activeTab === 'map'}
+                >
+                    Interactive Screen Map
                 </button>
-                <button 
+                <button
                     onClick={() => setActiveTab('customizer')}
-                    style={{ background: activeTab === 'customizer' ? '#3b82f6' : '#1e293b', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}>
-                    🎨 EZ Style & Size Customizer
+                    style={{ background: activeTab === 'customizer' ? '#3b82f6' : '#1e293b', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
+                    aria-pressed={activeTab === 'customizer'}
+                >
+                    EZ Style &amp; Size Customizer
                 </button>
-                <button 
+                <button
                     onClick={() => setActiveTab('location')}
-                    style={{ background: activeTab === 'location' ? '#3b82f6' : '#1e293b', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}>
-                    📍 Precision Position & Anchors
+                    style={{ background: activeTab === 'location' ? '#3b82f6' : '#1e293b', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}
+                    aria-pressed={activeTab === 'location'}
+                >
+                    Precision Position &amp; Anchors
                 </button>
             </div>
 
@@ -141,12 +150,12 @@ export default function ScreenMapPage() {
                                 window.addEventListener('mouseup', onUp);
                             }}
                         >
-                            <span style={{ fontSize: '18px' }}>🐾</span>
+                            <PetIcon size={20} color="#fff" aria-hidden="true" />
                             <span style={{ fontSize: '12px', fontWeight: 'bold' }}>Bubu ({selectedStyle})</span>
                         </div>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '14px', color: '#94a3b8', fontSize: '13px' }}>
-                        <span>💡 Tip: Click and drag Bubu inside the Screen Map above to freely position him across displays.</span>
+                        <span>Tip: Click and drag Bubu inside the Screen Map above to freely position him across displays.</span>
                         <button onClick={() => { setBubuPos({ x: 120, y: 120, scale: 1, opacity: 1, anchor: 'center' }); triggerUpdate('Reset position'); }} style={{ background: 'transparent', border: '1px solid #475569', color: '#cbd5e1', padding: '4px 12px', borderRadius: '6px', cursor: 'pointer' }}>Reset Position</button>
                     </div>
                 </div>
@@ -156,7 +165,7 @@ export default function ScreenMapPage() {
             {activeTab === 'customizer' && (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
                     <div style={{ background: '#1e293b', padding: '20px', borderRadius: '16px', border: '1px solid #334155' }}>
-                        <h3 style={{ marginTop: 0, fontSize: '18px' }}>🎭 Quick Style Switcher</h3>
+                        <h3 style={{ marginTop: 0, fontSize: '18px' }}>Quick Style Switcher</h3>
                         <p style={{ color: '#94a3b8', fontSize: '13px' }}>Click any preset to instantly dress Bubu in that visual style.</p>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginTop: '14px' }}>
                             {stylesList.map(st => (
@@ -179,7 +188,7 @@ export default function ScreenMapPage() {
                     </div>
 
                     <div style={{ background: '#1e293b', padding: '20px', borderRadius: '16px', border: '1px solid #334155' }}>
-                        <h3 style={{ marginTop: 0, fontSize: '18px' }}>📏 Size & Opacity Customizer</h3>
+                        <h3 style={{ marginTop: 0, fontSize: '18px' }}>Size &amp; Opacity Customizer</h3>
                         
                         <div style={{ marginTop: '20px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '8px' }}>
@@ -219,7 +228,7 @@ export default function ScreenMapPage() {
             {/* TAB 3: PRECISION ANCHORS */}
             {activeTab === 'location' && (
                 <div style={{ background: '#1e293b', padding: '24px', borderRadius: '16px', border: '1px solid #334155' }}>
-                    <h3 style={{ marginTop: 0, fontSize: '18px' }}>⚓ One-Click Screen Anchor Snapping</h3>
+                    <h3 style={{ marginTop: 0, fontSize: '18px' }}>One-Click Screen Anchor Snapping</h3>
                     <p style={{ color: '#94a3b8', fontSize: '13px' }}>Snap Bubu to any of the 9 desktop edge zones instantly.</p>
                     
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 140px)', gap: '12px', justifyContent: 'center', margin: '30px 0' }}>

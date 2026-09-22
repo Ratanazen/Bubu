@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Play, EyeOff, Power, Monitor, Palette, Check } from 'lucide-react';
+import { PetIcon } from '../components/Icons';
 
 interface SkinItem {
     id: string;
@@ -66,25 +68,25 @@ export default function HomeDashboard() {
     };
 
     const handleRunShow = () => {
-        triggerAction('🐾 Bubu Desktop Pet is now Visible and Active on Screen!', () => setBubuStatus('running'));
+        triggerAction('Bubu Desktop Pet is now Visible and Active on Screen!', () => setBubuStatus('running'));
     };
 
     const handleHide = () => {
-        triggerAction('🙈 Bubu Pet Window Hidden.', () => setBubuStatus('hidden'));
+        triggerAction('Bubu Pet Window Hidden.', () => setBubuStatus('hidden'));
     };
 
     const handleExit = () => {
-        triggerAction('🛑 Bubu Desktop Pet Terminated cleanly.', () => setBubuStatus('stopped'));
+        triggerAction('Bubu Desktop Pet Terminated cleanly.', () => setBubuStatus('stopped'));
     };
 
     const handleLocationClick = (locName: string) => {
         setCurrentLocation(locName);
-        triggerAction(`📍 Bubu relocated to: ${locName}`);
+        triggerAction(`Bubu relocated to: ${locName}`);
     };
 
     const handleSkinSelect = (skin: SkinItem) => {
         setActiveSkin(skin);
-        triggerAction(`🎭 Applied ${skin.type.toUpperCase()} Skin: ${skin.name}`);
+        triggerAction(`Applied ${skin.type.toUpperCase()} Skin: ${skin.name}`);
     };
 
     const handleUploadSkin = (e: React.ChangeEvent<HTMLInputElement>, isGif: boolean) => {
@@ -103,7 +105,7 @@ export default function HomeDashboard() {
 
         setSkins(prev => [newSkin, ...prev]);
         setActiveSkin(newSkin);
-        triggerAction(`✨ Imported & applied custom ${newSkin.badge}: ${file.name}`);
+        triggerAction(`Imported & applied custom ${newSkin.badge}: ${file.name}`);
     };
 
     const displayZones = [
@@ -124,13 +126,14 @@ export default function HomeDashboard() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <div>
                     <h1 style={{ margin: 0, fontSize: '26px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        🐾 Bubu V5 Skin & Location Master
-                        <span style={{ 
-                            fontSize: '12px', 
-                            background: bubuStatus === 'running' ? '#10b981' : bubuStatus === 'hidden' ? '#f59e0b' : '#ef4444', 
-                            color: '#fff', 
-                            padding: '4px 10px', 
-                            borderRadius: '12px', 
+                        <PetIcon size={26} color="#f8fafc" aria-hidden="true" />
+                        Bubu V5 Skin &amp; Location Master
+                        <span style={{
+                            fontSize: '12px',
+                            background: bubuStatus === 'running' ? '#10b981' : bubuStatus === 'hidden' ? '#f59e0b' : '#ef4444',
+                            color: '#fff',
+                            padding: '4px 10px',
+                            borderRadius: '12px',
                             fontWeight: 'bold',
                             textTransform: 'uppercase'
                         }}>
@@ -142,8 +145,8 @@ export default function HomeDashboard() {
                     </p>
                 </div>
                 {statusMsg && (
-                    <div style={{ background: '#3b82f6', color: '#fff', padding: '8px 16px', borderRadius: '10px', fontSize: '13px', fontWeight: 'bold', boxShadow: '0 4px 14px rgba(59, 130, 246, 0.4)' }}>
-                        ✓ {statusMsg}
+                    <div style={{ background: '#3b82f6', color: '#fff', padding: '8px 16px', borderRadius: '10px', fontSize: '13px', fontWeight: 'bold', boxShadow: '0 4px 14px rgba(59, 130, 246, 0.4)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Check size={14} aria-hidden="true" /> {statusMsg}
                     </div>
                 )}
             </div>
@@ -151,20 +154,29 @@ export default function HomeDashboard() {
             {/* Master Power Bar */}
             <div style={{ background: '#1e293b', padding: '16px 20px', borderRadius: '16px', border: '1px solid #334155', marginBottom: '24px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
                 <div style={{ display: 'flex', gap: '10px' }}>
-                    <button 
+                    <button
                         onClick={handleRunShow}
-                        style={{ background: 'linear-gradient(135deg, #10b981, #059669)', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '10px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        ▶️ Run & Show Bubu
+                        style={{ background: 'linear-gradient(135deg, #10b981, #059669)', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '10px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                        title="Run &amp; Show Bubu"
+                        aria-label="Run and show Bubu"
+                    >
+                        <Play size={14} aria-hidden="true" /> Run &amp; Show Bubu
                     </button>
-                    <button 
+                    <button
                         onClick={handleHide}
-                        style={{ background: '#334155', color: '#f8fafc', border: '1px solid #475569', padding: '10px 16px', borderRadius: '10px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer' }}>
-                        🙈 Hide
+                        style={{ background: '#334155', color: '#f8fafc', border: '1px solid #475569', padding: '10px 16px', borderRadius: '10px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                        title="Hide Bubu"
+                        aria-label="Hide Bubu"
+                    >
+                        <EyeOff size={14} aria-hidden="true" /> Hide
                     </button>
-                    <button 
+                    <button
                         onClick={handleExit}
-                        style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '10px 16px', borderRadius: '10px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer' }}>
-                        🛑 Exit Pet
+                        style={{ background: '#ef4444', color: '#fff', border: 'none', padding: '10px 16px', borderRadius: '10px', fontWeight: 'bold', fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px' }}
+                        title="Exit Pet"
+                        aria-label="Exit Bubu"
+                    >
+                        <Power size={14} aria-hidden="true" /> Exit Pet
                     </button>
                 </div>
 
@@ -273,7 +285,9 @@ export default function HomeDashboard() {
 
             {/* Skins Library (One-Click Selection) */}
             <div>
-                <h3 style={{ fontSize: '18px', margin: '0 0 16px 0' }}>🎨 Bubu Skin Library (Image & GIF)</h3>
+                <h3 style={{ fontSize: '18px', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Palette size={18} aria-hidden="true" /> Bubu Skin Library (Image &amp; GIF)
+                </h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: '16px' }}>
                     {skins.map(sk => {
                         const isSelected = activeSkin.id === sk.id;

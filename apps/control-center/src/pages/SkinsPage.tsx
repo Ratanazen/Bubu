@@ -1,4 +1,6 @@
 import React from 'react';
+import { Shirt, Plus, Upload, Download } from 'lucide-react';
+import { PetIcon } from '../components/Icons';
 
 const styles = [
     { id: 'cute', name: 'Cute', color: '#ffb7b2' },
@@ -25,12 +27,16 @@ const skins = [
 export default function SkinsPage() {
     return (
         <div>
-            <h2 className="page-title">🎭 Skins & Styles</h2>
+            <h2 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Shirt size={20} aria-hidden="true" /> Skins &amp; Styles
+            </h2>
 
             <div className="card">
                 <div className="card-header">
                     <span className="card-title">Active Skin</span>
-                    <button className="btn btn-secondary">+ Create Skin</button>
+                    <button className="btn btn-secondary" title="Create new skin" aria-label="Create skin">
+                        <Plus size={13} aria-hidden="true" /> Create Skin
+                    </button>
                 </div>
                 <div className="grid grid-4">
                     {skins.map(s => (
@@ -38,7 +44,9 @@ export default function SkinsPage() {
                             textAlign: 'center', cursor: 'pointer',
                             border: s.active ? '2px solid var(--accent)' : undefined
                         }}>
-                            <div style={{ fontSize: '30px', marginBottom: '8px' }}>🐻</div>
+                            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}>
+                                <PetIcon size={30} aria-hidden="true" />
+                            </div>
                             <div style={{ fontSize: '12px', fontWeight: 600 }}>{s.name}</div>
                             {s.active && <span className="badge badge-success" style={{ marginTop: '6px' }}>Active</span>}
                         </div>
@@ -49,7 +57,7 @@ export default function SkinsPage() {
             <div className="card">
                 <div className="card-header">
                     <span className="card-title">Visual Styles</span>
-                    <button className="btn btn-ghost">+ Custom Style</button>
+                    <button className="btn btn-ghost" title="Create custom style" aria-label="Create custom style">+ Custom Style</button>
                 </div>
                 <div className="grid grid-4">
                     {styles.map(s => (
@@ -69,10 +77,18 @@ export default function SkinsPage() {
                     <span className="card-title">Import / Export</span>
                 </div>
                 <div className="quick-actions">
-                    <button className="btn btn-ghost">📥 Import Skin</button>
-                    <button className="btn btn-ghost">📤 Export Skin</button>
-                    <button className="btn btn-ghost">📥 Import Style</button>
-                    <button className="btn btn-ghost">📤 Export Style</button>
+                    <button className="btn btn-ghost" title="Import skin" aria-label="Import skin">
+                        <Upload size={13} aria-hidden="true" /> Import Skin
+                    </button>
+                    <button className="btn btn-ghost" title="Export skin" aria-label="Export skin">
+                        <Download size={13} aria-hidden="true" /> Export Skin
+                    </button>
+                    <button className="btn btn-ghost" title="Import style" aria-label="Import style">
+                        <Upload size={13} aria-hidden="true" /> Import Style
+                    </button>
+                    <button className="btn btn-ghost" title="Export style" aria-label="Export style">
+                        <Download size={13} aria-hidden="true" /> Export Style
+                    </button>
                 </div>
             </div>
         </div>

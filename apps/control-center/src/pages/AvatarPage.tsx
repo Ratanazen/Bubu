@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Palette } from 'lucide-react';
 
 interface StyleAvatar {
     id: string;
@@ -179,7 +180,9 @@ export default function AvatarPage() {
             </div>
 
             {/* Style Preset Gallery (1 Style = 1 Avatar) */}
-            <h2 style={{ fontSize: '20px', margin: '0 0 16px 0' }}>🎨 Style Preset Library</h2>
+            <h2 style={{ fontSize: '20px', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Palette size={18} aria-hidden="true" /> Style Preset Library
+            </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '16px' }}>
                 {styles.map(st => {
                     const isSelected = activeStyle.id === st.id;

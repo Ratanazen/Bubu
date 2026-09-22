@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
-    HomeIcon, PetIcon, ScreenIcon, MonitorIcon, WorkspaceIcon, 
-    WindowIcon, CompositorIcon, WaybarIcon, CharacterIcon, AnimationIcon, 
-    StyleIcon, MusicIcon, NotificationIcon, BrowserIcon, IntegrationIcon, 
-    CliIcon, DiagnosticIcon, SettingsIcon, SearchIcon 
-} from './Icons';
+import {
+  House, Clapperboard, Shirt, UserRound, Music2,
+  LayoutGrid, Monitor, Activity, Settings, Search,
+  Zap, Power
+} from 'lucide-react';
+import { PetIcon } from './Icons';
 
 interface SidebarProps {
   currentPage: string;
@@ -13,47 +13,69 @@ interface SidebarProps {
 }
 
 const navItems = [
-  { id: 'home', icon: HomeIcon, label: 'Home' },
-  { id: 'animations', icon: AnimationIcon, label: 'Animation Studio' },
-  { id: 'styles', icon: StyleIcon, label: 'Skins & Styles' },
-  { id: 'character', icon: CharacterIcon, label: 'Character Studio' },
-  { id: 'music', icon: MusicIcon, label: 'Music & Lyrics' },
-  { id: 'integrations', icon: IntegrationIcon, label: 'Linux & Waybar' },
-  { id: 'screen', icon: ScreenIcon, label: 'Screen & Monitors' },
-  { id: 'diagnostics', icon: DiagnosticIcon, label: 'Diagnostics' },
-  { id: 'settings', icon: SettingsIcon, label: 'Settings' },
+  { id: 'home',         Icon: House,        label: 'Home' },
+  { id: 'animations',   Icon: Clapperboard, label: 'Animation Studio' },
+  { id: 'styles',       Icon: Shirt,        label: 'Skins & Styles' },
+  { id: 'character',    Icon: UserRound,    label: 'Character Studio' },
+  { id: 'music',        Icon: Music2,       label: 'Music & Lyrics' },
+  { id: 'integrations', Icon: LayoutGrid,   label: 'Linux & Waybar' },
+  { id: 'screen',       Icon: Monitor,      label: 'Screen & Monitors' },
+  { id: 'diagnostics',  Icon: Activity,     label: 'Diagnostics' },
+  { id: 'settings',     Icon: Settings,     label: 'Settings' },
 ];
 
 export default function Sidebar({ currentPage, onNavigate, onOpenCommandPalette }: SidebarProps) {
   return (
-    <nav style={{
-      width: '240px',
-      height: '100%',
-      backgroundColor: '#0f172a',
-      borderRight: '1px solid #1e293b',
-      display: 'flex',
-      flexDirection: 'column',
-      userSelect: 'none'
-    }}>
-      {/* Header */}
+    <nav
+      role="navigation"
+      aria-label="Bubu Control Center navigation"
+      style={{
+        width: '240px',
+        height: '100%',
+        backgroundColor: '#0f172a',
+        borderRight: '1px solid #1e293b',
+        display: 'flex',
+        flexDirection: 'column',
+        userSelect: 'none',
+        flexShrink: 0,
+      }}
+    >
+      {/* Header / Brand */}
       <div style={{
-        padding: '20px 16px',
+        padding: '18px 16px',
         borderBottom: '1px solid #1e293b',
         display: 'flex',
         alignItems: 'center',
-        gap: '10px'
+        gap: '10px',
       }}>
-        <span style={{ fontSize: '24px' }}>🐾</span>
+        <div style={{
+          width: '34px',
+          height: '34px',
+          borderRadius: '10px',
+          background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
+        }}>
+          <PetIcon size={18} color="#fff" />
+        </div>
         <div>
-          <div style={{ fontWeight: 'bold', fontSize: '16px', color: '#f8fafc', letterSpacing: '-0.02em' }}>Bubu V5</div>
-          <div style={{ fontSize: '11px', color: '#64748b' }}>Editable Character Platform</div>
+          <div style={{ fontWeight: 700, fontSize: '15px', color: '#f8fafc', letterSpacing: '-0.02em', lineHeight: 1.2 }}>
+            Bubu V5
+          </div>
+          <div style={{ fontSize: '10px', color: '#64748b', marginTop: '1px' }}>
+            Editable Character Platform
+          </div>
         </div>
       </div>
 
-      {/* Quick Search / Command Palette Bar */}
+      {/* Quick Search / Command Palette */}
       <div style={{ padding: '12px 14px' }}>
-        <button 
+        <button
           onClick={onOpenCommandPalette}
+          aria-label="Open command palette (Ctrl+K)"
+          title="Quick search — Ctrl+K"
           style={{
             width: '100%',
             background: '#1e293b',
@@ -65,25 +87,35 @@ export default function Sidebar({ currentPage, onNavigate, onOpenCommandPalette 
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            cursor: 'pointer'
-          }}>
+            cursor: 'pointer',
+          }}
+        >
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <SearchIcon size={14} color="#64748b" />
-            <span>Quick search...</span>
+            <Search size={13} color="#64748b" aria-hidden="true" />
+            <span>Quick search…</span>
           </div>
-          <kbd style={{ background: '#0f172a', padding: '2px 5px', borderRadius: '4px', fontSize: '10px', color: '#60a5fa' }}>Ctrl+K</kbd>
+          <kbd style={{
+            background: '#0f172a',
+            padding: '2px 5px',
+            borderRadius: '4px',
+            fontSize: '10px',
+            color: '#60a5fa',
+            fontFamily: 'monospace',
+          }}>Ctrl+K</kbd>
         </button>
       </div>
 
-      {/* Navigation Links */}
+      {/* Navigation */}
       <div style={{ flex: 1, overflowY: 'auto', padding: '0 8px 12px 8px' }}>
-        {navItems.map((item) => {
-          const IconComp = item.icon;
-          const isActive = currentPage === item.id;
+        {navItems.map(({ id, Icon, label }) => {
+          const isActive = currentPage === id;
           return (
             <button
-              key={item.id}
-              onClick={() => onNavigate(item.id)}
+              key={id}
+              onClick={() => onNavigate(id)}
+              aria-label={label}
+              aria-current={isActive ? 'page' : undefined}
+              title={label}
               style={{
                 width: '100%',
                 display: 'flex',
@@ -93,25 +125,60 @@ export default function Sidebar({ currentPage, onNavigate, onOpenCommandPalette 
                 margin: '2px 0',
                 border: 'none',
                 borderRadius: '8px',
-                background: isActive ? '#3b82f6' : 'transparent',
+                background: isActive
+                  ? 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)'
+                  : 'transparent',
                 color: isActive ? '#ffffff' : '#94a3b8',
                 fontWeight: isActive ? 600 : 500,
                 fontSize: '13px',
                 cursor: 'pointer',
                 textAlign: 'left',
-                transition: 'all 0.15s ease'
-              }}>
-              <IconComp size={16} color={isActive ? '#ffffff' : '#64748b'} />
-              <span>{item.label}</span>
+                transition: 'all 0.15s ease',
+                boxShadow: isActive ? '0 2px 8px rgba(99,102,241,0.35)' : 'none',
+              }}
+              onMouseEnter={e => {
+                if (!isActive) {
+                  (e.currentTarget as HTMLButtonElement).style.background = '#1e293b';
+                  (e.currentTarget as HTMLButtonElement).style.color = '#e2e8f0';
+                }
+              }}
+              onMouseLeave={e => {
+                if (!isActive) {
+                  (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
+                  (e.currentTarget as HTMLButtonElement).style.color = '#94a3b8';
+                }
+              }}
+            >
+              <Icon
+                size={16}
+                color={isActive ? '#fff' : '#64748b'}
+                aria-hidden="true"
+                style={{ flexShrink: 0 }}
+              />
+              <span>{label}</span>
             </button>
           );
         })}
       </div>
 
-      {/* Footer info */}
-      <div style={{ padding: '14px 16px', borderTop: '1px solid #1e293b', fontSize: '11px', color: '#64748b' }}>
-        <div>System: Linux Wayland</div>
-        <div style={{ color: '#10b981', marginTop: '2px' }}>● Pet Connected</div>
+      {/* Footer status */}
+      <div style={{
+        padding: '12px 16px',
+        borderTop: '1px solid #1e293b',
+        fontSize: '11px',
+        color: '#64748b',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '4px',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+          <Monitor size={11} color="#64748b" aria-hidden="true" />
+          <span>Linux · Wayland · Hyprland</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', color: '#10b981' }}>
+          <Zap size={11} color="#10b981" aria-hidden="true" />
+          <span>Pet Connected</span>
+        </div>
       </div>
     </nav>
   );

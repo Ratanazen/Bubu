@@ -1,4 +1,5 @@
 import React from 'react';
+import { ShieldCheck } from 'lucide-react';
 
 const privacyItems = [
     { id: 'app-monitoring', label: 'App Monitoring', desc: 'Detect which application is focused to adjust Bubu behavior.', default: false },
@@ -12,11 +13,16 @@ const privacyItems = [
 export default function PrivacyPage() {
     return (
         <div>
-            <h2 className="page-title">🔒 Privacy</h2>
+            <h2 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <ShieldCheck size={20} aria-hidden="true" /> Privacy
+            </h2>
 
             <div className="card" style={{ background: 'var(--accent-light)', borderColor: 'var(--accent)' }}>
                 <p style={{ fontSize: '13px', lineHeight: 1.6 }}>
-                    <strong>🔒 Bubu is privacy-first.</strong> All processing happens locally on your device.
+                    <strong style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <ShieldCheck size={14} aria-hidden="true" /> Bubu is privacy-first.
+                    </strong>
+                    All processing happens locally on your device.
                     No passwords, screen recordings, microphone, private messages, or browser history are ever collected.
                     You have full control over every feature.
                 </p>

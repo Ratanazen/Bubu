@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { UserRound, Columns2, Sparkles, Bot, RefreshCw, Save } from 'lucide-react';
 
 export default function CharacterPage() {
   const [activeTab, setActiveTab] = useState<'studio' | 'customize' | 'prompt'>('studio');
@@ -15,28 +16,35 @@ export default function CharacterPage() {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h2 className="page-title" style={{ margin: 0 }}>🎨 Character Studio V2</h2>
-        <button className="btn btn-ghost" onClick={resetToOriginal}>↺ Reset to Original</button>
+        <h2 className="page-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <UserRound size={20} aria-hidden="true" /> Character Studio
+        </h2>
+        <button className="btn btn-ghost" onClick={resetToOriginal} title="Reset to original" aria-label="Reset to original">
+          <RefreshCw size={14} aria-hidden="true" /> Reset to Original
+        </button>
       </div>
 
       <div className="quick-actions" style={{ marginBottom: '20px' }}>
         <button
           className={`btn ${activeTab === 'studio' ? 'btn-primary' : 'btn-ghost'}`}
           onClick={() => setActiveTab('studio')}
+          aria-pressed={activeTab === 'studio'}
         >
-          🖼️ Side-by-Side Comparison
+          <Columns2 size={14} aria-hidden="true" /> Side-by-Side Comparison
         </button>
         <button
           className={`btn ${activeTab === 'customize' ? 'btn-primary' : 'btn-ghost'}`}
           onClick={() => setActiveTab('customize')}
+          aria-pressed={activeTab === 'customize'}
         >
-          ✨ Customization Studio
+          <Sparkles size={14} aria-hidden="true" /> Customization Studio
         </button>
         <button
           className={`btn ${activeTab === 'prompt' ? 'btn-primary' : 'btn-ghost'}`}
           onClick={() => setActiveTab('prompt')}
+          aria-pressed={activeTab === 'prompt'}
         >
-          🤖 AI Sprite Generator
+          <Bot size={14} aria-hidden="true" /> AI Sprite Generator
         </button>
       </div>
 
@@ -115,8 +123,8 @@ export default function CharacterPage() {
             </div>
             <span className="badge badge-info" style={{ marginTop: '12px' }}>Live Runtime Preview</span>
             <div style={{ marginTop: '12px' }}>
-              <button className="btn btn-primary" onClick={() => alert('Custom variant saved to library!')}>
-                💾 Save as New Variant
+              <button className="btn btn-primary" onClick={() => alert('Custom variant saved to library!')} title="Save as new variant" aria-label="Save as new variant">
+                <Save size={14} aria-hidden="true" /> Save as New Variant
               </button>
             </div>
           </div>
@@ -190,8 +198,8 @@ export default function CharacterPage() {
             defaultValue="Create a soft pastel Sakura version of this Bubu. Keep the original character identity, rectangular head, and leg proportions. Add subtle pink accents and a small flower accessory."
           />
           <div style={{ marginTop: '14px', display: 'flex', gap: '10px' }}>
-            <button className="btn btn-primary" onClick={() => alert('AI provider requires configured credentials in Settings.')}>
-              ✨ Generate Variation
+            <button className="btn btn-primary" onClick={() => alert('AI provider requires configured credentials in Settings.')} title="Generate variation" aria-label="Generate variation">
+              <Sparkles size={14} aria-hidden="true" /> Generate Variation
             </button>
             <button className="btn btn-ghost" onClick={() => alert('Prompt saved to character metadata.')}>
               Save Prompt Preset

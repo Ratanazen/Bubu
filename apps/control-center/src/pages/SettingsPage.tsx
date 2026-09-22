@@ -1,9 +1,12 @@
 import React from 'react';
+import { Settings, Save } from 'lucide-react';
 
 export default function SettingsPage() {
     return (
         <div>
-            <h2 className="page-title">⚙️ Settings</h2>
+            <h2 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Settings size={20} aria-hidden="true" /> Settings
+            </h2>
 
             <div className="card">
                 <div className="card-title" style={{ marginBottom: '12px' }}>General</div>
@@ -122,7 +125,9 @@ export default function SettingsPage() {
                 <div className="quick-actions">
                     <button className="btn btn-ghost">📦 Export Bubu</button>
                     <button className="btn btn-ghost">📥 Import Bubu</button>
-                    <button className="btn btn-ghost">💾 Backup</button>
+                    <button className="btn btn-ghost" title="Backup settings" aria-label="Backup settings">
+                        <Save size={14} aria-hidden="true" /> Backup
+                    </button>
                     <button className="btn btn-ghost">♻️ Restore</button>
                     <button className="btn btn-ghost">📋 Export Logs</button>
                 </div>

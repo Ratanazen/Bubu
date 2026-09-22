@@ -1,4 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import {
+  Play, Pause, SkipBack, SkipForward, Repeat,
+  Upload, Save, Trash2, ArrowLeft, ArrowRight,
+  FolderOpen, Film,
+} from 'lucide-react';
 
 export interface FrameItem {
   id: string;
@@ -8,21 +13,21 @@ export interface FrameItem {
 }
 
 const DEFAULT_STATES = [
-  { id: 'IDLE', label: '🐾 Idle', defaultFps: 4 },
-  { id: 'WALK', label: '🚶 Walk', defaultFps: 8 },
-  { id: 'RUN', label: '🏃 Run', defaultFps: 12 },
-  { id: 'SLEEP', label: '😴 Sleep', defaultFps: 2 },
-  { id: 'WAKE', label: '🌅 Wake', defaultFps: 4 },
-  { id: 'SIT', label: '🪑 Sit', defaultFps: 4 },
-  { id: 'HAPPY', label: '😊 Happy', defaultFps: 6 },
-  { id: 'SAD', label: '😢 Sad', defaultFps: 4 },
-  { id: 'SURPRISED', label: '😮 Surprised', defaultFps: 6 },
-  { id: 'DANCE', label: '💃 Dance', defaultFps: 8 },
-  { id: 'MUSIC', label: '🎵 Music', defaultFps: 8 },
-  { id: 'NOTIFICATION', label: '🔔 Notification', defaultFps: 6 },
-  { id: 'DRAG', label: '🖱️ Drag', defaultFps: 4 },
-  { id: 'PET', label: '💖 Pet / Affection', defaultFps: 6 },
-  { id: 'CUSTOM', label: '✨ Custom State', defaultFps: 8 },
+  { id: 'IDLE',         label: 'Idle',            defaultFps: 4 },
+  { id: 'WALK',         label: 'Walk',            defaultFps: 8 },
+  { id: 'RUN',          label: 'Run',             defaultFps: 12 },
+  { id: 'SLEEP',        label: 'Sleep',           defaultFps: 2 },
+  { id: 'WAKE',         label: 'Wake',            defaultFps: 4 },
+  { id: 'SIT',          label: 'Sit',             defaultFps: 4 },
+  { id: 'HAPPY',        label: 'Happy',           defaultFps: 6 },
+  { id: 'SAD',          label: 'Sad',             defaultFps: 4 },
+  { id: 'SURPRISED',    label: 'Surprised',       defaultFps: 6 },
+  { id: 'DANCE',        label: 'Dance',           defaultFps: 8 },
+  { id: 'MUSIC',        label: 'Music Reaction',  defaultFps: 8 },
+  { id: 'NOTIFICATION', label: 'Notification',    defaultFps: 6 },
+  { id: 'DRAG',         label: 'Drag',            defaultFps: 4 },
+  { id: 'PET',          label: 'Pet / Affection', defaultFps: 6 },
+  { id: 'CUSTOM',       label: 'Custom State',    defaultFps: 8 },
 ];
 
 export default function AnimationStudioPage() {
@@ -182,18 +187,33 @@ export default function AnimationStudioPage() {
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <div>
-          <h2 className="page-title" style={{ margin: 0 }}>🕺 Animation Studio V3</h2>
+          <h2 className="page-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Film size={20} aria-hidden="true" />
+            Animation Studio
+          </h2>
           <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '4px' }}>
             Import your own character frames per animation state to generate smooth desktop companion movement.
           </div>
         </div>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          {saveToast && <span className="badge badge-success">✓ Saved to Desktop Pet!</span>}
-          <button className="btn btn-secondary" onClick={() => fileInputRef.current?.click()}>
-            + Import Frame Images
+          {saveToast && <span className="badge badge-success">Saved to Desktop Pet!</span>}
+          <button
+            className="btn btn-secondary"
+            onClick={() => fileInputRef.current?.click()}
+            title="Import frame images"
+            aria-label="Import frame images"
+          >
+            <Upload size={14} aria-hidden="true" />
+            Import Frames
           </button>
-          <button className="btn btn-primary" onClick={handleSaveAnimation}>
-            💾 Save Animation
+          <button
+            className="btn btn-primary"
+            onClick={handleSaveAnimation}
+            title="Save animation to Desktop Pet"
+            aria-label="Save animation"
+          >
+            <Save size={14} aria-hidden="true" />
+            Save Animation
           </button>
         </div>
       </div>
@@ -241,14 +261,33 @@ export default function AnimationStudioPage() {
 
           {/* Transport Controls */}
           <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}>
-            <button className="btn btn-ghost" onClick={() => setCurrentFrameIndex(prev => Math.max(0, prev - 1))}>
-              ⏮
+            <button
+              className="btn btn-ghost"
+              onClick={() => setCurrentFrameIndex(prev => Math.max(0, prev - 1))}
+              title="Previous frame"
+              aria-label="Previous frame"
+            >
+              <SkipBack size={14} aria-hidden="true" />
             </button>
-            <button className="btn btn-primary" style={{ width: '48px' }} onClick={() => setIsPlaying(!isPlaying)}>
-              {isPlaying ? '⏸' : '▶'}
+            <button
+              className="btn btn-primary"
+              style={{ width: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              onClick={() => setIsPlaying(!isPlaying)}
+              title={isPlaying ? 'Pause' : 'Play'}
+              aria-label={isPlaying ? 'Pause animation' : 'Play animation'}
+            >
+              {isPlaying
+                ? <Pause size={16} aria-hidden="true" />
+                : <Play  size={16} aria-hidden="true" />
+              }
             </button>
-            <button className="btn btn-ghost" onClick={() => setCurrentFrameIndex(prev => (prev + 1) % (activeFrames.length || 1))}>
-              ⏭
+            <button
+              className="btn btn-ghost"
+              onClick={() => setCurrentFrameIndex(prev => (prev + 1) % (activeFrames.length || 1))}
+              title="Next frame"
+              aria-label="Next frame"
+            >
+              <SkipForward size={14} aria-hidden="true" />
             </button>
             <span style={{ fontSize: '11px', color: 'var(--text-muted)', marginLeft: '12px' }}>
               Frame {activeFrames.length ? currentFrameIndex + 1 : 0} of {activeFrames.length}
@@ -344,11 +383,13 @@ export default function AnimationStudioPage() {
               border: '2px dashed var(--border)',
               borderRadius: '12px',
               textAlign: 'center',
-              cursor: 'pointer'
+              cursor: 'pointer',
             }}
             onClick={() => fileInputRef.current?.click()}
           >
-            <div style={{ fontSize: '32px', marginBottom: '8px' }}>📁</div>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}>
+              <FolderOpen size={36} color="var(--text-muted)" aria-hidden="true" />
+            </div>
             <div style={{ fontWeight: 600 }}>Drop PNG / WebP images here or click to import</div>
             <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '4px' }}>
               Name them sequentially (e.g. {selectedState.toLowerCase()}_01.png, {selectedState.toLowerCase()}_02.png) for automatic timeline generation.
@@ -403,26 +444,32 @@ export default function AnimationStudioPage() {
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '4px', marginTop: '8px' }}>
                   <button
                     className="btn btn-ghost"
-                    style={{ padding: '2px 6px', fontSize: '10px' }}
+                    style={{ padding: '3px 6px' }}
                     disabled={idx === 0}
                     onClick={() => handleFrameMove(idx, idx - 1)}
+                    title="Move frame left"
+                    aria-label="Move frame left"
                   >
-                    ←
+                    <ArrowLeft size={12} aria-hidden="true" />
                   </button>
                   <button
                     className="btn btn-ghost"
-                    style={{ padding: '2px 6px', fontSize: '10px' }}
+                    style={{ padding: '3px 6px' }}
                     disabled={idx === activeFrames.length - 1}
                     onClick={() => handleFrameMove(idx, idx + 1)}
+                    title="Move frame right"
+                    aria-label="Move frame right"
                   >
-                    →
+                    <ArrowRight size={12} aria-hidden="true" />
                   </button>
                   <button
                     className="btn btn-ghost"
-                    style={{ padding: '2px 6px', fontSize: '10px', color: '#ff6b6b' }}
+                    style={{ padding: '3px 6px', color: '#ff6b6b' }}
                     onClick={() => handleFrameDelete(idx)}
+                    title="Delete frame"
+                    aria-label="Delete frame"
                   >
-                    ✕
+                    <Trash2 size={12} aria-hidden="true" />
                   </button>
                 </div>
               </div>
