@@ -99,7 +99,7 @@ export default function AvatarPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
                 <div>
                     <h1 style={{ margin: 0, fontSize: '26px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        🖼️ Bubu Avatar & One-Asset Style Engine
+                        Bubu Avatar & One-Asset Style Engine
                     </h1>
                     <p style={{ color: '#94a3b8', margin: '6px 0 0 0', fontSize: '14px' }}>
                         Strict Architecture: 1 Visual Style = 1 Primary Bubu Avatar (PNG, WebP, JPG, or Animated GIF).
@@ -149,32 +149,32 @@ export default function AvatarPage() {
                 {/* Import & Actions Panel */}
                 <div style={{ background: '#1e293b', padding: '24px', borderRadius: '16px', border: '1px solid #334155', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <div>
-                        <h3 style={{ margin: '0 0 12px 0', fontSize: '18px', color: '#f8fafc' }}>⚡ Avatar Actions & File Import</h3>
+                        <h3 style={{ margin: '0 0 12px 0', fontSize: '18px', color: '#f8fafc' }}>Avatar Actions & File Import</h3>
                         <p style={{ color: '#94a3b8', fontSize: '13px', lineHeight: 1.5 }}>
                             Upload your own custom PNG, JPG, WebP, or animated GIF. Bubu will automatically adopt the new asset while strictly preserving your current screen coordinates, scaling, and monitor layout.
                         </p>
 
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginTop: '20px' }}>
                             <label style={{ background: '#3b82f6', color: '#fff', padding: '10px 18px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                🖼️ Import Image (PNG/WebP/JPG)
+                                Import Image (PNG/WebP/JPG)
                                 <input type="file" accept="image/png,image/jpeg,image/webp" style={{ display: 'none' }} onChange={(e) => handleFileUpload(e, false)} />
                             </label>
 
                             <label style={{ background: '#8b5cf6', color: '#fff', padding: '10px 18px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                🎬 Import Animated GIF
+                                Import Animated GIF
                                 <input type="file" accept="image/gif" style={{ display: 'none' }} onChange={(e) => handleFileUpload(e, true)} />
                             </label>
 
                             <button 
                                 onClick={() => handleApplyStyle(DEFAULT_STYLES[0])}
                                 style={{ background: '#334155', color: '#f8fafc', border: 'none', padding: '10px 18px', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '13px' }}>
-                                🔄 Reset to Default
+                                Reset to Default
                             </button>
                         </div>
                     </div>
 
                     <div style={{ marginTop: '20px', padding: '14px', background: 'rgba(59, 130, 246, 0.08)', borderRadius: '10px', border: '1px solid rgba(59, 130, 246, 0.2)', fontSize: '12px', color: '#93c5fd' }}>
-                        💡 <strong>Engine Rule:</strong> Changing the visual avatar updates Desktop Pet rendering immediately without affecting your location or window hierarchy.
+                        <strong>Engine Rule:</strong> Changing the visual avatar updates Desktop Pet rendering immediately without affecting your location or window hierarchy.
                     </div>
                 </div>
             </div>

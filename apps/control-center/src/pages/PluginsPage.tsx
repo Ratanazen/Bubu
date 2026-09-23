@@ -1,4 +1,5 @@
 import React from 'react';
+import { Puzzle, Shield } from 'lucide-react';
 
 export default function PluginsPage() {
   const plugins = [
@@ -34,13 +35,16 @@ export default function PluginsPage() {
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <h2 className="page-title" style={{ margin: 0 }}>🧩 Plugins & Extensions</h2>
+        <h2 className="page-title" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Puzzle size={20} aria-hidden="true" /> Plugins &amp; Extensions
+        </h2>
         <button className="btn btn-secondary">+ Install Custom Plugin (.zip)</button>
       </div>
 
-      <div className="card" style={{ background: 'var(--accent-light, #ffeae8)', borderColor: 'var(--accent)' }}>
-        <p style={{ fontSize: '13px', lineHeight: 1.6 }}>
-          <strong>🛡️ Sandboxed Plugin Architecture:</strong> Plugins run with declarative capabilities and strictly validated permissions. No plugin can execute arbitrary system commands or access sensitive files.
+      <div className="card" style={{ background: 'var(--accent-light, #ffeae8)', borderColor: 'var(--accent)', display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+        <Shield size={16} color="var(--accent)" style={{ flexShrink: 0, marginTop: '2px' }} />
+        <p style={{ fontSize: '13px', lineHeight: 1.6, margin: 0 }}>
+          <strong>Sandboxed Plugin Architecture:</strong> Plugins run with declarative capabilities and strictly validated permissions. No plugin can execute arbitrary system commands or access sensitive files.
         </p>
       </div>
 

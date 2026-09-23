@@ -10,7 +10,7 @@ export default function HomePage() {
 
             <div className="grid grid-2">
                 <div className="card" style={{ gridColumn: 'span 2', textAlign: 'center' }}>
-                    <div className="bubu-preview">🐻</div>
+                    <div className="bubu-preview"></div>
                     <h3 style={{ fontSize: '18px', marginBottom: '4px' }}>Bubu</h3>
                     <span className="badge badge-success">● Online</span>
                     <div className="quick-actions" style={{ justifyContent: 'center', marginTop: '16px' }}>

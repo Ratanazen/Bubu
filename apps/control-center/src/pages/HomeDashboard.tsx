@@ -183,12 +183,12 @@ export default function HomeDashboard() {
                 {/* Import Buttons */}
                 <div style={{ display: 'flex', gap: '10px' }}>
                     <label style={{ background: '#8b5cf6', color: '#fff', padding: '10px 16px', borderRadius: '10px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        🎬 Add Custom GIF
+                        Add Custom GIF
                         <input type="file" accept="image/gif" style={{ display: 'none' }} onChange={(e) => handleUploadSkin(e, true)} />
                     </label>
 
                     <label style={{ background: '#3b82f6', color: '#fff', padding: '10px 16px', borderRadius: '10px', cursor: 'pointer', fontWeight: 'bold', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        🖼️ Add Custom Image
+                        Add Custom Image
                         <input type="file" accept="image/png,image/jpeg,image/webp" style={{ display: 'none' }} onChange={(e) => handleUploadSkin(e, false)} />
                     </label>
                 </div>
@@ -274,7 +274,7 @@ export default function HomeDashboard() {
                 <div style={{ background: '#1e293b', padding: '24px', borderRadius: '18px', border: '1px solid #334155' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                         <div>
-                            <h3 style={{ margin: 0, fontSize: '18px', color: '#f8fafc' }}>🖥️ Screen Location Grid</h3>
+                            <h3 style={{ margin: 0, fontSize: '18px', color: '#f8fafc' }}>Screen Location Grid</h3>
                             <p style={{ margin: '4px 0 0 0', fontSize: '13px', color: '#94a3b8' }}>Click any spot below to instantly move your active skin on desktop.</p>
                         </div>
                         <div style={{ background: '#0f172a', padding: '6px 14px', borderRadius: '8px', border: '1px solid #334155', fontSize: '13px' }}>
@@ -313,7 +313,7 @@ export default function HomeDashboard() {
                                             </>
                                         ) : (
                                             <>
-                                                <span style={{ fontSize: '14px', opacity: 0.5 }}>⛶</span>
+                                                <span style={{ fontSize: '14px', opacity: 0.5 }}></span>
                                                 <span style={{ fontSize: '11px' }}>{zone.name}</span>
                                             </>
                                         )}

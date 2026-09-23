@@ -1,12 +1,17 @@
 import React from 'react';
+import { Mic, Captions, Image as ImageIcon } from 'lucide-react';
 
 export default function LyricsPage() {
     return (
         <div>
-            <h2 className="page-title">🎤 Lyrics</h2>
+            <h2 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Captions size={20} aria-hidden="true" /> Lyrics
+            </h2>
 
             <div className="card" style={{ minHeight: '300px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ fontSize: '40px', marginBottom: '12px' }}>🎤</div>
+                <div style={{ marginBottom: '12px', color: 'var(--text-muted)' }}>
+                    <Mic size={40} aria-hidden="true" />
+                </div>
                 <h3 style={{ marginBottom: '8px' }}>No Lyrics</h3>
                 <p style={{ fontSize: '12px', color: 'var(--text-muted)', maxWidth: '300px' }}>
                     Play a song to see synced lyrics here. Connect a browser extension or enable OS media detection.
@@ -48,7 +53,9 @@ export default function LyricsPage() {
                         <div className="toggle active" />
                     </div>
                     <div style={{ marginTop: '12px' }}>
-                        <button className="btn btn-secondary" style={{ width: '100%' }}>🖼️ Open Floating Lyrics</button>
+                        <button className="btn btn-secondary" style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                            <ImageIcon size={14} aria-hidden="true" /> Open Floating Lyrics
+                        </button>
                     </div>
                 </div>
             </div>

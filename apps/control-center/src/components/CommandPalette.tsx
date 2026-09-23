@@ -23,7 +23,7 @@ export default function CommandPalette({ isOpen, onClose, onNavigate }: CommandP
     { id: 'pet-hide', title: 'Hide Bubu', category: 'Pet', action: () => alert('Bubu Hidden') },
     { id: 'pet-dance', title: 'Dance Animation', category: 'Pet', shortcut: 'Ctrl+Shift+D', action: () => alert('Bubu is dancing!') },
     { id: 'pet-sleep', title: 'Sleep Animation', category: 'Pet', action: () => alert('Bubu is sleeping zzz') },
-    { id: 'pet-pet', title: 'Pet Bubu (Affection)', category: 'Interaction', action: () => alert('Bubu purrs with happiness! 💖') },
+    { id: 'pet-pet', title: 'Pet Bubu (Affection)', category: 'Interaction', action: () => alert('Bubu purrs with happiness!') },
     { id: 'nav-character', title: 'Open Character Studio', category: 'Navigation', action: () => { onNavigate('character'); onClose(); } },
     { id: 'nav-skins', title: 'Open Skin Library', category: 'Navigation', action: () => { onNavigate('skins'); onClose(); } },
     { id: 'nav-screen-map', title: 'Open Screen Control Map', category: 'Desktop', shortcut: 'Ctrl+Shift+M', action: () => { onNavigate('screen-map'); onClose(); } },

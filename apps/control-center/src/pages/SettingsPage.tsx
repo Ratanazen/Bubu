@@ -123,13 +123,13 @@ export default function SettingsPage() {
             <div className="card">
                 <div className="card-title" style={{ marginBottom: '12px' }}>Data</div>
                 <div className="quick-actions">
-                    <button className="btn btn-ghost">📦 Export Bubu</button>
-                    <button className="btn btn-ghost">📥 Import Bubu</button>
+                    <button className="btn btn-ghost">Export Bubu</button>
+                    <button className="btn btn-ghost">Import Bubu</button>
                     <button className="btn btn-ghost" title="Backup settings" aria-label="Backup settings">
                         <Save size={14} aria-hidden="true" /> Backup
                     </button>
-                    <button className="btn btn-ghost">♻️ Restore</button>
-                    <button className="btn btn-ghost">📋 Export Logs</button>
+                    <button className="btn btn-ghost">Restore</button>
+                    <button className="btn btn-ghost">Export Logs</button>
                 </div>
             </div>
         </div>

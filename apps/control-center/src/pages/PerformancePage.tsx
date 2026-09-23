@@ -5,7 +5,7 @@ export default function PerformancePage() {
 
   return (
     <div>
-      <h2 className="page-title">⚡ Performance & Resource Monitor</h2>
+      <h2 className="page-title">Performance & Resource Monitor</h2>
 
       <div className="grid grid-3" style={{ marginBottom: '20px' }}>
         <div className="card" style={{ textAlign: 'center' }}>
@@ -40,19 +40,19 @@ export default function PerformancePage() {
             className={`btn ${profile === 'normal' ? 'btn-primary' : 'btn-ghost'}`}
             onClick={() => setProfile('normal')}
           >
-            🚀 Normal (60 FPS, Full Blur)
+            Normal (60 FPS, Full Blur)
           </button>
           <button
             className={`btn ${profile === 'battery-saver' ? 'btn-primary' : 'btn-ghost'}`}
             onClick={() => setProfile('battery-saver')}
           >
-            🔋 Battery Saver (15 FPS, Low CPU)
+            Battery Saver (15 FPS, Low CPU)
           </button>
           <button
             className={`btn ${profile === 'game-mode' ? 'btn-primary' : 'btn-ghost'}`}
             onClick={() => setProfile('game-mode')}
           >
-            🎮 Game Mode (Minimal Stealth)
+            Game Mode (Minimal Stealth)
           </button>
         </div>
         <p style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>

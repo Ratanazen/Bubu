@@ -120,7 +120,7 @@ windowrulev2 = nodim, class:^(bubu-desktop)$
                         <div style={{ fontSize: '12px', color: '#64748b', marginTop: '4px' }}>○ Not Detected</div>
                     </div>
                     <div style={{ background: '#0f172a', padding: '12px', borderRadius: '10px', border: '1px solid #334155', opacity: 0.6 }}>
-                        <div style={{ fontSize: '14px', fontWeight: 'bold' }}>🐭 XFCE</div>
+                        <div style={{ fontSize: '14px', fontWeight: 'bold' }}>XFCE</div>
                         <div style={{ fontSize: '12px', color: '#64748b', marginTop: '4px' }}>○ Not Detected</div>
                     </div>
                 </div>
@@ -131,11 +131,11 @@ windowrulev2 = nodim, class:^(bubu-desktop)$
                 {/* Waybar Block */}
                 <div style={{ background: '#1e293b', padding: '20px', borderRadius: '14px', border: '1px solid #334155' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                        <h3 style={{ margin: 0, fontSize: '16px' }}>📊 Waybar Configuration</h3>
+                        <h3 style={{ margin: 0, fontSize: '16px' }}>Waybar Configuration</h3>
                         <button
                             onClick={() => handleCopy(waybarConfig, 'Waybar JSON')}
                             style={{ background: '#3b82f6', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px', fontWeight: 'bold' }}>
-                            📋 Copy Configuration
+                            Copy Configuration
                         </button>
                     </div>
                     <pre style={{ background: '#0f172a', padding: '14px', borderRadius: '10px', fontSize: '12px', color: '#38bdf8', overflowX: 'auto', border: '1px solid #334155' }}>
@@ -146,11 +146,11 @@ windowrulev2 = nodim, class:^(bubu-desktop)$
                 {/* Hyprland Block */}
                 <div style={{ background: '#1e293b', padding: '20px', borderRadius: '14px', border: '1px solid #334155' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                        <h3 style={{ margin: 0, fontSize: '16px' }}>🖥️ Hyprland Window Rules</h3>
+                        <h3 style={{ margin: 0, fontSize: '16px' }}>Hyprland Window Rules</h3>
                         <button
                             onClick={() => handleCopy(hyprlandConfig, 'Hyprland Rules')}
                             style={{ background: '#3b82f6', color: '#fff', border: 'none', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px', fontWeight: 'bold' }}>
-                            📋 Copy Configuration
+                            Copy Configuration
                         </button>
                     </div>
                     <pre style={{ background: '#0f172a', padding: '14px', borderRadius: '10px', fontSize: '12px', color: '#a78bfa', overflowX: 'auto', border: '1px solid #334155' }}>
