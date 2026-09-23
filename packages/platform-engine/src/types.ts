@@ -42,14 +42,36 @@ export interface DisplayInfo {
     isPrimary: boolean;
 }
 
+export type CapabilityStatus = 
+    | "SUPPORTED" 
+    | "IMPLEMENTED_NOT_VERIFIED" 
+    | "BEST_EFFORT" 
+    | "PERMISSION_REQUIRED" 
+    | "UNSUPPORTED" 
+    | "NOT_VERIFIED" 
+    | "BLOCKED" 
+    | "ERROR";
+
+export interface CapabilityResult {
+    id: string;
+    platform: string;
+    status: CapabilityStatus;
+    reason?: string;
+    permission?: string;
+    fallback?: string;
+    version?: string;
+    detected: boolean;
+    verified: boolean;
+}
+
 export interface PlatformCapabilities {
-    transparentWindow: boolean;
-    alwaysOnTop: boolean;
-    globalShortcut: boolean;
-    systemTray: boolean;
-    panelIntegration: boolean;
-    notifications: boolean;
-    mediaSession: boolean;
-    multiMonitor: boolean;
-    activeWindowTracking: boolean;
+    transparentWindow: boolean | CapabilityStatus;
+    alwaysOnTop: boolean | CapabilityStatus;
+    globalShortcut: boolean | CapabilityStatus;
+    systemTray: boolean | CapabilityStatus;
+    panelIntegration: boolean | CapabilityStatus;
+    notifications: boolean | CapabilityStatus;
+    mediaSession: boolean | CapabilityStatus;
+    multiMonitor: boolean | CapabilityStatus;
+    activeWindowTracking: boolean | CapabilityStatus;
 }

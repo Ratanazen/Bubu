@@ -1,5 +1,8 @@
 import { ipcMain, BrowserWindow, screen } from 'electron';
 import { loadSettings, saveSettings } from './store';
+import { PlatformManager } from '@bubu/platform-engine';
+
+const platformAdapter = PlatformManager.getInstance().getAdapter();
 
 export function setupIPC(mainWindow: BrowserWindow) {
   ipcMain.handle('get-settings', () => {
@@ -11,8 +14,25 @@ export function setupIPC(mainWindow: BrowserWindow) {
     return true;
   });
 
-  ipcMain.handle('get-displays', () => {
-    return screen.getAllDisplays();
+  ipcMain.handle('get-all-displays', async () => {
+    if (platformAdapter) {
+      try {
+        const displays = await platformAdapter.getDisplayInfo();
+        if (displays && displays.length > 0) return displays;
+      } catch (e) {
+        console.error("Platform Adapter getDisplayInfo error", e);
+      }
+    }
+    return screen.getAllDisplays().map(d => ({
+        id: d.id.toString(),
+        name: d.label || 'Display',
+        width: d.bounds.width,
+        height: d.bounds.height,
+        x: d.bounds.x,
+        y: d.bounds.y,
+        scaleFactor: d.scaleFactor,
+        isPrimary: d.id === screen.getPrimaryDisplay().id
+    }));
   });
 
   ipcMain.handle('get-primary-display', () => {
@@ -20,23 +40,37 @@ export function setupIPC(mainWindow: BrowserWindow) {
   });
 
   ipcMain.handle('get-platform-info', async () => {
+    const caps = platformAdapter ? platformAdapter.getCapabilities() : {};
     return {
       platform: process.platform,
-      session: process.env.XDG_SESSION_TYPE || 'wayland',
-      compositor: process.env.XDG_CURRENT_DESKTOP || 'hyprland',
-      capabilities: {
-        'transparent-window': 'SUPPORTED',
-        'always-on-top': 'SUPPORTED',
-        'multi-monitor': 'SUPPORTED',
-        'screen-map': 'SUPPORTED'
-      }
+      session: process.env.XDG_SESSION_TYPE || 'unknown',
+      compositor: process.env.XDG_CURRENT_DESKTOP || 'unknown',
+      capabilities: caps
     };
   });
 
   ipcMain.handle('get-workspaces', async () => {
-    return [
-      { id: '1', name: '1', active: true, monitorId: '1' },
-      { id: '2', name: '2', active: false, monitorId: '1' }
-    ];
+    if (platformAdapter && platformAdapter.getWorkspaces) {
+      try {
+          const workspaces = await platformAdapter.getWorkspaces();
+          if (workspaces && workspaces.length > 0) {
+              return workspaces;
+          }
+      } catch (e) {
+          console.error("Platform Adapter getWorkspaces error", e);
+      }
+    }
+    return [];
+  });
+  
+  ipcMain.handle('move-pet', async (_event, x: number, y: number) => {
+    if (platformAdapter && platformAdapter.movePet) {
+        try {
+            await platformAdapter.movePet(x, y);
+            return true;
+        } catch (e) {}
+    }
+    mainWindow.setBounds({ x: Math.round(x), y: Math.round(y), width: 150, height: 150 });
+    return true;
   });
 }
