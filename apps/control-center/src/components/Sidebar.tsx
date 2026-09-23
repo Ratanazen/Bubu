@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Download,
   House, Clapperboard, Shirt, UserRound, Music2,
   LayoutGrid, Monitor, Activity, Settings, Search,
   Zap, Power, Target
@@ -23,6 +24,7 @@ const navItems = [
   { id: 'screen',       Icon: Monitor,      label: 'Screen & Monitors' },
   { id: 'diagnostics',  Icon: Activity,     label: 'Diagnostics' },
   { id: 'settings',     Icon: Settings,     label: 'Settings' },
+  { id: 'updates',      Icon: Download,     label: 'Updates' },
 ];
 
 export default function Sidebar({ currentPage, onNavigate, onOpenCommandPalette }: SidebarProps) {

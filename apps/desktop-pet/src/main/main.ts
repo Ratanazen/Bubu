@@ -1,6 +1,6 @@
 import { app, BrowserWindow, screen } from 'electron';
 import { createMainWindow } from './window';
-import { setupIPC } from './ipc';
+import { setupIPC, setupUpdateEngine } from './ipc';
 import { setupTray } from './tray';
 import { setupStartup } from './startup';
 
@@ -15,6 +15,7 @@ if (process.platform === 'linux') {
 app.whenReady().then(() => {
     mainWindow = createMainWindow();
     setupIPC(mainWindow);
+    setupUpdateEngine(app.getPath('userData'), app.getVersion(), mainWindow);
     setupTray(mainWindow);
     setupStartup();
 

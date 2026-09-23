@@ -12,6 +12,7 @@ import LinuxPage from './pages/LinuxPage';
 import PerformancePage from './pages/PerformancePage';
 import PluginsPage from './pages/PluginsPage';
 import SettingsPage from './pages/SettingsPage';
+import UpdatesPage from './pages/UpdatesPage';
 import PrivacyPage from './pages/PrivacyPage';
 import ScreenMapPage from './pages/ScreenMapPage';
 import ContextPage from './pages/ContextPage';
@@ -42,6 +43,7 @@ const pages: Record<string, React.FC> = {
   cli: LinuxPage,
   diagnostics: PerformancePage,
   settings: SettingsPage,
+  updates: UpdatesPage,
 };
 
 export default function App() {

@@ -24,5 +24,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
     stopMediaMonitor: () => ipcRenderer.send('stop-media-monitor'),
     mediaControl: (command: string) => ipcRenderer.send('media-control', command),
     showSettings: () => ipcRenderer.send('show-settings'),
-    closeApp: () => ipcRenderer.send('close-app')
+    closeApp: () => ipcRenderer.send('close-app'),
+    checkForUpdates: () => ipcRenderer.invoke('check-for-updates'),
+    installUpdate: () => ipcRenderer.invoke('install-update'),
+    getUpdateState: () => ipcRenderer.invoke('get-update-state'),
+    onUpdateStateChanged: (callback: (data: any) => void) => ipcRenderer.on('update-state-changed', (_event, data) => callback(data))
 });

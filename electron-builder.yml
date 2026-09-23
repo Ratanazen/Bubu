@@ -20,3 +20,8 @@ win:
     - target: nsis
       arch:
         - x64
+
+publish:
+  provider: github
+  owner: Ratanazen
+  repo: Bubu

@@ -1,6 +1,7 @@
 import { ipcMain, BrowserWindow, screen } from 'electron';
 import { loadSettings, saveSettings } from './store';
 import { PlatformManager } from '@bubu/platform-engine';
+import { UpdateEngine } from '@bubu/update-engine';
 
 const platformAdapter = PlatformManager.getInstance().getAdapter();
 
@@ -91,4 +92,36 @@ export function setupIPC(mainWindow: BrowserWindow) {
     saveSettings(s);
     return true;
   });
+}
+
+// M16 Update Engine API
+let updateEngine: UpdateEngine | null = null;
+
+export function setupUpdateEngine(appDataDir: string, currentVersion: string, mainWindow: BrowserWindow) {
+    updateEngine = new UpdateEngine(currentVersion, appDataDir, {
+        enabled: true,
+        channel: 'stable',
+        checkOnStartup: false
+    });
+
+    updateEngine.subscribe((state, payload) => {
+        if (!mainWindow.isDestroyed()) {
+            mainWindow.webContents.send('update-state-changed', { state, payload });
+        }
+    });
+
+    ipcMain.handle('check-for-updates', async () => {
+        if (!updateEngine) return false;
+        return await updateEngine.checkForUpdates();
+    });
+
+    ipcMain.handle('install-update', async () => {
+        if (!updateEngine) return false;
+        await updateEngine.installUpdate();
+        return true;
+    });
+
+    ipcMain.handle('get-update-state', () => {
+        return updateEngine ? updateEngine.getState() : 'IDLE';
+    });
 }
