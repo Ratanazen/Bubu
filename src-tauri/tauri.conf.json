@@ -12,6 +12,17 @@
   "app": {
     "windows": [
       {
+        "label": "target-selector",
+        "title": "Select Target",
+        "url": "/target.html",
+        "fullscreen": true,
+        "transparent": true,
+        "decorations": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "visible": false
+      },
+      {
         "label": "main",
         "title": "Bubu Control Center",
         "url": "/",
