@@ -44,7 +44,7 @@ export class MusicWidget {
             <div style="display:flex; justify-content:center; gap:10px; margin-top:5px; border-top: 1px solid #eee; padding-top: 5px;">
                 <button style="border:none; background:none; cursor:pointer;" onclick="window.electronAPI.mediaControl('prev')">⏮</button>
                 <button style="border:none; background:none; cursor:pointer;" onclick="window.electronAPI.mediaControl('playpause')">⏯</button>
-                <button style="border:none; background:none; cursor:pointer;" onclick="window.electronAPI.mediaControl('next')">⏭</button>
+                <button style="border:none; background:none; cursor:pointer;" onclick="window.electronAPI.mediaControl('next')">Next</button>
             </div>
         `;
         this.element.style.display = 'block';

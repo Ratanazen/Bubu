@@ -168,7 +168,7 @@ export async function statusCommand(): Promise<void> {
       console.log(`  ${fmt.bold('Skin:')}           ${fmt.yellow(skin)}`);
 
       if (music.title) {
-        const musicState = music.state === 'playing' ? fmt.green('▶ Playing') : fmt.yellow('⏸ Paused');
+        const musicState = music.state === 'playing' ? fmt.green('Playing') : fmt.yellow('Paused');
         const artist = music.artist ? ` by ${music.artist}` : '';
         console.log(`  ${fmt.bold('Music:')}          ${musicState} - ${fmt.bold(music.title)}${artist}`);
       } else {

@@ -21,7 +21,7 @@ function updateUI(state) {
             songTitle.textContent = m.title || 'Unknown Track';
             songArtist.textContent = m.artist || 'Unknown Artist';
         } else if (m.state === 'paused') {
-            songTitle.textContent = `⏸ ${m.title || 'Paused'}`;
+            songTitle.textContent = `${m.title || 'Paused'}`;
             songArtist.textContent = m.artist || '';
         } else {
             songTitle.textContent = 'Not Playing';

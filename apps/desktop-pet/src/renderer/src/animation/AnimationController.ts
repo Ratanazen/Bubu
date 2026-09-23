@@ -19,6 +19,7 @@ export class AnimationController {
   element: HTMLElement;
   state: string = 'IDLE';
   skin: Skin = { id: 'default', name: 'Default Bubu', color: '#ffb7b2' };
+  primaryAvatar?: { file: string; type: string };
 
   private customAnimations: Map<string, CustomAnimationManifest> = new Map();
   private currentFrameIndex: number = 0;
@@ -28,6 +29,15 @@ export class AnimationController {
     this.element = element;
     globalEventBus.subscribe('SKIN_CHANGED', (event) => {
       this.skin = event.payload;
+    });
+    
+    // Subscribe to Style/Avatar changes
+    globalEventBus.subscribe('STYLE_CHANGED', (event) => {
+        if (event.payload?.avatar) {
+            this.primaryAvatar = event.payload.avatar;
+        } else {
+            this.primaryAvatar = undefined;
+        }
     });
 
     this.loadCustomAnimations();
@@ -60,10 +70,24 @@ export class AnimationController {
   }
 
   public update(dt: number, direction: 'left' | 'right'): void {
-    const customAnim = this.customAnimations.get(this.state);
+    // 1. One Primary Avatar pattern (M8 priority)
+    if (this.primaryAvatar) {
+        // Just render the primary avatar (e.g., GIF remains animated natively by browser)
+        this.element.innerHTML = `
+          <div style="width: 100%; height: 100%; display: flex; align-items: flex-end; justify-content: center;">
+            <img
+              src="${this.primaryAvatar.file}"
+              alt="Bubu Primary Avatar"
+              style="max-width: 90%; max-height: 90%; object-fit: contain; transform: ${direction === 'left' ? 'scaleX(-1)' : 'scaleX(1)'}; pointer-events: none;"
+            />
+          </div>
+        `;
+        return;
+    }
 
+    // 2. Custom Frame sequences (Animation Engine fallback)
+    const customAnim = this.customAnimations.get(this.state);
     if (customAnim && customAnim.frames.length > 0) {
-      // Step through user-created image animation frames
       const currentFrameObj = customAnim.frames[this.currentFrameIndex] || customAnim.frames[0];
       const frameDuration = (currentFrameObj.duration || (1000 / (customAnim.fps || 8))) / 1000;
 
@@ -79,12 +103,12 @@ export class AnimationController {
           <img
             src="/assets/characters/bubu-reference.png"
             alt="${frameName}"
-            style="max-width: 85%; max-height: 85%; object-fit: contain; image-rendering: pixelated; transform: ${direction === 'left' ? 'scaleX(-1)' : 'scaleX(1)'};"
+            style="max-width: 85%; max-height: 85%; object-fit: contain; image-rendering: pixelated; transform: ${direction === 'left' ? 'scaleX(-1)' : 'scaleX(1)'}; pointer-events: none;"
           />
         </div>
       `;
     } else {
-      // Fallback to SVG / Procedural skin renderer
+      // 3. Fallback to SVG Procedural renderer
       this.element.innerHTML = getPlaceholderSVG(this.state, this.skin);
       this.element.style.transform = direction === 'left' ? 'scaleX(-1)' : 'scaleX(1)';
     }

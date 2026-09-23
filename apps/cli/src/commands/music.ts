@@ -27,9 +27,9 @@ export async function musicCommand(args: string[]): Promise<void> {
         if (res && typeof res === 'object' && res.title) {
           const stateStr =
             res.state === 'playing'
-              ? `${colors.brightGreen}▶ Playing${colors.reset}`
+              ? `${colors.brightGreen}Playing${colors.reset}`
               : res.state === 'paused'
-              ? `${colors.brightYellow}⏸ Paused${colors.reset}`
+              ? `${colors.brightYellow}Paused${colors.reset}`
               : `${colors.gray}⏹ Stopped${colors.reset}`;
 
           console.log(`  ${fmt.bold('Status:')}    ${stateStr}`);

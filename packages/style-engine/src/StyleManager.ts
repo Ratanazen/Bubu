@@ -21,6 +21,10 @@ export interface StyleAnimationModifiers {
  * and animation modifiers.
  */
 export interface StyleDefinition {
+  avatar?: {
+    file: string;
+    type: "image" | "gif" | "webp" | "png" | "jpg";
+  };
   id: string;
   name: string;
   description: string;
