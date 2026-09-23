@@ -2,6 +2,7 @@ import { PlatformCapabilities, DisplayInfo, SystemTheme } from './types';
 import { WorkspaceInfo, DiagnosticResult } from '@bubu/shared-types';
 
 export interface PlatformAdapter {
+    getWindows?(): Promise<any[]>;
     getPlatform(): string;
     getCapabilities(): PlatformCapabilities;
     getDisplayInfo(): Promise<DisplayInfo[]>;

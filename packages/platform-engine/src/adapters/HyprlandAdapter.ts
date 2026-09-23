@@ -77,12 +77,33 @@ export class HyprlandAdapter implements PlatformAdapter {
         });
     }
 
+    async getWindows(): Promise<any[]> {
+        return new Promise((resolve) => {
+            exec('hyprctl clients -j', (err, stdout) => {
+                try {
+                    const clients = JSON.parse(stdout);
+                    resolve(clients.map((c: any) => ({
+                        id: c.address,
+                        title: c.title,
+                        application: c.class,
+                        pid: c.pid,
+                        geometry: { x: c.at[0], y: c.at[1], width: c.size[0], height: c.size[1] },
+                        monitorId: c.monitor.toString(),
+                        workspaceId: c.workspace.id.toString(),
+                        focused: c.focusHistoryID === 0,
+                        visible: !c.hidden,
+                        floating: c.floating
+                    })));
+                } catch { resolve([]); }
+            });
+        });
+    }
+
     async showPet(): Promise<void> {}
     async hidePet(): Promise<void> {}
     
     async movePet(x: number, y: number): Promise<void> {
         return new Promise((resolve) => {
-            // Actual Hyprland dispatch to move the bubu window
             exec(`hyprctl dispatch movewindowpixel exact ${x} ${y},^(bubu-desktop-pet)$`, () => {
                 resolve();
             });
@@ -91,7 +112,6 @@ export class HyprlandAdapter implements PlatformAdapter {
     
     async setAlwaysOnTop(enabled: boolean): Promise<void> {
         return new Promise((resolve) => {
-            // Unpin first just in case
             exec(`hyprctl dispatch pin ^(bubu-desktop-pet)$`, () => {
                 resolve();
             });
@@ -114,7 +134,7 @@ export class HyprlandAdapter implements PlatformAdapter {
     getSystemTheme(): SystemTheme { return 'dark'; }
     async openUrl(url: string): Promise<void> {
         return new Promise((resolve) => {
-            exec(`xdg-open "${url}"`, { timeout: 3000,  }, () => resolve());
+            exec(`xdg-open "${url}"`, () => resolve());
         });
     }
 

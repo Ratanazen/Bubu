@@ -71,7 +71,6 @@ export class PlatformManager {
         this.adapter = adapter;
     }
 
-    // Convenience delegates
     public getPlatform(): string {
         return this.adapter.getPlatform();
     }
@@ -123,14 +122,23 @@ export class PlatformManager {
     public async getWorkspaces() {
         return this.adapter.getWorkspaces();
     }
+    
     public async getActiveWorkspace() {
         return this.adapter.getActiveWorkspace();
     }
+
+    public async getWindows() {
+        if (this.adapter.getWindows) {
+            return this.adapter.getWindows();
+        }
+        return [];
+    }
+
     public async configure() {
         return this.adapter.configure();
     }
+    
     public async doctor() {
         return this.adapter.doctor();
     }
-
 }

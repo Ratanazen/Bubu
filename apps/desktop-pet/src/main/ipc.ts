@@ -49,6 +49,16 @@ export function setupIPC(mainWindow: BrowserWindow) {
     };
   });
 
+  ipcMain.handle('get-windows', async () => {
+    if (platformAdapter && platformAdapter.getWindows) {
+      try {
+        const windows = await platformAdapter.getWindows();
+        return windows || [];
+      } catch (e) { console.error('getWindows error', e); }
+    }
+    return [];
+  });
+
   ipcMain.handle('get-workspaces', async () => {
     if (platformAdapter && platformAdapter.getWorkspaces) {
       try {

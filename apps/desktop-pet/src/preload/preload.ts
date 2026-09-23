@@ -7,6 +7,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     getAllDisplays: () => ipcRenderer.invoke('get-all-displays'),
     getScreenBounds: () => ipcRenderer.invoke('get-screen-bounds'),
     getWorkspaces: () => ipcRenderer.invoke('get-workspaces'),
+    getWindows: () => ipcRenderer.invoke('get-windows'),
     getPlatformInfo: () => ipcRenderer.invoke('get-platform-info'),
     movePet: (x: number, y: number) => ipcRenderer.invoke('move-pet', x, y),
     setIgnoreMouseEvents: (ignore: boolean, forward: boolean = false) => ipcRenderer.send('set-ignore-mouse-events', ignore, forward),
