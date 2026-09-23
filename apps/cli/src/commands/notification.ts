@@ -16,7 +16,7 @@ export async function notificationCommand(args: string[]): Promise<void> {
       const message =
         customMessage && args.length > 2
           ? customMessage
-          : customTitle || 'Hello! Bubu notification system is functioning properly 🐾';
+          : customTitle || 'Hello! Bubu notification system is functioning properly ';
 
       try {
         await sendCommand('notification:test', {

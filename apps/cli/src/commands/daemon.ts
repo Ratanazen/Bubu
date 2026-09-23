@@ -149,7 +149,7 @@ export async function statusCommand(): Promise<void> {
     const status = await sendCommand('status');
     const socketPath = getSocketPath();
 
-    console.log(`\n${fmt.bold(fmt.cyan('🐾 Bubu Desktop Companion Status'))}`);
+    console.log(`\n${fmt.bold(fmt.cyan('Bubu Desktop Companion Status'))}`);
     console.log(`──────────────────────────────────────────────────`);
     console.log(`  ${fmt.bold('Daemon:')}         ${colors.brightGreen}● Running${colors.reset} ${fmt.dim(`(${socketPath})`)}`);
 
@@ -185,7 +185,7 @@ export async function statusCommand(): Promise<void> {
 
     console.log('');
   } catch (err: any) {
-    console.log(`\n${fmt.bold(fmt.cyan('🐾 Bubu Desktop Companion Status'))}`);
+    console.log(`\n${fmt.bold(fmt.cyan('Bubu Desktop Companion Status'))}`);
     console.log(`──────────────────────────────────────────────────`);
     console.log(`  ${fmt.bold('Daemon:')}         ${colors.brightRed}○ Offline${colors.reset}\n`);
     handleDaemonError(err);

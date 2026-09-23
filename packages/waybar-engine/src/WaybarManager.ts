@@ -15,11 +15,11 @@ export class WaybarManager {
     }
 
     public async start(): Promise<void> {
-        this.updateState('bubu-online', '🐾 Bubu', 'Bubu is online');
+        this.updateState('bubu-online', 'Bubu', 'Bubu is online');
     }
 
     public async stop(): Promise<void> {
-        this.updateState('bubu-offline', '🐾 Zzz', 'Bubu is offline');
+        this.updateState('bubu-offline', 'Zzz', 'Bubu is offline');
     }
 
     public updateState(state: WaybarStatus['moduleState'], text: string, tooltip: string): void {

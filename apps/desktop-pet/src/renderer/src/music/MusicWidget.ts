@@ -35,7 +35,7 @@ export class MusicWidget {
     private show(title: string, artist: string) {
         this.element.innerHTML = `
             <div style="display:flex; align-items:center; gap: 8px;">
-                <div style="font-size: 20px;">🎵</div>
+                <div style="font-size: 20px;">Notes</div>
                 <div>
                     <div style="font-weight: bold; width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${title}</div>
                     <div style="color: #666; font-size: 10px; width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${artist}</div>

@@ -27,7 +27,7 @@ const VERSION = '2.0.0';
  */
 function printHelp(): void {
   console.log(`
-${colors.brightMagenta}  🐾  BUBU DESKTOP COMPANION CLI  v${VERSION}${colors.reset}
+${colors.brightMagenta}   BUBU DESKTOP COMPANION CLI  v${VERSION}${colors.reset}
 ${colors.dim}  ────────────────────────────────────────────────────────${colors.reset}
 
 ${fmt.bold('USAGE:')}

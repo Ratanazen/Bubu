@@ -13,7 +13,7 @@ interface DiagnosticCheck {
 }
 
 export async function runDoctor(): Promise<void> {
-  console.log(`\n  ${colors.brightWhite}${colors.bold}🐾 BUBU DOCTOR — ENVIRONMENT & COMPATIBILITY DIAGNOSTICS${colors.reset}`);
+  console.log(`\n  ${colors.brightWhite}${colors.bold}BUBU DOCTOR — ENVIRONMENT & COMPATIBILITY DIAGNOSTICS${colors.reset}`);
   console.log(`  ${colors.dim}───────────────────────────────────────────────────────────${colors.reset}\n`);
 
   const checks: DiagnosticCheck[] = [];

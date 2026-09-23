@@ -5,10 +5,10 @@ app.innerHTML = `
     <div class="section">
         <h3>Administration & Quick Actions</h3>
         <div style="display: flex; gap: 10px; margin-top: 10px;">
-            <button onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'run'}))">🏃 Run</button>
-            <button onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'speak'}))">💬 Speak</button>
-            <button onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'sleep'}))">😴 Sleep</button>
-            <button onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'play'}))">🎮 Play</button>
+            <button onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'run'}))">Run</button>
+            <button onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'speak'}))">Speak</button>
+            <button onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'sleep'}))">Sleep</button>
+            <button onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'play'}))">Play</button>
         </div>
     </div>
 

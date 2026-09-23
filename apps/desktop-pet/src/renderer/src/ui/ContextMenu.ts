@@ -32,14 +32,14 @@ export class ContextMenu {
 
     private show(x: number, y: number) {
         this.element.innerHTML = `
-            <div class="menu-item" onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'play'}))">🎮 Play</div>
-            <div class="menu-item" onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'speak'}))">💬 Speak</div>
-            <div class="menu-item" onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'sleep'}))">😴 Sleep</div>
-            <div class="menu-item" onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'run'}))">🏃 Run</div>
-            <div class="menu-item" onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'dance'}))">🎵 Dance</div>
+            <div class="menu-item" onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'play'}))">Play</div>
+            <div class="menu-item" onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'speak'}))">Speak</div>
+            <div class="menu-item" onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'sleep'}))">Sleep</div>
+            <div class="menu-item" onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'run'}))">Run</div>
+            <div class="menu-item" onclick="window.dispatchEvent(new CustomEvent('cmd', {detail: 'dance'}))">Dance</div>
             <hr style="margin: 4px 0; border: none; border-top: 1px solid #eee;" />
-            <div class="menu-item" onclick="window.electronAPI.showSettings()">⚙️ Admin / Config</div>
-            <div class="menu-item" onclick="window.electronAPI.closeApp()">❌ Exit</div>
+            <div class="menu-item" onclick="window.electronAPI.showSettings()">Admin / Config</div>
+            <div class="menu-item" onclick="window.electronAPI.closeApp()">Exit</div>
         `;
         
         const items = this.element.querySelectorAll('.menu-item');

@@ -43,7 +43,7 @@ export async function lyricsCommand(args: string[]): Promise<void> {
     case 'status': {
       try {
         const res = await sendCommand('lyrics:status', { action: 'status' });
-        console.log(`\n${fmt.bold(fmt.cyan('📜 Bubu Lyrics Status'))}`);
+        console.log(`\n${fmt.bold(fmt.cyan('Bubu Lyrics Status'))}`);
         console.log(`───────────────────────────────────────`);
 
         if (res && typeof res === 'object') {

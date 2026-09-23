@@ -52,7 +52,7 @@ export async function waybarCommand(): Promise<void> {
   if (!status) {
     console.log(
       JSON.stringify({
-        text: '🐾 Bubu',
+        text: 'Bubu',
         tooltip: 'Bubu Desktop Companion\nStatus: Offline (Not Running)\nStart with: bubu start',
         class: 'bubu-offline',
       })
@@ -68,8 +68,8 @@ export async function waybarCommand(): Promise<void> {
     : 'Not Playing';
 
   const barText = isPlaying && status.music?.title
-    ? `🐾 Bubu ♫ ${status.music.title}`
-    : '🐾 Bubu';
+    ? `Bubu [Playing] ${status.music.title}`
+    : 'Bubu';
 
   const tooltip = [
     'Bubu Desktop Companion',
@@ -99,10 +99,10 @@ export async function swaybarCommand(): Promise<void> {
   if (!status) {
     console.log(
       JSON.stringify({
-        full_text: '🐾 Bubu (offline)',
-        short_text: '🐾 Bubu',
+        full_text: 'Bubu (offline)',
+        short_text: 'Bubu',
         color: '#707880',
-        text: '🐾 Bubu (offline)',
+        text: 'Bubu (offline)',
         tooltip: 'Bubu Desktop Companion\nStatus: Offline\nStart with: bubu start',
         class: 'bubu-offline',
       })
@@ -117,8 +117,8 @@ export async function swaybarCommand(): Promise<void> {
     : 'Not Playing';
 
   const displayText = isPlaying && status.music?.title
-    ? `🐾 Bubu: ♫ ${status.music.title}`
-    : `🐾 Bubu: ${petState}`;
+    ? `Bubu: [Playing] ${status.music.title}`
+    : `Bubu: ${petState}`;
 
   const tooltip = [
     'Bubu Desktop Companion',
@@ -129,7 +129,7 @@ export async function swaybarCommand(): Promise<void> {
   console.log(
     JSON.stringify({
       full_text: displayText,
-      short_text: '🐾 Bubu',
+      short_text: 'Bubu',
       color: isPlaying ? '#a3be8c' : '#88c0d0',
       text: displayText,
       tooltip: tooltip,
@@ -167,7 +167,7 @@ export async function hyprlandCommand(): Promise<void> {
       title: status?.music?.title || null,
       artist: status?.music?.artist || null,
     },
-    text: isOnline ? (isPlaying ? `🐾 Bubu ♫ ${status?.music?.title}` : '🐾 Bubu') : '🐾 Bubu (offline)',
+    text: isOnline ? (isPlaying ? `Bubu [Playing] ${status?.music?.title}` : 'Bubu') : 'Bubu (offline)',
     tooltip: isOnline
       ? `Bubu Hyprland Integration\nStatus: Active\nCompositor: ${isHyprland ? 'Hyprland' : 'Other'}`
       : 'Bubu Desktop Companion\nStatus: Offline',
@@ -206,7 +206,7 @@ export async function niriCommand(): Promise<void> {
       title: status?.music?.title || null,
       artist: status?.music?.artist || null,
     },
-    text: isOnline ? (isPlaying ? `🐾 Bubu ♫ ${status?.music?.title}` : '🐾 Bubu') : '🐾 Bubu (offline)',
+    text: isOnline ? (isPlaying ? `Bubu [Playing] ${status?.music?.title}` : 'Bubu') : 'Bubu (offline)',
     tooltip: isOnline
       ? `Bubu Niri Integration\nStatus: Active\nCompositor: ${isNiri ? 'Niri' : 'Other'}`
       : 'Bubu Desktop Companion\nStatus: Offline',

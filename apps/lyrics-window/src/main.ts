@@ -38,7 +38,7 @@ class LyricsOverlayClient {
     channel.onmessage = (event) => {
       const { type, payload } = event.data;
       if (type === 'TRACK_UPDATE') {
-        this.trackTitle.textContent = `🎵 ${payload.title} - ${payload.artist}`;
+        this.trackTitle.textContent = `${payload.title} - ${payload.artist}`;
       } else if (type === 'LYRICS_LOADED') {
         this.lyrics = payload.lines || [];
       } else if (type === 'POSITION_UPDATE') {

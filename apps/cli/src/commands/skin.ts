@@ -31,7 +31,7 @@ export async function skinCommand(args: string[]): Promise<void> {
             ? res.skins
             : FALLBACK_SKINS;
 
-        console.log(`\n${fmt.bold(fmt.cyan('🎨 Available Bubu Skins'))}`);
+        console.log(`\n${fmt.bold(fmt.cyan('Available Bubu Skins'))}`);
         console.log(`───────────────────────────────────────`);
 
         for (const skin of skins) {

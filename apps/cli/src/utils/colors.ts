@@ -44,10 +44,10 @@ export const colors = {
  * Format helpers for consistent CLI presentation
  */
 export const fmt = {
-  success: (msg: string): string => `${colors.brightGreen}✔${colors.reset} ${msg}`,
-  error: (msg: string): string => `${colors.brightRed}✖${colors.reset} ${msg}`,
+  success: (msg: string): string => `${colors.brightGreen}[+]${colors.reset} ${msg}`,
+  error: (msg: string): string => `${colors.brightRed}[x]${colors.reset} ${msg}`,
   info: (msg: string): string => `${colors.brightCyan}ℹ${colors.reset} ${msg}`,
-  warn: (msg: string): string => `${colors.brightYellow}⚠${colors.reset} ${msg}`,
+  warn: (msg: string): string => `${colors.brightYellow}[!]${colors.reset} ${msg}`,
   bold: (msg: string): string => `${colors.bold}${msg}${colors.reset}`,
   dim: (msg: string): string => `${colors.dim}${msg}${colors.reset}`,
   cyan: (msg: string): string => `${colors.brightCyan}${msg}${colors.reset}`,

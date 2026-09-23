@@ -115,10 +115,10 @@ export default function CharacterPage() {
                 </div>
               )}
               {accessory === 'sakura-pin' && (
-                <div style={{ position: 'absolute', top: '24px', right: '32px', fontSize: '18px' }}>🌸</div>
+                <div style={{ position: 'absolute', top: '24px', right: '32px', fontSize: '18px' }}>[Flower]</div>
               )}
               {accessory === 'crown' && (
-                <div style={{ position: 'absolute', top: '14px', fontSize: '18px' }}>👑</div>
+                <div style={{ position: 'absolute', top: '14px', fontSize: '18px' }}>[Crown]</div>
               )}
             </div>
             <span className="badge badge-info" style={{ marginTop: '12px' }}>Live Runtime Preview</span>
@@ -151,8 +151,8 @@ export default function CharacterPage() {
               style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid var(--border)' }}
             >
               <option value="none">None</option>
-              <option value="sakura-pin">🌸 Sakura Hairpin</option>
-              <option value="crown">👑 Golden Crown</option>
+              <option value="sakura-pin">Sakura Hairpin</option>
+              <option value="crown">Golden Crown</option>
             </select>
           </div>
 

@@ -14,7 +14,7 @@ export function openControlCenterWindow() {
         height: 750,
         minWidth: 800,
         minHeight: 600,
-        title: '🐾 Bubu Control Center',
+        title: 'Bubu Control Center',
         autoHideMenuBar: true,
         webPreferences: {
             preload: path.join(__dirname, '../preload/preload.js'),

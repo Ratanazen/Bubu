@@ -21,7 +21,7 @@ export async function musicCommand(args: string[]): Promise<void> {
     case 'status': {
       try {
         const res = await sendCommand('music:status', { action: 'status' });
-        console.log(`\n${fmt.bold(fmt.cyan('🎵 Bubu Music Integration'))}`);
+        console.log(`\n${fmt.bold(fmt.cyan('Bubu Music Integration'))}`);
         console.log(`───────────────────────────────────────`);
 
         if (res && typeof res === 'object' && res.title) {
