@@ -1,55 +1,61 @@
 import { create } from 'zustand';
 
-export type Emotion = 
-    | 'idle' | 'happy' | 'sad' | 'sleep' | 'run' | 'dance' 
-    | 'walk' | 'sit' | 'jump' | 'stretch' | 'think' 
-    | 'eat' | 'drink' | 'celebrate' | 'surprised' 
-    | 'code' | 'read' | 'study' | 'wave' | 'sing' | 'look around';
+export type Emotion = string;
 
-interface CharacterState {
-    activeSkinUrl: string;
+export interface CharacterData {
+    id: string;
+    name: string;
     emotion: Emotion;
     speechText: string | null;
-    positionX: number; // 0 to 100 representing screen percentage
-    setActiveSkinUrl: (url: string) => void;
-    setEmotion: (emotion: Emotion) => void;
-    setSpeechText: (text: string | null) => void;
-    setPositionX: (x: number) => void;
+    x: number;
+    y: number;
+    personality: 'Playful' | 'Calm' | 'Energetic' | 'Lazy' | 'Focused' | 'Shy';
+    energy: number;
+    mood: string;
 }
 
-const channel = new BroadcastChannel('bubu_state');
+interface MultiCharacterState {
+    characters: Record<string, CharacterData>;
+    updateCharacter: (id: string, updates: Partial<CharacterData>) => void;
+    addCharacter: (char: CharacterData) => void;
+    removeCharacter: (id: string) => void;
+}
 
-export const useCharacterStore = create<CharacterState>((set) => ({
-    activeSkinUrl: '/assets/skins/invader/happy_invader.png',
-    emotion: 'idle',
-    speechText: null,
-    positionX: 50,
-    setActiveSkinUrl: (url) => {
-        set({ activeSkinUrl: url });
-        channel.postMessage({ type: 'SET_SKIN', url });
+const channel = new BroadcastChannel('bubu_multi_state');
+
+export const useCharacterStore = create<MultiCharacterState>((set) => ({
+    characters: JSON.parse(localStorage.getItem('bubu_characters') || 'null') || {
+        'bubu': { id: 'bubu', name: 'Bubu', emotion: 'idle', speechText: null, x: 100, y: 100, personality: 'Playful', energy: 100, mood: 'Happy' }
     },
-    setEmotion: (emotion) => {
-        set({ emotion });
-        channel.postMessage({ type: 'SET_EMOTION', emotion });
+    updateCharacter: (id, updates) => {
+        set((state) => {
+            const next = { ...state.characters, [id]: { ...state.characters[id], ...updates } };
+            localStorage.setItem('bubu_characters', JSON.stringify(next));
+            channel.postMessage({ type: 'UPDATE', characters: next });
+            return { characters: next };
+        });
     },
-    setSpeechText: (text) => {
-        set({ speechText: text });
-        channel.postMessage({ type: 'SET_SPEECH', text });
+    addCharacter: (char) => {
+        set((state) => {
+            const next = { ...state.characters, [char.id]: char };
+            localStorage.setItem('bubu_characters', JSON.stringify(next));
+            channel.postMessage({ type: 'UPDATE', characters: next });
+            return { characters: next };
+        });
     },
-    setPositionX: (x) => {
-        set({ positionX: x });
-        channel.postMessage({ type: 'SET_POSITION_X', x });
+    removeCharacter: (id) => {
+        set((state) => {
+            const next = { ...state.characters };
+            delete next[id];
+            localStorage.setItem('bubu_characters', JSON.stringify(next));
+            channel.postMessage({ type: 'UPDATE', characters: next });
+            return { characters: next };
+        });
     }
 }));
 
 channel.onmessage = (event) => {
-    if (event.data.type === 'SET_SKIN') {
-        useCharacterStore.setState({ activeSkinUrl: event.data.url });
-    } else if (event.data.type === 'SET_EMOTION') {
-        useCharacterStore.setState({ emotion: event.data.emotion });
-    } else if (event.data.type === 'SET_SPEECH') {
-        useCharacterStore.setState({ speechText: event.data.text });
-    } else if (event.data.type === 'SET_POSITION_X') {
-        useCharacterStore.setState({ positionX: event.data.x });
+    if (event.data.type === 'UPDATE') {
+        useCharacterStore.setState({ characters: event.data.characters });
     }
 };

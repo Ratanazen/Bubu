@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { open } from "@tauri-apps/plugin-dialog";
 import { readFile } from "@tauri-apps/plugin-fs";
-import { useCharacterStore } from "../../shared/store/characterStore";
+
 import { ImagePlus } from "lucide-react";
 
 export function AvatarPage() {
-    const activeSkinUrl = useCharacterStore(state => state.activeSkinUrl);
-    const setActiveSkinUrl = useCharacterStore(state => state.setActiveSkinUrl);
+    const activeSkinUrl = "";
+    const setActiveSkinUrl = (_url: string) => {};
     const [isLoading, setIsLoading] = useState(false);
 
     const handleImportSkin = async () => {

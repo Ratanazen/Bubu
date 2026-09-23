@@ -1,7 +1,7 @@
 
 import ReactDOM from "react-dom/client";
 import { Link, Route, Switch } from "wouter";
-import { Settings, UserCircle, Home } from "lucide-react";
+import { Settings, Users, UserCircle, Home } from "lucide-react";
 import { AvatarPage } from "./pages/AvatarPage";
 import { AnimationPage } from "./pages/AnimationPage";
 import { MusicPage } from "./pages/MusicPage";
@@ -11,6 +11,7 @@ import { AIPage } from "./pages/AIPage";
 import { BehaviorPage } from "./pages/BehaviorPage";
 import { AssetManagerPage } from "./pages/AssetManagerPage";
 import { MovementPage } from "./pages/MovementPage";
+import { CharacterManagerPage } from "./pages/CharacterManagerPage";
 
 function Layout() {
     return (
@@ -28,6 +29,7 @@ function Layout() {
                     <Link href="/behavior" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Autonomous Life</Link>
                     <Link href="/assets" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Action Library</Link>
                     <Link href="/movement" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Movement</Link>
+                    <Link href="/characters" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Users size={16} /> Characters</Link>
                 </nav>
             </div>
             <div style={{ flex: 1, padding: 20, background: "#f8f9fa", overflowY: "auto" }}>
@@ -42,6 +44,7 @@ function Layout() {
                     <Route path="/behavior"><BehaviorPage /></Route>
                     <Route path="/assets"><AssetManagerPage /></Route>
                     <Route path="/movement"><MovementPage /></Route>
+                    <Route path="/characters"><CharacterManagerPage /></Route>
                 </Switch>
             </div>
         </div>

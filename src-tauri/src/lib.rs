@@ -4,6 +4,7 @@ mod browser_bridge;
 mod lyrics;
 mod ai;
 mod system_monitor;
+mod window_manager;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -13,7 +14,7 @@ pub fn run() {
     .invoke_handler(tauri::generate_handler![
         music::get_current_media,
         context::get_active_window,
-        lyrics::fetch_lyrics,
+        lyrics::fetch_lyrics, window_manager::spawn_pet_window,
         ai::generate_chat
     ])
     .setup(|app| {
