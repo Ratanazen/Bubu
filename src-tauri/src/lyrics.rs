@@ -3,14 +3,15 @@ use serde::{Deserialize, Serialize};
 use std::time::Duration;
 
 #[derive(Serialize, Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 pub struct LrcResponse {
     pub id: i32,
-    pub trackName: Option<String>,
-    pub artistName: Option<String>,
-    pub albumName: Option<String>,
+    pub track_name: Option<String>,
+    pub artist_name: Option<String>,
+    pub album_name: Option<String>,
     pub duration: Option<f64>,
-    pub plainLyrics: Option<String>,
-    pub syncedLyrics: Option<String>,
+    pub plain_lyrics: Option<String>,
+    pub synced_lyrics: Option<String>,
 }
 
 #[tauri::command]
