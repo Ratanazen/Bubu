@@ -10,6 +10,7 @@ import { SkinManager } from './skins/SkinManager';
 import { NotificationUI } from './notifications/NotificationUI';
 import { ContextMenu } from './ui/ContextMenu';
 import { globalEventBus } from './events/EventBus';
+import { ProfileEngine } from '@bubu/profile-engine';
 
 const app = document.getElementById('app')!;
 const petContainer = document.createElement('div');
@@ -94,4 +95,37 @@ window.electronAPI.getScreenBounds().then(bounds => {
 skinManager.initialize();
 window.electronAPI.getSettings().then(settings => {
     if (settings.petSize) petContainer.style.transform = `scale(${settings.petSize})`;
+});
+
+// M10 Context Profile Engine setup
+const profileEngine = new ProfileEngine();
+
+globalEventBus.subscribe('APP_FOCUSED', (event) => {
+    profileEngine.updateContext('app_focused', event.payload);
+});
+globalEventBus.subscribe('MUSIC_PLAYING', (event) => {
+    profileEngine.updateContext('music_playing', event.payload?.isPlaying || false);
+});
+
+profileEngine.subscribe((profile) => {
+    console.log('[ProfileEngine] Activated Profile:', profile.name);
+    if (profile.styleId) {
+        skinManager.loadSkin(profile.styleId);
+    }
+    if (profile.settings?.scale) {
+        petContainer.style.transform = `scale(${profile.settings.scale})`;
+    }
+    if (profile.settings?.opacity) {
+        petContainer.style.opacity = `${profile.settings.opacity}`;
+    }
+    if (profile.settings?.behaviorPreset) {
+        if (profile.settings.behaviorPreset === 'sleepy') {
+            bubu.setState('SLEEP');
+        } else if (profile.settings.behaviorPreset === 'energetic') {
+            behavior.reactToMusic(true);
+        } else if (profile.settings.behaviorPreset === 'quiet') {
+            bubu.setState('SIT');
+        }
+    }
+    globalEventBus.emit('NOTIFICATION_RECEIVED', { title: 'Context Switched', message: `Profile changed to ${profile.name}`});
 });
