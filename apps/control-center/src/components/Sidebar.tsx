@@ -26,6 +26,7 @@ const navItems = [
   { id: 'screen',       Icon: Monitor,      label: 'Screen & Monitors' },
   { id: 'diagnostics',  Icon: Activity,     label: 'Diagnostics' },
   { id: 'developer',    Icon: Code,         label: 'Developer Panel' },
+  { id: 'panel-ex',     Icon: LayoutGrid,   label: 'Panel Example' },
   { id: 'settings',     Icon: Settings,     label: 'Settings' },
   { id: 'updates',      Icon: Download,     label: 'Updates' },
 ];

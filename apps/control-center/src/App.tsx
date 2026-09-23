@@ -20,6 +20,7 @@ import CompositorPage from './pages/CompositorPage';
 import WaybarPage from './pages/WaybarPage';
 import AvatarPage from './pages/AvatarPage';
 import { DeveloperPage } from './pages/DeveloperPage';
+import PanelExamplePage from './pages/PanelExamplePage';
 
 const pages: Record<string, React.FC> = {
   home: HomePage,
@@ -46,6 +47,8 @@ const pages: Record<string, React.FC> = {
   settings: SettingsPage,
   updates: UpdatesPage,
   developer: DeveloperPage,
+  'panel-ex': PanelExamplePage,
+  grid: PanelExamplePage,
 };
 
 export default function App() {
