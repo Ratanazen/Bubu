@@ -4,6 +4,7 @@ import { Link, Route, Switch } from "wouter";
 import { Settings, UserCircle, Home } from "lucide-react";
 import { AvatarPage } from "./pages/AvatarPage";
 import { AnimationPage } from "./pages/AnimationPage";
+import { MusicPage } from "./pages/MusicPage";
 
 function Layout() {
     return (
@@ -14,6 +15,7 @@ function Layout() {
                     <Link href="/" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Home size={16} /> Dashboard</Link>
                     <Link href="/avatar" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><UserCircle size={16} /> Skin Manager</Link>
                     <Link href="/animation" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Animation Studio</Link>
+                    <Link href="/music" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Music Engine</Link>
                 </nav>
             </div>
             <div style={{ flex: 1, padding: 20, background: "#f8f9fa", overflowY: "auto" }}>
@@ -21,6 +23,7 @@ function Layout() {
                     <Route path="/"><h2 style={{ color: "#333" }}>Welcome to Bubu Phase 2</h2><p style={{ color: "#666" }}>Select Skin Manager to import characters.</p></Route>
                     <Route path="/avatar"><AvatarPage /></Route>
                     <Route path="/animation"><AnimationPage /></Route>
+                    <Route path="/music"><MusicPage /></Route>
                 </Switch>
             </div>
         </div>

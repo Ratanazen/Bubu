@@ -25,3 +25,4 @@ tauri = { version = "2.11.6" }
 tauri-plugin-log = "2"
 tauri-plugin-fs = "2.5.2"
 tauri-plugin-dialog = "2.7.3"
+mpris = "2.1.0"
