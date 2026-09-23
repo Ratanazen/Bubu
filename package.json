@@ -19,7 +19,9 @@
     "package": "npm run package:linux && npm run package:win"
   },
   "allowScripts": {
-    "electron@29.4.6": true
+    "esbuild": true,
+    "electron@29.4.6": true,
+    "esbuild@0.21.5": true
   },
   "devDependencies": {
     "electron": "^29.4.6",
