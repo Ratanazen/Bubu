@@ -1,14 +1,21 @@
 import { create } from 'zustand';
 
-export type ActionName = string; // e.g. 'idle', 'walk', 'run', 'code', 'drink'
+export type ActionName = string;
 
 export interface ActionFrame {
     url: string;
+    x?: number;
+    y?: number;
+    w?: number;
+    h?: number;
+    offsetX?: number;
+    offsetY?: number;
 }
 
 export interface ActionMapping {
     fps: number;
     frames: ActionFrame[];
+    scale?: number;
 }
 
 interface SkinState {
