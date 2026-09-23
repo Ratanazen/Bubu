@@ -9,6 +9,7 @@ import { ContextPage } from "./pages/ContextPage";
 import { BrowserPage } from "./pages/BrowserPage";
 import { AIPage } from "./pages/AIPage";
 import { BehaviorPage } from "./pages/BehaviorPage";
+import { AssetManagerPage } from "./pages/AssetManagerPage";
 
 function Layout() {
     return (
@@ -24,6 +25,7 @@ function Layout() {
                     <Link href="/browser" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Browser Bridge</Link>
                     <Link href="/ai" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Personality Engine</Link>
                     <Link href="/behavior" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Autonomous Life</Link>
+                    <Link href="/assets" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Action Library</Link>
                 </nav>
             </div>
             <div style={{ flex: 1, padding: 20, background: "#f8f9fa", overflowY: "auto" }}>
@@ -36,6 +38,7 @@ function Layout() {
                     <Route path="/browser"><BrowserPage /></Route>
                     <Route path="/ai"><AIPage /></Route>
                     <Route path="/behavior"><BehaviorPage /></Route>
+                    <Route path="/assets"><AssetManagerPage /></Route>
                 </Switch>
             </div>
         </div>

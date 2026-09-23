@@ -3,6 +3,7 @@ mod context;
 mod browser_bridge;
 mod lyrics;
 mod ai;
+mod system_monitor;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -17,6 +18,7 @@ pub fn run() {
     ])
     .setup(|app| {
       browser_bridge::start_server(app.handle().clone());
+      system_monitor::start_monitor(app.handle().clone());
       
       if cfg!(debug_assertions) {
         app.handle().plugin(

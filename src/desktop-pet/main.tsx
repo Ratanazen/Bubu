@@ -1,14 +1,71 @@
 import ReactDOM from "react-dom/client";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { useCharacterStore } from "../shared/store/characterStore";
+import { useSkinStore } from "../shared/store/skinStore";
+import { useMusicStore } from "../shared/store/musicStore";
 import { useEffect, useState } from "react";
 import { BehaviorEngine } from "./BehaviorEngine";
 
 function DesktopPet() {
-    const { activeSkinUrl, emotion, speechText, positionX, setEmotion, setSpeechText } = useCharacterStore();
+    const { emotion, speechText, positionX, setEmotion, setSpeechText } = useCharacterStore();
+    const { actions } = useSkinStore();
+    const { currentLyrics } = useMusicStore();
+    
     const [bounce, setBounce] = useState(0);
+    const [frameIndex, setFrameIndex] = useState(0);
+    const [currentFrameUrl, setCurrentFrameUrl] = useState("");
 
-    // Simple animation loop based on emotion
+    // Fallback Logic
+    const getMapping = (requested: string) => {
+        if (actions[requested] && actions[requested].frames.length > 0) return actions[requested];
+        
+        // Smart Fallbacks
+        const fallbacks: Record<string, string> = {
+            'code': 'think',
+            'study': 'think',
+            'read': 'think',
+            'drink': 'sit',
+            'eat': 'sit',
+            'dance': 'happy',
+            'sing': 'happy',
+            'run': 'walk',
+            'stretch': 'idle',
+            'celebrate': 'happy'
+        };
+        
+        let fallback = fallbacks[requested];
+        while (fallback) {
+            if (actions[fallback] && actions[fallback].frames.length > 0) return actions[fallback];
+            fallback = fallbacks[fallback];
+        }
+        
+        return actions['idle']; // Ultimate fallback
+    };
+
+    // Frame Animation Loop
+    useEffect(() => {
+        const mapping = getMapping(emotion);
+        if (!mapping || mapping.frames.length === 0) return;
+        
+        const fps = mapping.fps || 1;
+        const msPerFrame = 1000 / fps;
+        
+        const interval = setInterval(() => {
+            setFrameIndex(prev => (prev + 1) % mapping.frames.length);
+        }, msPerFrame);
+        
+        return () => clearInterval(interval);
+    }, [emotion, actions]);
+
+    useEffect(() => {
+        const mapping = getMapping(emotion);
+        if (mapping && mapping.frames.length > 0) {
+            const idx = frameIndex % mapping.frames.length;
+            setCurrentFrameUrl(mapping.frames[idx].url);
+        }
+    }, [frameIndex, emotion, actions]);
+
+    // CSS Bounce Loop
     useEffect(() => {
         let frame = 0;
         const interval = setInterval(() => {
@@ -19,7 +76,7 @@ function DesktopPet() {
                 setBounce(Math.sin(frame * 2) * 3);
             } else if (emotion === 'walk') {
                 setBounce(Math.sin(frame) * 5);
-            } else if (emotion === 'idle' || emotion === 'think' || emotion === 'read' || emotion === 'code' || emotion === 'sit') {
+            } else if (['idle', 'think', 'read', 'code', 'sit'].includes(emotion)) {
                 setBounce(Math.sin(frame * 0.5) * 5);
             } else if (emotion === 'sleep') {
                 setBounce(0);
@@ -53,8 +110,8 @@ function DesktopPet() {
             }}>
                 {/* Speech Bubble */}
                 <div style={{ 
-                    opacity: speechText ? 1 : 0,
-                    transform: speechText ? 'translateY(0)' : 'translateY(10px)',
+                    opacity: (speechText || currentLyrics) ? 1 : 0,
+                    transform: (speechText || currentLyrics) ? 'translateY(0)' : 'translateY(10px)',
                     transition: 'all 0.3s ease',
                     background: 'white',
                     padding: '10px 15px',
@@ -71,7 +128,7 @@ function DesktopPet() {
                     pointerEvents: 'none',
                     whiteSpace: 'nowrap'
                 }}>
-                    {speechText}
+                    {speechText}{currentLyrics ? `🎵 ${currentLyrics}` : speechText}
                 </div>
 
                 {/* Pet Sprite */}
@@ -80,13 +137,13 @@ function DesktopPet() {
                         width: 150, 
                         height: 150, 
                         cursor: "grab", 
-                        backgroundImage: `url(${activeSkinUrl})`,
+                        backgroundImage: `url(${currentFrameUrl})`,
                         backgroundSize: 'contain',
                         backgroundRepeat: 'no-repeat',
                         backgroundPosition: 'center',
                         filter: emotion === 'sleep' ? "brightness(0.7) drop-shadow(0 4px 8px rgba(0,0,0,0.5))" : "drop-shadow(0 8px 16px rgba(0,0,0,0.3))",
                         transform: `translateY(${bounce}px) ${emotion === 'sleep' ? 'scaleY(0.95)' : ''} ${emotion === 'dance' ? `rotate(${bounce}deg)` : ''}`,
-                        transition: 'filter 0.5s ease, background-image 0.5s ease'
+                        transition: 'filter 0.5s ease'
                     }}
                     onMouseDown={(e) => {
                         if (e.button === 0) getCurrentWindow().startDragging();

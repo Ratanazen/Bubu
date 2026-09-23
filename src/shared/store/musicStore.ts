@@ -9,6 +9,8 @@ export interface MediaInfo {
 }
 
 interface MusicState {
+    currentLyrics: string | null;
+    setCurrentLyrics: (lyrics: string | null) => void;
     media: MediaInfo | null;
     reactionLevel: "Off" | "Low" | "Normal" | "High";
     setReactionLevel: (level: "Off" | "Low" | "Normal" | "High") => void;
@@ -16,6 +18,8 @@ interface MusicState {
 }
 
 export const useMusicStore = create<MusicState>((set) => ({
+    currentLyrics: null,
+    setCurrentLyrics: (currentLyrics) => set({ currentLyrics }),
     media: null,
     reactionLevel: "Normal",
     setReactionLevel: (level) => set({ reactionLevel: level }),
