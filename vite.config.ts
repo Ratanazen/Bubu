@@ -1,17 +1,4 @@
-import { defineConfig } from 'vite';
-import path from 'path';
-
-export default defineConfig({
-  root: path.join(__dirname, 'src/renderer'),
-  base: './',
-  build: {
-    outDir: path.join(__dirname, 'dist/renderer'),
-    emptyOutDir: true,
-    rollupOptions: {
-      input: {
-        main: path.join(__dirname, 'src/renderer/index.html'),
-        settings: path.join(__dirname, 'src/renderer/settings.html')
-      }
-    }
-  }
-});
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { resolve } from "path";
+export default defineConfig({plugins: [react()], clearScreen: false, server: {port: 1420, strictPort: true}, build: {rollupOptions: {input: {main: resolve(__dirname, "index.html"), pet: resolve(__dirname, "pet.html")}}}});
