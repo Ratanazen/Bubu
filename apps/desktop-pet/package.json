@@ -7,6 +7,7 @@
     "build": "tsc && esbuild src/main/main.ts --bundle --platform=node --external:electron --outfile=dist/main/main.js && vite build"
   },
   "dependencies": {
+    "@bubu/developer-engine": "^1.0.0",
     "@bubu/platform-engine": "*",
     "@bubu/profile-engine": "^1.0.0",
     "@bubu/update-engine": "^1.0.0"

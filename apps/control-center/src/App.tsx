@@ -19,6 +19,7 @@ import ContextPage from './pages/ContextPage';
 import CompositorPage from './pages/CompositorPage';
 import WaybarPage from './pages/WaybarPage';
 import AvatarPage from './pages/AvatarPage';
+import { DeveloperPage } from './pages/DeveloperPage';
 
 const pages: Record<string, React.FC> = {
   home: HomePage,
@@ -44,6 +45,7 @@ const pages: Record<string, React.FC> = {
   diagnostics: PerformancePage,
   settings: SettingsPage,
   updates: UpdatesPage,
+  developer: DeveloperPage,
 };
 
 export default function App() {

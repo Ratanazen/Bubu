@@ -1,11 +1,13 @@
 import React from 'react';
 import {
+  Code,
   Download,
   House, Clapperboard, Shirt, UserRound, Music2,
   LayoutGrid, Monitor, Activity, Settings, Search,
   Zap, Power, Target
 } from 'lucide-react';
-import { PetIcon } from './Icons';
+import {
+  PetIcon } from './Icons';
 
 interface SidebarProps {
   currentPage: string;
@@ -23,6 +25,7 @@ const navItems = [
   { id: 'integrations', Icon: LayoutGrid,   label: 'Linux & Waybar' },
   { id: 'screen',       Icon: Monitor,      label: 'Screen & Monitors' },
   { id: 'diagnostics',  Icon: Activity,     label: 'Diagnostics' },
+  { id: 'developer',    Icon: Code,         label: 'Developer Panel' },
   { id: 'settings',     Icon: Settings,     label: 'Settings' },
   { id: 'updates',      Icon: Download,     label: 'Updates' },
 ];

@@ -153,3 +153,42 @@ ipcMain.on('show-settings', () => {
     const { openSettingsWindow } = require('./settingsWindow');
     openSettingsWindow();
 });
+
+// M24/M25/M29 Developer Engine API
+import { ToolchainDetector, ProjectScanner, ProcessManager } from '@bubu/developer-engine';
+
+const toolchainDetector = new ToolchainDetector();
+const projectScanner = new ProjectScanner();
+const processManager = new ProcessManager();
+
+export function setupDeveloperEngineIPC(mainWindow: BrowserWindow) {
+    ipcMain.handle('detect-toolchains', async () => {
+        return await toolchainDetector.detectAll();
+    });
+
+    ipcMain.handle('scan-project', (_event, dir: string) => {
+        return projectScanner.scanDirectory(dir);
+    });
+
+    ipcMain.handle('run-process', (_event, command: string, args: string[], cwd: string) => {
+        const pid = processManager.runCommand(command, args, cwd);
+        return pid;
+    });
+
+    ipcMain.handle('kill-process', (_event, pid: number) => {
+        processManager.killProcess(pid);
+        return true;
+    });
+
+    processManager.on('output', (payload) => {
+        if (!mainWindow.isDestroyed()) {
+            mainWindow.webContents.send('process-output', payload);
+        }
+    });
+
+    processManager.on('exit', (payload) => {
+        if (!mainWindow.isDestroyed()) {
+            mainWindow.webContents.send('process-exit', payload);
+        }
+    });
+}

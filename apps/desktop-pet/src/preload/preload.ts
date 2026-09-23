@@ -31,3 +31,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
     getUpdateState: () => ipcRenderer.invoke('get-update-state'),
     onUpdateStateChanged: (callback: (data: any) => void) => ipcRenderer.on('update-state-changed', (_event, data) => callback(data))
 });
+
+contextBridge.exposeInMainWorld('developerAPI', {
+    detectToolchains: () => ipcRenderer.invoke('detect-toolchains'),
+    scanProject: (dir: string) => ipcRenderer.invoke('scan-project', dir),
+    runProcess: (cmd: string, args: string[], cwd: string) => ipcRenderer.invoke('run-process', cmd, args, cwd),
+    killProcess: (pid: number) => ipcRenderer.invoke('kill-process', pid),
+    onProcessOutput: (callback: (payload: any) => void) => ipcRenderer.on('process-output', (_event, payload) => callback(payload)),
+    onProcessExit: (callback: (payload: any) => void) => ipcRenderer.on('process-exit', (_event, payload) => callback(payload))
+});

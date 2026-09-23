@@ -16,6 +16,8 @@ if (process.platform === 'linux') {
 app.whenReady().then(() => {
     mainWindow = createMainWindow();
     setupIPC(mainWindow);
+    const { setupDeveloperEngineIPC } = require('./ipc');
+    setupDeveloperEngineIPC(mainWindow);
     setupUpdateEngine(app.getPath('userData'), app.getVersion(), mainWindow);
     setupTray(mainWindow);
     setupStartup();
