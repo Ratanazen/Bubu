@@ -1,5 +1,6 @@
 import { runDiagnostics } from './commands/diagnostics';
 import { checkConfig } from './commands/config';
+import { openSettings } from './commands/settings';
 import { colors, fmt } from './utils/colors';
 import { startCommand, stopCommand, restartCommand, statusCommand } from './commands/daemon';
 import { petCommand } from './commands/pet';
@@ -129,6 +130,10 @@ async function main(): Promise<void> {
 
     case 'status':
       await statusCommand();
+      break;
+
+    case 'settings':
+      await openSettings();
       break;
 
     case 'pet':

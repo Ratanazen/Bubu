@@ -148,3 +148,8 @@ ipcMain.on('set-ignore-mouse-events', (event, ignore, forward) => {
         win.setIgnoreMouseEvents(ignore, { forward });
     }
 });
+
+ipcMain.on('show-settings', () => {
+    const { openSettingsWindow } = require('./settingsWindow');
+    openSettingsWindow();
+});

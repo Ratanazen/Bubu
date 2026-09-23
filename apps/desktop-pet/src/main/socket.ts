@@ -35,6 +35,10 @@ export function setupSocketServer(mainWindow: BrowserWindow) {
                             mainWindow.show();
                         } else if (command === 'pet:hide' || command === 'pet hide') {
                             mainWindow.hide();
+                        } else if (command === 'settings' || command === 'config') {
+                            const { openSettingsWindow } = require('./settingsWindow');
+                            openSettingsWindow();
+                            mainWindow.hide();
                         }
                         
                         client.write(JSON.stringify(response) + '\n');
