@@ -13,6 +13,7 @@ export class SkinManager {
 
     constructor() {
         this.skins.set('default', { id: 'default', name: 'Space Invader', imageUrl: '../../assets/skins/invader/invader.png' });
+        this.skins.set('sad_invader', { id: 'sad_invader', name: 'Sad Space Invader', imageUrl: '../../assets/skins/invader/sad_invader.png' });
         this.skins.set('night', { id: 'night', name: 'Night Bubu', color: '#4a4e69' });
         this.skins.set('sakura', { id: 'sakura', name: 'Sakura Bubu', color: '#ffc8dd' });
         this.skins.set('retro', { id: 'retro', name: 'Retro Bubu', imageUrl: '../../assets/skins/retro/retro.png' });

@@ -13,6 +13,22 @@ interface SkinItem {
 
 const DEFAULT_SKINS: SkinItem[] = [
     {
+        id: 'sad_invader',
+        name: 'Sad Invader (Active)',
+        type: 'png',
+        imgUrl: '/assets/skins/invader/sad_invader.png',
+        desc: 'Red Pixel Alien with Tear & Speech Bubble',
+        badge: 'NEW SKIN'
+    },
+    {
+        id: 'invader',
+        name: 'Space Invader',
+        type: 'png',
+        imgUrl: '/assets/skins/invader/invader.png',
+        desc: 'Classic Red Pixel Invader',
+        badge: 'DEFAULT'
+    },
+    {
         id: 'cyberpunk',
         name: 'Cyberpunk Neon',
         type: 'gif',
