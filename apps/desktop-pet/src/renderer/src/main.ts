@@ -10,6 +10,7 @@ import { SkinManager } from './skins/SkinManager';
 import { NotificationUI } from './notifications/NotificationUI';
 import { ContextMenu } from './ui/ContextMenu';
 import { globalEventBus } from './events/EventBus';
+import { WidgetManager } from './widgets/WidgetManager';
 import { ProfileEngine } from '@bubu/profile-engine';
 
 const app = document.getElementById('app')!;
@@ -129,3 +130,20 @@ profileEngine.subscribe((profile) => {
     }
     globalEventBus.emit('NOTIFICATION_RECEIVED', { title: 'Context Switched', message: `Profile changed to ${profile.name}`});
 });
+
+// M11 Widget and Layer System Setup
+const layersContainer = document.createElement('div');
+layersContainer.className = 'layers-container';
+layersContainer.style.position = 'absolute';
+layersContainer.style.top = '0';
+layersContainer.style.left = '0';
+layersContainer.style.width = '100%';
+layersContainer.style.height = '100%';
+layersContainer.style.pointerEvents = 'none'; // let clicks pass through to background
+app.appendChild(layersContainer);
+
+const widgetManager = new WidgetManager(layersContainer);
+
+// API hook for CLI / External injection
+(window as any).widgetManager = widgetManager;
+
