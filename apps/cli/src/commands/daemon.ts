@@ -22,7 +22,7 @@ async function isRunning(): Promise<boolean> {
 function findExecutable(): string | null {
   const candidates = [
     // Unpacked build in monorepo
-    '/home/reny/Documents/Bubu/release/linux-unpacked/bubu-desktop-pet',
+    path.join(__dirname, '../../../release/linux-unpacked/bubu-desktop-pet'),
     path.join(__dirname, '../../../release/linux-unpacked/bubu-desktop-pet'),
     // System installations
     '/usr/local/bin/bubu-desktop-pet',
@@ -84,7 +84,7 @@ export async function startCommand(): Promise<void> {
   }
 
   // If binary not found, look for npm project root
-  const rootDir = '/home/reny/Documents/Bubu';
+  const rootDir = path.resolve(__dirname, '../../../../');
   if (fs.existsSync(path.join(rootDir, 'package.json'))) {
     try {
       const child = spawn('npm', ['run', 'dev', '--workspace=@bubu/desktop-pet'], {

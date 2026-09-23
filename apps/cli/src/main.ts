@@ -1,3 +1,5 @@
+import { runDiagnostics } from './commands/diagnostics';
+import { checkConfig } from './commands/config';
 import { colors, fmt } from './utils/colors';
 import { startCommand, stopCommand, restartCommand, statusCommand } from './commands/daemon';
 import { petCommand } from './commands/pet';
@@ -107,7 +109,13 @@ async function main(): Promise<void> {
   }
 
   switch (command) {
-    case 'start':
+    case 'diagnostics':
+    runDiagnostics();
+    break;
+  case 'config':
+    checkConfig();
+    break;
+  case 'start':
       await startCommand();
       break;
 
