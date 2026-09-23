@@ -77,10 +77,18 @@ export function setupIPC(mainWindow: BrowserWindow) {
     if (platformAdapter && platformAdapter.movePet) {
         try {
             await platformAdapter.movePet(x, y);
+            const s = loadSettings();
+            s.position.x = x;
+            s.position.y = y;
+            saveSettings(s);
             return true;
         } catch (e) {}
     }
     mainWindow.setBounds({ x: Math.round(x), y: Math.round(y), width: 150, height: 150 });
+    const s = loadSettings();
+    s.position.x = x;
+    s.position.y = y;
+    saveSettings(s);
     return true;
   });
 }

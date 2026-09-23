@@ -5,8 +5,10 @@ import { loadSettings } from './store';
 export function createMainWindow() {
     const settings = loadSettings();
     const win = new BrowserWindow({
-        width: 180,
-        height: 220,
+        width: 150,
+        x: settings.position?.x ?? 100,
+        y: settings.position?.y ?? 100,
+        height: 150,
         frame: false,
         transparent: true,
         alwaysOnTop: settings.alwaysOnTop,
