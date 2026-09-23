@@ -70,6 +70,9 @@ window.addEventListener('settings-updated', (e: any) => {
     if (settings.petSize) {
         petContainer.style.transform = `scale(${settings.petSize})`;
     }
+    if (settings.dragEnabled !== undefined) {
+        bubu.dragEnabled = settings.dragEnabled;
+    }
 });
 
 window.electronAPI.onPauseStateChanged((paused) => {
@@ -87,8 +90,13 @@ function loop(time: number) {
 }
 
 // Initial bounds check and load settings
-window.electronAPI.getScreenBounds().then(bounds => {
-    bubu.setBounds(bounds);
+window.electronAPI.getAllDisplays().then((displays: any[]) => {
+    bubu.setDisplays(displays);
+    if (displays.length > 0) {
+        bubu.setBounds(displays.find(d => d.isPrimary) || displays[0]);
+    } else {
+        window.electronAPI.getScreenBounds().then(bounds => bubu.setBounds(bounds));
+    }
     requestAnimationFrame(loop);
 });
 
@@ -96,6 +104,7 @@ window.electronAPI.getScreenBounds().then(bounds => {
 skinManager.initialize();
 window.electronAPI.getSettings().then(settings => {
     if (settings.petSize) petContainer.style.transform = `scale(${settings.petSize})`;
+    if (settings.dragEnabled !== undefined) bubu.dragEnabled = settings.dragEnabled;
 });
 
 // M10 Context Profile Engine setup

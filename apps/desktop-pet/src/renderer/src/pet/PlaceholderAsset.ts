@@ -14,7 +14,7 @@ export function getPlaceholderSVG(state: string, skin: Skin): string {
 
         let extra = '';
         if (state === 'SLEEP') extra = `<div style="position:absolute; top:-10px; right: 20px; font-weight:bold; font-family:sans-serif;">Z</div>`;
-        if (state === 'DANCE') extra = `<div style="position:absolute; top:-10px; left: 10px; font-weight:bold; color:pink;">♪</div>`;
+        if (state === 'DANCE') extra = `<div style="position:absolute; top:-10px; left: 10px; font-weight:bold; color:pink;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>`;
 
         return `
             <div style="position:relative; transform: translateY(${bobbing}px); width:100%; height:100%; display:flex; justify-content:center; align-items:center;">
@@ -69,7 +69,7 @@ export function getPlaceholderSVG(state: string, skin: Skin): string {
             ${mouth}
         </g>
         ${state === 'SLEEP' ? `<text x="80" y="${30 - Math.abs(Math.sin(Date.now() / 500) * 10)}" font-family="Arial" font-size="15" fill="#333">Z</text>` : ''}
-        ${state === 'DANCE' ? `<text x="10" y="${40 - Math.abs(Math.sin(Date.now() / 300) * 10)}" font-family="Arial" font-size="20" fill="#ff9a94">♪</text>` : ''}
-        ${state === 'PLAY' ? `<text x="90" y="${40 - Math.abs(Math.sin(Date.now() / 300) * 10)}" font-family="Arial" font-size="20" fill="#ffb7b2">♥</text>` : ''}
+        ${state === 'DANCE' ? `<g transform="translate(10, ${25 - Math.abs(Math.sin(Date.now() / 300) * 10)})"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ff9a94" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></g>` : ''}
+        ${state === 'PLAY' ? `<g transform="translate(90, ${25 - Math.abs(Math.sin(Date.now() / 300) * 10)})"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffb7b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></g>` : ''}
     </svg>`;
 }

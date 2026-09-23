@@ -20,10 +20,46 @@ export class Bubu {
         this.animator = new AnimationController(element);
     }
 
+    displays: any[] = [];
+    currentDisplay: any;
+    dragEnabled = true;
+
     setBounds(bounds: any) {
-        this.bounds = bounds;
+        this.bounds = bounds; // fallback primary bounds
+        this.currentDisplay = bounds;
         this.y = bounds.y + bounds.height - 220;
         this.x = bounds.x + Math.floor(bounds.width / 2);
+    }
+
+    setDisplays(displays: any[]) {
+        this.displays = displays;
+        if (displays.length > 0) {
+            this.currentDisplay = displays[0];
+        }
+    }
+
+    private updateCurrentDisplay() {
+        if (!this.displays || this.displays.length === 0) return;
+        // Pet center x, y
+        const cx = this.x + 75;
+        const cy = this.y + 75;
+        let found = this.displays.find(d => cx >= d.x && cx <= d.x + d.width && cy >= d.y && cy <= d.y + d.height);
+        if (!found) {
+            // Find closest display if outside
+            let minDist = Infinity;
+            for (const d of this.displays) {
+                const dcx = d.x + d.width / 2;
+                const dcy = d.y + d.height / 2;
+                const dist = Math.hypot(cx - dcx, cy - dcy);
+                if (dist < minDist) {
+                    minDist = dist;
+                    found = d;
+                }
+            }
+        }
+        if (found) {
+            this.currentDisplay = found;
+        }
     }
 
     setState(newState: string) {
@@ -49,7 +85,7 @@ export class Bubu {
     }
 
     onMouseDown(e: MouseEvent) {
-        if (e.button !== 0) return; // Only left click
+        if (e.button !== 0 || !this.dragEnabled) return; // Only left click and if dragging enabled
         this.isDragging = true;
         this.dragOffsetX = e.clientX;
         this.dragOffsetY = e.clientY;
@@ -62,14 +98,17 @@ export class Bubu {
         if (this.isDragging) {
             this.x = e.screenX - this.dragOffsetX;
             this.y = e.screenY - this.dragOffsetY;
+            this.updateCurrentDisplay();
         }
     }
 
     onMouseUp(e: MouseEvent) {
         if (this.isDragging) {
             this.isDragging = false;
+            this.updateCurrentDisplay();
             this.setState('SURPRISED');
             setTimeout(() => { if(this.state === 'SURPRISED') this.setState('IDLE'); }, 1000);
+            window.electronAPI.movePet(Math.round(this.x), Math.round(this.y));
         }
     }
 
@@ -109,18 +148,21 @@ export class Bubu {
             this.x += this.vx * dt;
             this.y += this.vy * dt;
 
+            this.updateCurrentDisplay();
+            const activeBounds = this.currentDisplay || this.bounds;
+
             // Bounds collision
-            const groundY = this.bounds.y + this.bounds.height - 220;
+            const groundY = activeBounds.y + activeBounds.height - 220;
             if (this.y > groundY) {
                 this.y = groundY;
                 this.vy = 0;
             }
 
-            if (this.x < this.bounds.x) {
-                this.x = this.bounds.x;
+            if (this.x < activeBounds.x) {
+                this.x = activeBounds.x;
                 this.setState('WALK_RIGHT');
-            } else if (this.x > this.bounds.x + this.bounds.width - 180) {
-                this.x = this.bounds.x + this.bounds.width - 180;
+            } else if (this.x > activeBounds.x + activeBounds.width - 180) {
+                this.x = activeBounds.x + activeBounds.width - 180;
                 this.setState('WALK_LEFT');
             }
         }

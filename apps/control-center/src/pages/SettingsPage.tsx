@@ -72,6 +72,20 @@ export default function SettingsPage() {
             <div className="card">
                 <div className="card-title" style={{ marginBottom: '12px' }}>Desktop</div>
                 <div className="status-row">
+                    <span className="status-label">Enable Dragging</span>
+                    <input 
+                        type="checkbox" 
+                        defaultChecked={true} 
+                        onChange={async (e) => {
+                            const current = await (window as any).electronAPI.getSettings();
+                            current.dragEnabled = e.target.checked;
+                            await (window as any).electronAPI.saveSettings(current);
+                            const event = new CustomEvent('settings-updated', { detail: current });
+                            window.dispatchEvent(event);
+                        }}
+                    />
+                </div>
+                <div className="status-row">
                     <span className="status-label">Position</span>
                     <select style={{ width: '150px' }}>
                         <option>Free Movement</option>

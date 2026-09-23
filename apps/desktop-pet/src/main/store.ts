@@ -8,6 +8,7 @@ const defaultSettings = {
     alwaysOnTop: true,
     startWithWindows: false,
     petSize: 1,
+    dragEnabled: true,
     movementSpeed: 1,
     animationSpeed: 1,
     behaviorMode: 'normal',

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Palette } from 'lucide-react';
+import { Palette, Check } from 'lucide-react';
 
 interface StyleAvatar {
     id: string;
@@ -106,8 +106,8 @@ export default function AvatarPage() {
                     </p>
                 </div>
                 {notification && (
-                    <div style={{ background: '#10b981', color: '#fff', padding: '8px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600 }}>
-                        ✓ {notification}
+                    <div style={{ background: '#10b981', color: '#fff', padding: '8px 16px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <Check size={16} /> {notification}
                     </div>
                 )}
             </div>
@@ -219,7 +219,11 @@ export default function AvatarPage() {
                                     fontSize: '12px',
                                     cursor: 'pointer'
                                 }}>
-                                {isSelected ? '✓ Active Avatar' : 'Apply Avatar'}
+                                {isSelected ? (
+                                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
+                                        <Check size={14} /> Active Avatar
+                                    </span>
+                                ) : 'Apply Avatar'}
                             </button>
                         </div>
                     );
