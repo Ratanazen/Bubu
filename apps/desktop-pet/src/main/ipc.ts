@@ -155,11 +155,13 @@ ipcMain.on('show-settings', () => {
 });
 
 // M24/M25/M29 Developer Engine API
-import { ToolchainDetector, ProjectScanner, ProcessManager } from '@bubu/developer-engine';
+import { ToolchainDetector, ProjectScanner, ProcessManager, TerminalEngine, GitEngine } from '@bubu/developer-engine';
 
 const toolchainDetector = new ToolchainDetector();
 const projectScanner = new ProjectScanner();
 const processManager = new ProcessManager();
+const terminalEngine = new TerminalEngine();
+const gitEngine = new GitEngine();
 
 export function setupDeveloperEngineIPC(mainWindow: BrowserWindow) {
     ipcMain.handle('detect-toolchains', async () => {
@@ -180,6 +182,48 @@ export function setupDeveloperEngineIPC(mainWindow: BrowserWindow) {
         return true;
     });
 
+    // V6.0 Terminal APIs
+    ipcMain.handle('terminal-create', (_event, id: string, cwd: string) => {
+        return terminalEngine.createSession(id, cwd);
+    });
+
+    ipcMain.handle('terminal-write', (_event, id: string, data: string) => {
+        return terminalEngine.write(id, data);
+    });
+
+    ipcMain.handle('terminal-kill', (_event, id: string) => {
+        return terminalEngine.kill(id);
+    });
+
+    terminalEngine.on('data', (payload) => {
+        if (!mainWindow.isDestroyed()) {
+            mainWindow.webContents.send('terminal-data', payload);
+        }
+    });
+
+    terminalEngine.on('exit', (payload) => {
+        if (!mainWindow.isDestroyed()) {
+            mainWindow.webContents.send('terminal-exit', payload);
+        }
+    });
+
+    // V6.0 Git APIs
+    ipcMain.handle('git-status', async (_event, cwd: string) => {
+        return await gitEngine.getStatus(cwd);
+    });
+
+    ipcMain.handle('git-diff', async (_event, cwd: string) => {
+        return await gitEngine.getDiff(cwd);
+    });
+
+    ipcMain.handle('git-commit', async (_event, message: string, cwd: string) => {
+        return await gitEngine.commit(message, cwd);
+    });
+
+    ipcMain.handle('git-log', async (_event, cwd: string, count?: number) => {
+        return await gitEngine.getLog(cwd, count);
+    });
+
     processManager.on('output', (payload) => {
         if (!mainWindow.isDestroyed()) {
             mainWindow.webContents.send('process-output', payload);
@@ -192,3 +236,4 @@ export function setupDeveloperEngineIPC(mainWindow: BrowserWindow) {
         }
     });
 }
+

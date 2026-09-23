@@ -38,5 +38,17 @@ contextBridge.exposeInMainWorld('developerAPI', {
     runProcess: (cmd: string, args: string[], cwd: string) => ipcRenderer.invoke('run-process', cmd, args, cwd),
     killProcess: (pid: number) => ipcRenderer.invoke('kill-process', pid),
     onProcessOutput: (callback: (payload: any) => void) => ipcRenderer.on('process-output', (_event, payload) => callback(payload)),
-    onProcessExit: (callback: (payload: any) => void) => ipcRenderer.on('process-exit', (_event, payload) => callback(payload))
+    onProcessExit: (callback: (payload: any) => void) => ipcRenderer.on('process-exit', (_event, payload) => callback(payload)),
+    // V6.0 Terminal
+    createTerminal: (id: string, cwd: string) => ipcRenderer.invoke('terminal-create', id, cwd),
+    writeTerminal: (id: string, data: string) => ipcRenderer.invoke('terminal-write', id, data),
+    killTerminal: (id: string) => ipcRenderer.invoke('terminal-kill', id),
+    onTerminalData: (callback: (payload: any) => void) => ipcRenderer.on('terminal-data', (_event, payload) => callback(payload)),
+    onTerminalExit: (callback: (payload: any) => void) => ipcRenderer.on('terminal-exit', (_event, payload) => callback(payload)),
+    // V6.0 Git
+    getGitStatus: (cwd: string) => ipcRenderer.invoke('git-status', cwd),
+    getGitDiff: (cwd: string) => ipcRenderer.invoke('git-diff', cwd),
+    gitCommit: (message: string, cwd: string) => ipcRenderer.invoke('git-commit', message, cwd),
+    getGitLog: (cwd: string, count?: number) => ipcRenderer.invoke('git-log', cwd, count)
 });
+
