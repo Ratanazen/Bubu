@@ -30,3 +30,5 @@ clap = { version = "4.5.61", features = ["derive"] }
 tokio = { version = "1.53.1", features = ["full"] }
 tokio-tungstenite = "0.29.0"
 futures-util = "0.3.34"
+reqwest = { version = "0.13.3", features = ["json"] }
+urlencoding = "2.1.3"

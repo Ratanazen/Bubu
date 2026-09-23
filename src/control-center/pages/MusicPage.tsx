@@ -1,15 +1,39 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useMusicStore } from "../../shared/store/musicStore";
-import { Music, Play, Pause } from "lucide-react";
+import { invoke } from "@tauri-apps/api/core";
+import { Music, Play, Pause, Mic2 } from "lucide-react";
+
+interface LrcResponse {
+    plainLyrics?: string;
+    syncedLyrics?: string;
+}
 
 export function MusicPage() {
     const { media, reactionLevel, setReactionLevel, pollMedia } = useMusicStore();
+    const [lyrics, setLyrics] = useState<LrcResponse | null>(null);
+    const [loadingLyrics, setLoadingLyrics] = useState(false);
 
     useEffect(() => {
         pollMedia();
         const interval = setInterval(pollMedia, 2000);
         return () => clearInterval(interval);
     }, [pollMedia]);
+
+    useEffect(() => {
+        if (media?.title && media?.artist) {
+            setLoadingLyrics(true);
+            invoke<LrcResponse | null>("fetch_lyrics", { 
+                trackName: media.title, 
+                artistName: media.artist 
+            }).then(res => {
+                setLyrics(res);
+                setLoadingLyrics(false);
+            }).catch(e => {
+                console.error("Lyrics fetch failed", e);
+                setLoadingLyrics(false);
+            });
+        }
+    }, [media?.title, media?.artist]);
 
     return (
         <div style={{ padding: 20 }}>
@@ -35,6 +59,29 @@ export function MusicPage() {
                         {media?.playing ? <Play color="#10b981" /> : <Pause color="#ef4444" />}
                     </div>
                 </div>
+            </div>
+
+            <div style={{ marginTop: 20, background: '#1e1e2e', border: '1px solid #ddd', borderRadius: 8, padding: 20, color: '#fff', minHeight: 150 }}>
+                <h3 style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 0, color: '#cdd6f4' }}><Mic2 size={18}/> Live Lyrics</h3>
+                
+                {loadingLyrics ? (
+                    <p style={{ color: '#a6adc8' }}>Searching LRCLIB for synced lyrics...</p>
+                ) : lyrics?.syncedLyrics ? (
+                    <div style={{ maxHeight: 200, overflowY: 'auto', color: '#cdd6f4', lineHeight: '1.8' }}>
+                        {lyrics.syncedLyrics.split('\n').map((line, i) => {
+                            const match = line.match(/\[\d{2}:\d{2}\.\d{2}\](.*)/);
+                            return <p key={i} style={{ margin: '4px 0', opacity: i === 2 ? 1 : 0.6, fontSize: i === 2 ? 18 : 14, fontWeight: i === 2 ? 'bold' : 'normal' }}>
+                                {match ? match[1] : line}
+                            </p>
+                        })}
+                    </div>
+                ) : lyrics?.plainLyrics ? (
+                    <div style={{ maxHeight: 200, overflowY: 'auto', color: '#a6adc8', whiteSpace: 'pre-wrap' }}>
+                        {lyrics.plainLyrics}
+                    </div>
+                ) : (
+                    <p style={{ color: '#a6adc8' }}>No lyrics found for this track.</p>
+                )}
             </div>
 
             <div style={{ marginTop: 20, background: '#fff', border: '1px solid #ddd', borderRadius: 8, padding: 20 }}>
