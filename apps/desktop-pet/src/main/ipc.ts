@@ -125,3 +125,26 @@ export function setupUpdateEngine(appDataDir: string, currentVersion: string, ma
         return updateEngine ? updateEngine.getState() : 'IDLE';
     });
 }
+
+// M20 BUGFIX handlers
+ipcMain.handle('get-screen-bounds', () => {
+    return screen.getPrimaryDisplay().bounds;
+});
+
+ipcMain.handle('get-active-window', async () => {
+    if (platformAdapter && platformAdapter.getActiveWindow) {
+        try {
+            return await platformAdapter.getActiveWindow();
+        } catch (e) {
+            console.error('getActiveWindow error', e);
+        }
+    }
+    return null;
+});
+
+ipcMain.on('set-ignore-mouse-events', (event, ignore, forward) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    if (win) {
+        win.setIgnoreMouseEvents(ignore, { forward });
+    }
+});
