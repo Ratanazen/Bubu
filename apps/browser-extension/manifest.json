@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Bubu Companion Bridge",
+  "version": "6.0.0",
+  "description": "Bridges your browser context securely to the Bubu Desktop App.",
+  "permissions": ["activeTab", "scripting", "tabs"],
+  "host_permissions": ["*://*.youtube.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}

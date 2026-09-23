@@ -1,5 +1,6 @@
 mod music;
 mod context;
+mod browser_bridge;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -11,6 +12,8 @@ pub fn run() {
         context::get_active_window
     ])
     .setup(|app| {
+      browser_bridge::start_server(app.handle().clone());
+      
       if cfg!(debug_assertions) {
         app.handle().plugin(
           tauri_plugin_log::Builder::default()
