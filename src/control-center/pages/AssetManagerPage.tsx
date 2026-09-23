@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useSkinStore, ActionName, ActionFrame } from "../../shared/store/skinStore";
+import { useAssetStore } from "../../shared/store/assetStore";
+import { ImageProcessor } from "./ImageProcessor";
 import { 
-    Folder, Trash, Settings, Plus, Play, Pause, 
-    Footprints, Zap, Moon, Music, Terminal, Coffee, Image as ImageIcon, Smile, Frown 
+    Folder, Trash, Settings, Play, Pause, 
+    Footprints, Zap, Moon, Music, Terminal, Coffee, Image as ImageIcon, Smile, Frown, Save 
 } from "lucide-react";
 
 const getActionIcon = (action: string) => {
@@ -19,7 +21,8 @@ const getActionIcon = (action: string) => {
 };
 
 export function AssetManagerPage() {
-    const { actions, setAction, deleteAction } = useSkinStore();
+    const { actions, setAction, } = useSkinStore();
+    const { assets } = useAssetStore();
     
     // Editor State
     const [selectedAction, setSelectedAction] = useState<ActionName>("walk");
@@ -34,7 +37,6 @@ export function AssetManagerPage() {
 
     const activeAction = selectedAction === 'custom' ? customAction : selectedAction;
 
-    // Load existing action into editor when selected
     useEffect(() => {
         if (selectedAction !== 'custom' && actions[selectedAction]) {
             setFrames(actions[selectedAction].frames || []);
@@ -45,7 +47,6 @@ export function AssetManagerPage() {
         }
     }, [selectedAction, actions]);
 
-    // Live Preview Loop
     useEffect(() => {
         if (!previewPlaying || frames.length === 0) return;
         const interval = setInterval(() => {
@@ -53,26 +54,6 @@ export function AssetManagerPage() {
         }, 1000 / Math.max(1, fps));
         return () => clearInterval(interval);
     }, [previewPlaying, frames.length, fps]);
-
-    // Reset preview frame when frames change
-    useEffect(() => {
-        if (previewFrame >= frames.length) setPreviewFrame(0);
-    }, [frames.length]);
-
-    const handlePasteUrls = (text: string) => {
-        // Split by comma or newline, trim, filter empty
-        const urls = text.split(/[\n,]+/).map(u => u.trim()).filter(u => u.length > 0);
-        
-        // Auto-sort based on numbers in filename (e.g. walk_01.png, walk_02.png)
-        urls.sort((a, b) => {
-            const numA = a.match(/\d+/g)?.pop() || "0";
-            const numB = b.match(/\d+/g)?.pop() || "0";
-            return parseInt(numA) - parseInt(numB);
-        });
-
-        const newFrames = urls.map(url => ({ url, offsetX: 0, offsetY: 0 }));
-        setFrames(prev => [...prev, ...newFrames]);
-    };
 
     const handleSave = () => {
         if (!activeAction || frames.length === 0) return;
@@ -83,38 +64,48 @@ export function AssetManagerPage() {
         setFrames(frames.filter((_, i) => i !== index));
     };
 
+    const addFrameFromAsset = (dataUrl: string) => {
+        setFrames([...frames, { url: dataUrl, offsetX: 0, offsetY: 0 }]);
+    };
+
     return (
         <div style={{ padding: 20 }}>
             <h2>Animation Studio</h2>
-            <p style={{ color: '#666' }}>Map multiple images into a single animation state.</p>
             
             <div style={{ display: 'flex', gap: 20, marginTop: 20 }}>
-                {/* Available Actions Sidebar */}
-                <div style={{ flex: 1, background: '#fff', border: '1px solid #ddd', borderRadius: 8, padding: 20, maxHeight: 650, overflowY: 'auto' }}>
-                    <h3 style={{ marginTop: 0 }}><Folder size={18}/> Mapped Actions</h3>
-                    {Object.keys(actions).map(act => (
-                        <div key={act} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', borderBottom: '1px solid #eee', background: activeAction === act ? '#f0f9ff' : 'transparent' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                <div style={{ color: '#3b82f6' }}>{getActionIcon(act)}</div>
-                                <div>
-                                    <strong style={{ display: 'block', textTransform: 'uppercase' }}>{act}</strong>
-                                    <span style={{ fontSize: 12, color: '#888' }}>{actions[act].frames.length} frames @ {actions[act].fps} FPS</span>
+                {/* Left Side: Image Processor & Library */}
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 20 }}>
+                    <ImageProcessor />
+                    
+                    {/* Asset Library Picker */}
+                    <div style={{ background: '#fff', border: '1px solid #ddd', borderRadius: 8, padding: 20, maxHeight: 400, overflowY: 'auto' }}>
+                        <h3 style={{ marginTop: 0, display: 'flex', alignItems: 'center', gap: 8 }}><Folder size={18}/> 2. Asset Library</h3>
+                        <p style={{ color: '#666', fontSize: 12 }}>Click an asset to add it as a frame.</p>
+                        
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10 }}>
+                            {Object.values(assets).map(asset => (
+                                <div 
+                                    key={asset.id} 
+                                    onClick={() => addFrameFromAsset(asset.dataUrl)}
+                                    style={{ 
+                                        border: '1px solid #ccc', borderRadius: 6, cursor: 'pointer', 
+                                        background: 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYNgvwMDA/o8xmZGBgYWRAQhWMIzKwKigwYgBDEf9MGoAwyG9gYEBgAAr7wkziE4nJgAAAABJRU5ErkJggg==") repeat'
+                                    }}
+                                >
+                                    <img src={asset.dataUrl} style={{ width: '100%', height: 'auto', imageRendering: 'pixelated', display: 'block' }} />
                                 </div>
-                            </div>
-                            <div style={{ display: 'flex', gap: 10 }}>
-                                <button onClick={() => setSelectedAction(act)} style={{ background: 'none', border: 'none', color: '#3b82f6', cursor: 'pointer', fontWeight: 'bold' }}>Edit</button>
-                                <button onClick={() => deleteAction(act)} style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer' }}><Trash size={16}/></button>
-                            </div>
+                            ))}
                         </div>
-                    ))}
+                        {Object.keys(assets).length === 0 && <p style={{ textAlign: 'center', color: '#999', padding: 20 }}>No assets saved yet.</p>}
+                    </div>
                 </div>
 
-                {/* Main Editor */}
+                {/* Right Side: Action Mapper */}
                 <div style={{ flex: 2, display: 'flex', flexDirection: 'column', gap: 20 }}>
                     
                     {/* Action Selector */}
                     <div style={{ background: '#fff', border: '1px solid #ddd', borderRadius: 8, padding: 20 }}>
-                        <h3 style={{ marginTop: 0, display: 'flex', alignItems: 'center', gap: 8 }}><Settings size={18}/> 1. Select Action</h3>
+                        <h3 style={{ marginTop: 0, display: 'flex', alignItems: 'center', gap: 8 }}><Settings size={18}/> 3. Select Action</h3>
                         <div style={{ display: 'flex', gap: 10 }}>
                             <select value={selectedAction} onChange={e => setSelectedAction(e.target.value)} style={{ flex: 1, padding: 10, borderRadius: 6, border: '1px solid #ccc', fontSize: 16 }}>
                                 <optgroup label="Basic">
@@ -140,78 +131,53 @@ export function AssetManagerPage() {
                     {/* Frame Slots */}
                     <div style={{ background: '#fff', border: '1px solid #ddd', borderRadius: 8, padding: 20 }}>
                         <h3 style={{ marginTop: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <span>2. Animation Frames</span>
+                            <span>4. Animation Frames</span>
                             <span style={{ fontSize: 14, color: '#666', fontWeight: 'normal' }}>{frames.length} frames</span>
                         </h3>
-                        
-                        {/* Drag/Paste Dropzone */}
-                        <div style={{ marginBottom: 20 }}>
-                            <textarea 
-                                placeholder="Paste multiple image URLs/paths here (comma or newline separated). They will be automatically sorted and added as frames."
-                                rows={2}
-                                onChange={(e) => {
-                                    if (e.target.value) {
-                                        handlePasteUrls(e.target.value);
-                                        e.target.value = ''; // clear after reading
-                                    }
-                                }}
-                                style={{ width: '100%', padding: 10, borderRadius: 6, border: '2px dashed #cbd5e1', resize: 'vertical' }}
-                            />
-                        </div>
 
                         {/* Visual Frame Slots */}
-                        <div style={{ display: 'flex', gap: 15, overflowX: 'auto', paddingBottom: 15 }}>
+                        <div style={{ display: 'flex', gap: 15, overflowX: 'auto', paddingBottom: 15, minHeight: 150 }}>
                             {frames.map((frame, idx) => (
                                 <div key={idx} style={{ minWidth: 100, border: '1px solid #e2e8f0', borderRadius: 8, overflow: 'hidden', position: 'relative', background: '#f8fafc' }}>
                                     
-                                    {/* Action Icon Badge */}
                                     <div style={{ position: 'absolute', top: 5, left: 5, background: 'rgba(255,255,255,0.9)', borderRadius: '50%', padding: 4, display: 'flex', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
                                         {getActionIcon(activeAction)}
                                     </div>
                                     
-                                    {/* Delete Button */}
                                     <button onClick={() => removeFrame(idx)} style={{ position: 'absolute', top: 5, right: 5, background: 'rgba(239, 68, 68, 0.9)', color: 'white', border: 'none', borderRadius: '50%', width: 24, height: 24, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                         <Trash size={12}/>
                                     </button>
 
-                                    {/* Image Thumbnail */}
-                                    <div style={{ height: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
+                                    <div style={{ height: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 10, background: 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYNgvwMDA/o8xmZGBgYWRAQhWMIzKwKigwYgBDEf9MGoAwyG9gYEBgAAr7wkziE4nJgAAAABJRU5ErkJggg==") repeat' }}>
                                         <img src={frame.url} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', imageRendering: 'pixelated' }} alt={`Frame ${idx + 1}`} />
                                     </div>
                                     
-                                    {/* Label */}
                                     <div style={{ padding: 8, background: '#e2e8f0', fontSize: 12, textAlign: 'center', fontWeight: 'bold', color: '#475569' }}>
                                         Frame {idx + 1}
                                     </div>
                                 </div>
                             ))}
 
-                            {/* Add Single Frame Button */}
-                            <div 
-                                onClick={() => {
-                                    const url = prompt("Enter image URL/path:");
-                                    if (url) setFrames([...frames, { url, offsetX: 0, offsetY: 0 }]);
-                                }}
-                                style={{ minWidth: 100, height: 135, border: '2px dashed #cbd5e1', borderRadius: 8, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#64748b', background: '#f8fafc' }}
-                            >
-                                <Plus size={24} />
-                                <span style={{ fontSize: 12, marginTop: 5, fontWeight: 'bold' }}>Add Frame</span>
-                            </div>
+                            {frames.length === 0 && (
+                                <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8', border: '2px dashed #cbd5e1', borderRadius: 8 }}>
+                                    Click assets in the library to add frames
+                                </div>
+                            )}
                         </div>
                     </div>
 
                     {/* Preview & Save */}
                     <div style={{ display: 'flex', gap: 20 }}>
                         <div style={{ flex: 1, background: '#fff', border: '1px solid #ddd', borderRadius: 8, padding: 20 }}>
-                            <h3 style={{ marginTop: 0 }}>3. Settings</h3>
+                            <h3 style={{ marginTop: 0 }}>5. Settings</h3>
                             <label style={{ display: 'block', fontWeight: 'bold', fontSize: 14 }}>FPS (Speed):</label>
                             <input type="number" value={fps} onChange={e => setFps(Number(e.target.value))} style={{ width: '100%', padding: 10, marginTop: 5, borderRadius: 4, border: '1px solid #ccc' }} />
                             
                             <label style={{ display: 'block', fontWeight: 'bold', fontSize: 14, marginTop: 15 }}>Scale Multiplier:</label>
                             <input type="number" step="0.1" value={scale} onChange={e => setScale(Number(e.target.value))} style={{ width: '100%', padding: 10, marginTop: 5, borderRadius: 4, border: '1px solid #ccc' }} />
                             
-                            <button onClick={handleSave} style={{ marginTop: 25, width: '100%', padding: 15, background: '#10b981', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', fontSize: 16, fontWeight: 'bold' }}>
-                                Save {activeAction.toUpperCase()} Animation
+                            <button onClick={handleSave} style={{ marginTop: 25, width: '100%', padding: 15, background: '#10b981', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', fontSize: 16, fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5 }}>
+                                <Save size={18}/> Save {activeAction.toUpperCase()} Animation
                             </button>
                         </div>
 
@@ -225,7 +191,7 @@ export function AssetManagerPage() {
                                 </div>
                             </h3>
                             
-                            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent' }}>
+                            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYNgvwMDA/o8xmZGBgYWRAQhWMIzKwKigwYgBDEf9MGoAwyG9gYEBgAAr7wkziE4nJgAAAABJRU5ErkJggg==") repeat' }}>
                                 {frames.length > 0 ? (
                                     <img 
                                         src={frames[previewFrame]?.url} 
@@ -237,12 +203,11 @@ export function AssetManagerPage() {
                                         }} 
                                     />
                                 ) : (
-                                    <span style={{ color: '#64748b' }}>No frames</span>
+                                    <span style={{ color: '#64748b', background: '#1e293b', padding: '2px 8px' }}>No frames</span>
                                 )}
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
