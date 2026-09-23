@@ -12,16 +12,19 @@
   "scripts": {
     "dev": "npm run dev --workspaces",
     "build": "npm run build --workspaces",
-    "test": "node --test tests/engines.test.mjs",
+    "test": "node --test tests/",
     "package:linux": "electron-builder --linux",
     "package:win": "electron-builder --win",
     "package:mac": "electron-builder --mac",
     "package": "npm run package:linux && npm run package:win"
   },
+  "allowScripts": {
+    "electron@29.4.6": true
+  },
   "devDependencies": {
-    "typescript": "^5.2.2",
     "electron": "^29.4.6",
     "electron-builder": "^24.13.3",
+    "typescript": "^5.2.2",
     "vite": "^5.4.1"
   }
 }

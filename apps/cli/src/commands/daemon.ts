@@ -1,3 +1,4 @@
+import * as os from 'os';
 import * as fs from 'fs';
 import * as path from 'path';
 import { spawn } from 'child_process';
@@ -22,12 +23,13 @@ async function isRunning(): Promise<boolean> {
 function findExecutable(): string | null {
   const candidates = [
     // Unpacked build in monorepo
-    path.join(__dirname, '../../../release/linux-unpacked/bubu-desktop-pet'),
-    path.join(__dirname, '../../../release/linux-unpacked/bubu-desktop-pet'),
+    path.join(__dirname, '../../../release/linux-unpacked/bubu-desktop-companion'),
+    path.join(__dirname, '../../../release/linux-unpacked/bubu-desktop-companion'),
     // System installations
-    '/usr/local/bin/bubu-desktop-pet',
-    '/usr/bin/bubu-desktop-pet',
-    '/opt/Bubu/bubu-desktop-pet',
+    path.join(os.homedir(), '.local/bin/bubu-desktop-pet'),
+    '/usr/local/bin/bubu-desktop-companion',
+    '/usr/bin/bubu-desktop-companion',
+    '/opt/Bubu/bubu-desktop-companion',
   ];
 
   for (const candidate of candidates) {

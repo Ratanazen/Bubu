@@ -7,6 +7,7 @@ echo "🐾 Starting Bubu V5 Zero-to-Full Installation..."
 
 echo "📦 1. Installing dependencies..."
 npm install
+npm rebuild electron
 
 echo "🔨 2. Building all packages and applications..."
 npm run build
