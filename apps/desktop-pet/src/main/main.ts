@@ -3,6 +3,7 @@ import { createMainWindow } from './window';
 import { setupIPC, setupUpdateEngine } from './ipc';
 import { setupTray } from './tray';
 import { setupStartup } from './startup';
+import { setupSocketServer } from './socket';
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -18,6 +19,7 @@ app.whenReady().then(() => {
     setupUpdateEngine(app.getPath('userData'), app.getVersion(), mainWindow);
     setupTray(mainWindow);
     setupStartup();
+    setupSocketServer(mainWindow);
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
