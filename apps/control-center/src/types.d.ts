@@ -6,6 +6,9 @@ export interface IElectronAPI {
   getSettings?: () => Promise<any>;
   getAllDisplays?: () => Promise<any[]>;
   getScreenBounds?: () => Promise<{ width: number; height: number; x: number; y: number }>;
+  getWorkspaces?: () => Promise<any[]>;
+  getWindows?: () => Promise<any[]>;
+  movePet?: (x: number, y: number) => void;
 }
 
 declare global {
