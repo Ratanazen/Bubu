@@ -1,3 +1,4 @@
+import { execFile } from "child_process";
 import { PlatformAdapter } from '../PlatformAdapter';
 import { PlatformCapabilities, DisplayInfo, SystemTheme, CapabilityStatus } from '../types';
 import { WorkspaceInfo, DiagnosticResult } from '@bubu/shared-types';
@@ -134,7 +135,7 @@ export class HyprlandAdapter implements PlatformAdapter {
     getSystemTheme(): SystemTheme { return 'dark'; }
     async openUrl(url: string): Promise<void> {
         return new Promise((resolve) => {
-            exec(`xdg-open "${url}"`, () => resolve());
+            execFile("xdg-open", [url], () => resolve());
         });
     }
 
