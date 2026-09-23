@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import path from 'path';
 
 let settingsWin: BrowserWindow | null = null;
@@ -22,12 +22,21 @@ export function openControlCenterWindow() {
         }
     });
 
-    const ccDist = path.join(__dirname, '../../../../dist/control-center/index.html');
-    if (require('fs').existsSync(ccDist)) {
-        controlCenterWin.loadFile(ccDist);
+    const possiblePaths = [
+        path.join(app.getAppPath(), 'dist/control-center/index.html'),
+        path.join(__dirname, '../../../../dist/control-center/index.html'),
+        path.join(__dirname, '../../dist/control-center/index.html'),
+        path.join(__dirname, '../control-center/index.html')
+    ];
+
+    let foundPath = possiblePaths.find(p => require('fs').existsSync(p));
+
+    if (foundPath) {
+        controlCenterWin.loadFile(foundPath);
     } else {
         controlCenterWin.loadURL('http://localhost:5173');
     }
+
 
     controlCenterWin.on('closed', () => {
         controlCenterWin = null;
