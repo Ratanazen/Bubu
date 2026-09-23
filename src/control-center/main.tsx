@@ -7,6 +7,7 @@ import { AnimationPage } from "./pages/AnimationPage";
 import { MusicPage } from "./pages/MusicPage";
 import { ContextPage } from "./pages/ContextPage";
 import { BrowserPage } from "./pages/BrowserPage";
+import { AIPage } from "./pages/AIPage";
 
 function Layout() {
     return (
@@ -20,6 +21,7 @@ function Layout() {
                     <Link href="/music" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Music Engine</Link>
                     <Link href="/context" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Smart Context</Link>
                     <Link href="/browser" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Browser Bridge</Link>
+                    <Link href="/ai" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Personality Engine</Link>
                 </nav>
             </div>
             <div style={{ flex: 1, padding: 20, background: "#f8f9fa", overflowY: "auto" }}>
@@ -30,6 +32,7 @@ function Layout() {
                     <Route path="/music"><MusicPage /></Route>
                     <Route path="/context"><ContextPage /></Route>
                     <Route path="/browser"><BrowserPage /></Route>
+                    <Route path="/ai"><AIPage /></Route>
                 </Switch>
             </div>
         </div>

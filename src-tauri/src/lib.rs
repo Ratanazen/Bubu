@@ -2,6 +2,7 @@ mod music;
 mod context;
 mod browser_bridge;
 mod lyrics;
+mod ai;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -11,7 +12,8 @@ pub fn run() {
     .invoke_handler(tauri::generate_handler![
         music::get_current_media,
         context::get_active_window,
-        lyrics::fetch_lyrics
+        lyrics::fetch_lyrics,
+        ai::generate_chat
     ])
     .setup(|app| {
       browser_bridge::start_server(app.handle().clone());
