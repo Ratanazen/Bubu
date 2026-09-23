@@ -26,3 +26,4 @@ tauri-plugin-log = "2"
 tauri-plugin-fs = "2.5.2"
 tauri-plugin-dialog = "2.7.3"
 mpris = "2.1.0"
+clap = { version = "4.5.61", features = ["derive"] }
