@@ -147,3 +147,11 @@ const widgetManager = new WidgetManager(layersContainer);
 // API hook for CLI / External injection
 (window as any).widgetManager = widgetManager;
 
+
+// Listen for CLI notifications
+(window as any).electronAPI.onShowNotification((args: any) => {
+    if (args && args.title && args.message) {
+        bubu.setState('HAPPY');
+        globalEventBus.emit('NOTIFICATION_RECEIVED', { title: args.title, message: args.message });
+    }
+});

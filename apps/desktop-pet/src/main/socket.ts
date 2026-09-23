@@ -35,6 +35,8 @@ export function setupSocketServer(mainWindow: BrowserWindow) {
                             mainWindow.show();
                         } else if (command === 'pet:hide' || command === 'pet hide') {
                             mainWindow.hide();
+                        } else if (command === 'notification:test') {
+                            mainWindow.webContents.send('show-notification', parsed.args);
                         } else if (command === 'settings' || command === 'config') {
                             const { openSettingsWindow } = require('./settingsWindow');
                             openSettingsWindow();

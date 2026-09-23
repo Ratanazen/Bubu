@@ -9,6 +9,7 @@ import { musicCommand } from './commands/music';
 import { lyricsCommand } from './commands/lyrics';
 import { browserCommand } from './commands/browser';
 import { notificationCommand } from './commands/notification';
+import { sayCommand } from './commands/say';
 import {
   waybarCommand,
   swaybarCommand,
@@ -154,6 +155,10 @@ async function main(): Promise<void> {
 
     case 'browser':
       await browserCommand(subArgs);
+      break;
+
+    case 'say':
+      await sayCommand(subArgs);
       break;
 
     case 'notification':

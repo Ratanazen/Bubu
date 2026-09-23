@@ -24,6 +24,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     stopMediaMonitor: () => ipcRenderer.send('stop-media-monitor'),
     mediaControl: (command: string) => ipcRenderer.send('media-control', command),
     showSettings: () => ipcRenderer.send('show-settings'),
+    onShowNotification: (callback: (args: any) => void) => ipcRenderer.on('show-notification', (_event, args) => callback(args)),
     closeApp: () => ipcRenderer.send('close-app'),
     checkForUpdates: () => ipcRenderer.invoke('check-for-updates'),
     installUpdate: () => ipcRenderer.invoke('install-update'),

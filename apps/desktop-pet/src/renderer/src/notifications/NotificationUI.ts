@@ -2,37 +2,39 @@ import { globalEventBus } from '../events/EventBus';
 
 export class NotificationUI {
     private element: HTMLElement;
+    private timer: any;
 
     constructor(container: HTMLElement) {
         this.element = document.createElement('div');
         this.element.className = 'notification-bubble';
         
-        // Basic CSS
+        // Match the mockup: pill-shaped light gray speech bubble
         this.element.style.position = 'absolute';
-        this.element.style.bottom = '120px'; // above bubu
+        this.element.style.bottom = '140px'; 
         this.element.style.left = '50%';
         this.element.style.transform = 'translateX(-50%)';
-        this.element.style.background = 'white';
-        this.element.style.padding = '8px 12px';
-        this.element.style.borderRadius = '15px';
-        this.element.style.boxShadow = '0 2px 8px rgba(0,0,0,0.15)';
+        this.element.style.background = '#e0e0e0';
+        this.element.style.padding = '15px 25px';
+        this.element.style.borderRadius = '30px';
+        this.element.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
         this.element.style.fontFamily = 'sans-serif';
-        this.element.style.fontSize = '12px';
+        this.element.style.fontSize = '14px';
         this.element.style.color = '#333';
         this.element.style.display = 'none';
         this.element.style.whiteSpace = 'nowrap';
         this.element.style.pointerEvents = 'none';
         this.element.style.zIndex = '100';
 
-        // Add tail arrow
+        // Add tail arrow matching the mockup
         const arrow = document.createElement('div');
         arrow.style.position = 'absolute';
-        arrow.style.bottom = '-5px';
-        arrow.style.left = '50%';
-        arrow.style.transform = 'translateX(-50%) rotate(45deg)';
-        arrow.style.width = '10px';
-        arrow.style.height = '10px';
-        arrow.style.background = 'white';
+        arrow.style.bottom = '-10px';
+        arrow.style.right = '30px';
+        arrow.style.width = '0';
+        arrow.style.height = '0';
+        arrow.style.borderLeft = '15px solid transparent';
+        arrow.style.borderRight = '0px solid transparent';
+        arrow.style.borderTop = '20px solid #e0e0e0';
         this.element.appendChild(arrow);
         
         container.appendChild(this.element);
@@ -44,7 +46,7 @@ export class NotificationUI {
 
     private show(title: string, message: string) {
         const textNode = document.createElement('div');
-        textNode.innerHTML = `<b>${title}</b><br/>${message}`;
+        textNode.innerHTML = title ? `<b>${title}</b><br/>${message}` : message;
         textNode.style.position = 'relative';
         textNode.style.zIndex = '101';
         
@@ -56,7 +58,8 @@ export class NotificationUI {
         
         this.element.style.display = 'block';
         
-        setTimeout(() => {
+        if (this.timer) clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
             this.element.style.display = 'none';
         }, 5000);
     }
