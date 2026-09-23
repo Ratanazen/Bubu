@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAIStore } from "../../shared/store/aiStore";
 import { useContextStore } from "../../shared/store/contextStore";
 import { useMusicStore } from "../../shared/store/musicStore";
+import { useCharacterStore } from "../../shared/store/characterStore";
 import { invoke } from "@tauri-apps/api/core";
 import { BrainCircuit, MessageCircle, Lock, Loader2 } from "lucide-react";
 
@@ -9,6 +10,7 @@ export function AIPage() {
     const { apiKey, enabled, setApiKey, setEnabled } = useAIStore();
     const { activeWindow } = useContextStore();
     const { media } = useMusicStore();
+    const { setSpeechText, setEmotion } = useCharacterStore();
     
     const [testResponse, setTestResponse] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
@@ -23,6 +25,9 @@ export function AIPage() {
                 currentSong: media?.title || null
             });
             setTestResponse(res);
+            setSpeechText(res);
+            setEmotion("happy");
+            setTimeout(() => { setSpeechText(null); setEmotion("idle"); }, 5000);
         } catch (e) {
             console.error(e);
             setTestResponse("Error contacting Gemini: " + e);
