@@ -5,6 +5,7 @@ import { Settings, UserCircle, Home } from "lucide-react";
 import { AvatarPage } from "./pages/AvatarPage";
 import { AnimationPage } from "./pages/AnimationPage";
 import { MusicPage } from "./pages/MusicPage";
+import { ContextPage } from "./pages/ContextPage";
 
 function Layout() {
     return (
@@ -16,6 +17,7 @@ function Layout() {
                     <Link href="/avatar" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><UserCircle size={16} /> Skin Manager</Link>
                     <Link href="/animation" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Animation Studio</Link>
                     <Link href="/music" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Music Engine</Link>
+                    <Link href="/context" style={{ color: "#cdd6f4", textDecoration: "none", display: "flex", alignItems: "center", gap: 8 }}><Settings size={16} /> Smart Context</Link>
                 </nav>
             </div>
             <div style={{ flex: 1, padding: 20, background: "#f8f9fa", overflowY: "auto" }}>
@@ -24,6 +26,7 @@ function Layout() {
                     <Route path="/avatar"><AvatarPage /></Route>
                     <Route path="/animation"><AnimationPage /></Route>
                     <Route path="/music"><MusicPage /></Route>
+                    <Route path="/context"><ContextPage /></Route>
                 </Switch>
             </div>
         </div>
