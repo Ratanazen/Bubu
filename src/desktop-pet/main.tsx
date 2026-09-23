@@ -6,6 +6,7 @@ import { useMusicStore } from "../shared/store/musicStore";
 import { useMovementStore } from "../shared/store/movementStore";
 import { useEffect, useState, useRef } from "react";
 import { BehaviorEngine } from "./BehaviorEngine";
+import { ErrorBoundary } from "../shared/components/ErrorBoundary";
 
 function DesktopPet() {
     const searchParams = new URLSearchParams(window.location.search);
@@ -198,4 +199,4 @@ function DesktopPet() {
     );
 }
 
-ReactDOM.createRoot(document.getElementById("app")!).render(<DesktopPet />);
+ReactDOM.createRoot(document.getElementById("app")!).render(<ErrorBoundary><DesktopPet /></ErrorBoundary>);
